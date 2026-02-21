@@ -10,4 +10,12 @@ module.exports = merge(common, {
     open: true,
     static: ['./'],
   },
+  watchOptions: {
+    ignored: ['**/node_modules', '**/.git'],
+    aggregateTimeout: 300,
+    poll: false,
+  },
+  snapshot: {
+    managedPaths: [/^(.+?[\\/]node_modules[\\/])/],
+  },
 });
