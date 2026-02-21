@@ -1,0 +1,643 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Margarita + Lime + Salt – AI Simplified</title>
+  <meta name="description"
+        content="Margarita + Lime + Salt: A powerful ecosystem for reusable prompts and agentic workflows. Build, compose, and manage your AI pipelines with ease.">
+
+  <meta property="og:title" content="Margarita + Lime + Salt – AI Simplified">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://banyango.com/margarita/">
+  <meta property="og:image" content="icon.png">
+  <meta property="og:image:alt" content="Margarita logo">
+  <meta property="og:description"
+        content="A lightweight templating tool for building reusable prompt and markdown templates. Supercharged by Lime for agentic workflows.">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#16A34A">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" aria-label="Margarita home">
+      <img src="lime.svg" alt="Lime" class="nav-logo-img">
+      <span class="nav-logo-text">Margarita <span class="code-var">/</span> Lime <span class="code-var">/</span> Salt</span>
+    </a>
+
+    <button class="nav-hamburger" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false"
+            aria-controls="nav-links">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <ul class="nav-links" id="nav-links" role="list">
+      <li><a href="#features">Margarita</a></li>
+      <li><a href="#lime">Lime</a></li>
+      <li><a href="#salt">Salt</a></li>
+      <li><a href="#docs">Docs</a></li>
+      <li>
+        <a href="https://github.com/banyango/margarita" class="nav-cta" target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="hero-lime-bg hero-lime-bg-1" aria-hidden="true"><img src="lime.svg" alt="" class="hero-lime-img"></div>
+  <div class="hero-lime-bg hero-lime-bg-2" aria-hidden="true"><img src="lime.svg" alt="" class="hero-lime-img"></div>
+  <div class="hero-lime-bg hero-lime-bg-3" aria-hidden="true"><img src="lime.svg" alt="" class="hero-lime-img"></div>
+  <div class="hero-lime-bg hero-lime-bg-4" aria-hidden="true"><img src="lime.svg" alt="" class="hero-lime-img"></div>
+  <div class="hero-lime-bg hero-lime-bg-5" aria-hidden="true"><img src="lime.svg" alt="" class="hero-lime-img"></div>
+  <div class="container">
+    <p class="hero-eyebrow">AI Simplified</p>
+    <h1 class="hero-heading">
+      Margarita <span class="hero-accent">+</span> Lime <span class="hero-accent">+</span> Salt
+    </h1>
+    <p class="hero-sub">
+      All the tools you need to build reusable, composable prompts and agentic workflows.
+    </p>
+    <div class="hero-actions">
+      <a href="https://www.banyango.com/margarita/latest/" class="btn btn-primary" target="_blank"
+         rel="noopener noreferrer">Get Started</a>
+      <a href="#features" class="btn btn-ghost">See Features</a>
+    </div>
+    <div class="hero-demo">
+      <div class="hero-code">
+        <div class="hero-code-label">template</div>
+        <pre><code><span class="code-comment"># hello.mg</span>
+<span class="code-meta">---
+description: any key/value metadata
+---</span>
+&lt;&lt;
+Hello, <span class="code-var">${ user }</span>!
+&gt;&gt;
+<span class="code-keyword">if</span> user == "World":
+  &lt;&lt; Welcome to Margarita. &gt;&gt;
+</code></pre>
+      </div>
+
+      <div class="hero-arrow" aria-hidden="true">&#8594;</div>
+
+      <div class="hero-output">
+        <div class="hero-code-label">rendered output</div>
+        <pre><code>Hello, World!
+
+Welcome to Margarita.</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="margarita-intro">
+      <div class="lime-badge">Ecosystem</div>
+      <h2 class="section-heading">Margarita</h2>
+      <p class="section-sub">Margarita templates bring structure and reusability to your prompts without the complexity
+        of a full
+        framework.</p>
+      <a href="https://www.banyango.com/margarita/latest/" class="btn btn-lime" target="_blank"
+         rel="noopener noreferrer">Explore
+        Margarita Docs</a>
+    </div>
+    <div class="feature-explorer">
+
+      <div class="feature-tab-list" role="tablist" aria-label="Feature examples">
+
+        <button class="feature-tab is-active" role="tab" aria-selected="true" aria-controls="panel-markdown"
+                data-panel="markdown">
+          <span class="ftab-icon">&lt;&gt;</span>
+          <span class="ftab-text">
+              <span class="ftab-name">Markdown</span>
+              <span class="ftab-desc">Plain markdown output</span>
+            </span>
+        </button>
+
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-variables"
+                data-panel="variables">
+          <span class="ftab-icon">{}</span>
+          <span class="ftab-text">
+              <span class="ftab-name">Variables</span>
+              <span class="ftab-desc">Inject context values</span>
+            </span>
+        </button>
+
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-conditionals"
+                data-panel="conditionals">
+          <span class="ftab-icon">if:</span>
+          <span class="ftab-text">
+              <span class="ftab-name">Conditionals</span>
+              <span class="ftab-desc">if / else branching</span>
+            </span>
+        </button>
+
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-loops" data-panel="loops">
+          <span class="ftab-icon">for:</span>
+          <span class="ftab-text">
+              <span class="ftab-name">Loops</span>
+              <span class="ftab-desc">Iterate over lists</span>
+            </span>
+        </button>
+
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-includes"
+                data-panel="includes">
+          <span class="ftab-icon">&lt;+&gt;</span>
+          <span class="ftab-text">
+              <span class="ftab-name">Includes</span>
+              <span class="ftab-desc">Compose from fragments</span>
+            </span>
+        </button>
+
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-cli" data-panel="cli">
+          <span class="ftab-icon">$</span>
+          <span class="ftab-text">
+              <span class="ftab-name">CLI</span>
+              <span class="ftab-desc">Render from the terminal</span>
+            </span>
+        </button>
+
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-python" data-panel="python">
+          <span class="ftab-icon">&#955;</span>
+          <span class="ftab-text">
+              <span class="ftab-name">Python API</span>
+              <span class="ftab-desc">Programmatic access</span>
+            </span>
+        </button>
+
+      </div><!-- /.feature-tab-list -->
+
+      <div class="feature-panels">
+
+        <div class="feature-panel is-active" id="panel-markdown" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Markdown Output</h3>
+            <p>Anything between <code>&lt;&lt;</code> and <code>&gt;&gt;</code> is plain Markdown</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-meta">---
+description: A template that demonstrates basic markdown formatting.
+---</span>
+&lt;&lt;
+# This is a normal heading
+  - A list
+A **bold** statement followwed by *italics* and a [link](https://www.banyango.com/margarita/latest).
+
+Anything you can do in markdown you can do here.
+&gt;&gt;
+<span class="code-keyword">for</span> item <span class="code-keyword">in</span> items:
+  &lt;&lt; - This is also markdown -> <span class="code-var">${ item }</span> &gt;&gt;</code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-variables" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Variable Substitution</h3>
+            <p>Pass data in through json context on the CLI or directly via includes and use
+              <code>${ variable }</code> anywhere in the body.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># greet.mg</span>
+<span class="code-meta">---
+name: greet
+description: A simple template that demonstrates variable substitution.
+parameter1: name (string): The name of the person to greet.
+parameter2: project (string): The name of the project or product.
+---</span>
+&lt;&lt; Hello, <span class="code-var">${ name }</span>! &gt;&gt;
+&lt;&lt; You are using <span class="code-var">${ project }</span>. &gt;&gt;</code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-conditionals" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Conditionals</h3>
+            <p>
+              Use <code>if var == value:</code> / <code>else:</code> to include or exclude sections based on context.
+            </p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># access.mg</span>
+<span class="code-meta">---
+parameters: level (string): Access level of the user, e.g. "admin" or "user".
+---</span>
+&lt;&lt; Access level: <span class="code-var">${ level }</span> &gt;&gt;
+<span class="code-keyword">if</span> level == <span class="code-string">"admin"</span>:
+  &lt;&lt; You have full access. &gt;&gt;
+<span class="code-keyword">else</span>:
+  &lt;&lt; Read-only mode. &gt;&gt;</code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-loops" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Loops</h3>
+            <p>Iterate over a list in the context with <code>for item in list:</code>. Each iteration renders the
+              indented block — ideal for enumerating examples or steps.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># tasks.mg</span>
+<span class="code-meta">---
+description: A template that demonstrates looping over a list of tasks.
+---</span>
+<< ## My Tasks >>
+<span class="code-keyword">for</span> task <span class="code-keyword">in</span> tasks:
+  &lt;&lt; - <span class="code-var">${ task }</span> &gt;&gt;</code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-includes" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Includes</h3>
+            <p>Define reusable fragments in their own files and pull them into any template.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># components/greeting.mg</span>
+<span class="code-meta">---
+description: A simple greeting component that can be included in other templates.
+parameters: user (string): The name of the person to greet. (metadata is not required but good practice!)
+---</span>
+&lt;&lt; Hello, <span class="code-var">${ user }</span>! &gt;&gt;
+
+<span class="code-comment"># report.mg</span>
+<span class="code-meta">---
+description: A report template that includes a greeting component.
+---</span>
+<span class="code-var">[[ components/greeting.mg user="Batman" ]]</span>
+            </code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-cli" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>CLI Tools</h3>
+            <p>Render templates or extract metadata straight from the terminal. Supply context via a JSON file or let
+              the template use its built-in defaults.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># render to stdout</span>
+margarita render greet.mg
+
+<span class="code-comment"># supply an external context file</span>
+margarita render greet.mg \
+  --context ctx.json
+
+<span class="code-comment"># extract template metadata</span>
+margarita metadata report.mg</code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-python" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Python API</h3>
+            <p>Import Margarita directly into Python for agentic loop patterns — render templates, inject dynamic
+              context, and pipe the output straight into your LLM calls.</p>
+          </div>
+          <pre class="fpanel-code">
+<code><span class="code-keyword">from</span> margarita.parser <span class="code-keyword">import</span> Parser
+<span class="code-keyword">from</span> margarita.renderer <span class="code-keyword">import</span> Renderer
+
+metadata, nodes = Parser().parse(template)
+renderer = Renderer(context={
+    "task": "Summarize the key points",
+    "context": "User is researching AI agents"
+})
+
+prompt = renderer.render(nodes)</code>
+          </pre>
+        </div>
+
+      </div><!-- /.feature-panels -->
+
+    </div><!-- /.feature-explorer -->
+  </div>
+</section>
+
+<!-- Lime -->
+<section class="lime-section" id="lime">
+  <div class="container">
+    <div class="lime-intro">
+      <div class="lime-badge">Ecosystem</div>
+      <h2 class="section-heading">Meet <span class="lime-accent">Lime</span></h2>
+      <p class="section-sub">
+        Lime is an agent programming framework built directly on top of Margarita. It extends <code class="code-var">.mgx</code>
+        files
+        with full agentic capabilities — giving you surgical control over the context, tools, and state sent to your
+        LLM.
+      </p>
+      <a href="https://www.banyango.com/Lime/latest/" class="btn btn-lime" target="_blank" rel="noopener noreferrer">Explore
+        Lime Docs</a>
+    </div>
+
+    <div class="feature-explorer">
+
+      <div class="feature-tab-list" role="tablist" aria-label="Lime feature examples">
+
+        <button class="feature-tab is-active" role="tab" aria-selected="true"
+                aria-controls="panel-lime-run" data-panel="lime-run">
+          <span class="ftab-icon">&#9654;</span>
+          <span class="ftab-text">
+            <span class="ftab-name">Run Agent</span>
+            <span class="ftab-desc">Execute the agent</span>
+          </span>
+        </button>
+
+        <button class="feature-tab" role="tab" aria-selected="false"
+                aria-controls="panel-lime-func" data-panel="lime-func">
+          <span class="ftab-icon">fn</span>
+          <span class="ftab-text">
+            <span class="ftab-name">Local Functions</span>
+            <span class="ftab-desc">Run Python locally</span>
+          </span>
+        </button>
+
+        <button class="feature-tab" role="tab" aria-selected="false"
+                aria-controls="panel-lime-tools" data-panel="lime-tools">
+          <span class="ftab-icon">[]</span>
+          <span class="ftab-text">
+            <span class="ftab-name">Dynamic Tools</span>
+            <span class="ftab-desc">Call tool methods</span>
+          </span>
+        </button>
+
+        <button class="feature-tab" role="tab" aria-selected="false"
+                aria-controls="panel-lime-context" data-panel="lime-context">
+          <span class="ftab-icon">ctx</span>
+          <span class="ftab-text">
+            <span class="ftab-name">Context Control</span>
+            <span class="ftab-desc">Prevent context bloat</span>
+          </span>
+        </button>
+
+        <button class="feature-tab" role="tab" aria-selected="false"
+                aria-controls="panel-lime-state" data-panel="lime-state">
+          <span class="ftab-icon">~</span>
+          <span class="ftab-text">
+            <span class="ftab-name">State</span>
+            <span class="ftab-desc">Persistent variables</span>
+          </span>
+        </button>
+
+      </div><!-- /.feature-tab-list -->
+
+      <div class="feature-panels">
+
+        <div class="feature-panel is-active" id="panel-lime-run" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Run Agent</h3>
+            <p>Use <code>@effect run</code> to execute the agent at any point in your <code>.mgx</code> file. Margarita
+              renders all accumulated
+              <code>&lt;&lt; &gt;&gt;</code> blocks into the prompt before the agent is called.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># assistant.mgx</span>
+<span class="code-meta">---
+description: A simple Lime agent that answers a question.
+---</span>
+<span class="code-comment">// All statements are sequential</span>
+
+<span class="code-comment">// 1. Add this to the context</span>
+&lt;&lt; You are a helpful assistant. What is the answer to life the universe and everything? &gt;&gt;
+
+<span class="code-comment">// 2. Run the agent</span>
+<span class="code-keyword">@effect run</span></code>
+
+<span class="code-comment">// 3. Add more to the context</span>
+&lt;&lt; You need to think harder this time? &gt;&gt;
+
+<span class="code-comment">// 4. Run the agent again!</span>
+<span class="code-keyword">@effect run</span></code>
+</pre></div>
+<div class="feature-panel" id="panel-lime-func" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Local Functions</h3>
+            <p>Use <code>@effect func</code> to run a local Python function and store the return value in state — no LLM
+              round-trip, no tokens consumed.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># processor.mgx</span>
+<span class="code-meta">---
+description: Call a Python function and store the result into state vars.
+---</span>
+<span class="code-keyword">import</span> summarize <span class="code-keyword">from</span> module
+
+<span class="code-comment">// Run the summarize function and store into summary var</span>
+<span class="code-keyword">@effect func</span> summarize(<span class="code-var">"A really long text input"</span>) <span
+              class="code-keyword">=></span> summary
+
+<span class="code-comment">// Summary was stored into state vars so we can use it here!</span>
+&lt;&lt; Write a poem about the summary: <span class="code-var">${ summary }</span> &gt;&gt;
+
+<span class="code-keyword">@effect run</span></code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-lime-tools" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Dynamic Tools</h3>
+            <p>Use <code>@effect tools</code> to call a tool method directly from your <code>.mgx</code> file. The
+              result is stored in state and
+              available to the rest of the template. Use <code>@effect tools clear</code> to reset tool state.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># analyst.mgx</span>
+<span class="code-meta">---
+description: Fetch data with a tool, then pass it to the agent.
+---</span>
+<span class="code-keyword">import</span> fetch <span class="code-keyword">from</span> module
+
+<span class="code-comment">// This registers your fetch Python function with the agent's tools.</span>
+<span class="code-keyword">@effect tools</span> fetch(url: str) <span class="code-keyword">=></span> data
+
+&lt;&lt; You are a helpful assistant. You can fetch data from urls if you need... &gt;&gt;
+
+<span class="code-keyword">@effect run</span>
+<span class="code-keyword">@effect tools clear</span>
+
+<span class="code-comment">// Tools are cleared so no context is wasted on that tool.</span>
+&lt;&lt; Write a summary... &gt;&gt;
+<span class="code-keyword">@effect run</span>
+          </code></pre>
+
+        </div>
+
+        <div class="feature-panel" id="panel-lime-context" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Context Control</h3>
+            <p>Use <code>@effect context clear</code> to reset the accumulated context between agent calls. Keeps each
+              step focused and prevents context from
+              ballooning across a multi-step workflow.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># multi-step.mgx</span>
+<span class="code-meta">---
+description: Two focused agent calls with a clean context boundary.
+---</span>
+&lt;&lt; You are a code reviewer. &gt;&gt;
+&lt;&lt; Review: <span class="code-var">${ code }</span> &gt;&gt;
+
+<span class="code-keyword">@effect run</span>
+<span class="code-keyword">@effect context clear</span>
+
+&lt;&lt; You are a documentation writer. &gt;&gt;
+&lt;&lt; Write docs for: <span class="code-var">${ code }</span> &gt;&gt;
+
+<span class="code-keyword">@effect run</span></code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-lime-state" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>State</h3>
+            <p>Values stored by <code>@effect func</code> and <code>@effect tools</code> persist for the lifetime of
+              the run — templates and the agent can read from state at any point.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># stateful.mgx</span>
+<span class="code-meta">---
+description: Show how the agent state works.
+---</span>
+<span class="code-keyword">@state</span> count = 5
+<span class="code-keyword">@state</span> user = "Batman"
+
+&lt;&lt;
+The agent can get/set state variables using markdown.
+
+Update the count variable to 10 and print out the user variable.
+&gt;&gt;
+
+<span class="code-keyword">@effect run</span></code></pre>
+        </div>
+
+      </div><!-- /.feature-panels -->
+
+    </div><!-- /.feature-explorer -->
+  </div>
+</section>
+
+<!-- Salt -->
+<section class="salt-section" id="salt">
+  <div class="container">
+    <div class="salt-intro">
+      <div class="salt-badge">Coming Soon</div>
+      <h2 class="section-heading">Meet <span class="salt-accent">Salt</span></h2>
+      <p class="section-sub">
+        Salt is a package manager for prompts. Install reusable prompt packages from a shared registry, lock every
+        file to a verified hash, and protect your pipelines against prompt injection before they can do any damage.
+      </p>
+    </div>
+
+    <div class="salt-highlights">
+
+      <div class="salt-highlight">
+        <div class="salt-highlight-icon">&#128230;</div>
+        <div class="salt-highlight-body">
+          <h3>Package Registry</h3>
+          <p>Install prompt packages from the Salt registry with a single command — just like npm for your LLM
+            pipelines. Share and version your own packages for the whole team.</p>
+        </div>
+      </div>
+
+      <div class="salt-highlight">
+        <div class="salt-highlight-icon">&#128274;</div>
+        <div class="salt-highlight-body">
+          <h3>Lock Files</h3>
+          <p>Pin the exact content hash of every installed prompt. A <code>salt.lock</code> file guarantees
+            reproducible builds — the same template, every time, on every machine.</p>
+        </div>
+      </div>
+
+      <div class="salt-highlight">
+        <div class="salt-highlight-icon">&#128737;</div>
+        <div class="salt-highlight-body">
+          <h3>Injection Protection</h3>
+          <p>Hash verification catches tampered templates before they reach your LLM. Any deviation from the locked
+            hash fails fast — keeping malicious prompt injections out of your pipeline.</p>
+        </div>
+      </div>
+
+      <div class="salt-highlight">
+        <div class="salt-highlight-icon">&#9881;</div>
+        <div class="salt-highlight-body">
+          <h3>Built on Margarita</h3>
+          <p>Salt packages are plain <code>.mg</code> and <code>.mgx</code> files — fully compatible with Margarita
+            and Lime from day one. No new format to learn.</p>
+        </div>
+      </div>
+
+      <div class="salt-highlight">
+        <div class="salt-highlight-icon">&#128279;</div>
+        <div class="salt-highlight-body">
+          <h3>Link Hashing</h3>
+          <p>Any link inside a <code>&lt;&lt; &gt;&gt;</code> block is safely fetched at package time and hashed.
+            If the page changes during execution, Salt notifies you — so stale or tampered external context never silently poisons your
+            context.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Documentation Links -->
+<section class="docs-section" id="docs">
+  <div class="container">
+    <h2 class="section-heading">Ready to dive in?</h2>
+    <p class="section-sub">Explore the full documentation for both Margarita and Lime, or jump straight to the source on
+      GitHub.</p>
+
+    <div class="docs-grid">
+      <a href="https://www.banyango.com/margarita/latest/" class="docs-card" target="_blank" rel="noopener noreferrer">
+        <div class="docs-card-icon docs-card-icon--margarita">M</div>
+        <h3>Margarita Docs</h3>
+        <p>Language reference, CLI guide, Python API, and examples for building templates.</p>
+        <span class="docs-card-link">Read the docs &rarr;</span>
+      </a>
+
+      <a href="https://www.banyango.com/Lime/latest/" class="docs-card" target="_blank" rel="noopener noreferrer">
+        <div class="docs-card-icon docs-card-icon--lime">L</div>
+        <h3>Lime Docs</h3>
+        <p>Agent programming guide, effects, state management, tool configuration, and more.</p>
+        <span class="docs-card-link">Read the docs &rarr;</span>
+      </a>
+
+      <a href="https://github.com/banyango/margarita" class="docs-card" target="_blank" rel="noopener noreferrer">
+        <div class="docs-card-icon docs-card-icon--github">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28" aria-hidden="true">
+            <path
+              d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+        </div>
+        <h3>GitHub</h3>
+        <p>Browse the source, open issues, contribute, and follow the latest releases.</p>
+        <span class="docs-card-link">View on GitHub &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="lime.svg" alt="Lime" class="footer-logo-img">
+        <span class="footer-brand-name">Margarita</span>
+      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="https://www.banyango.com/margarita/latest/" target="_blank" rel="noopener noreferrer">Margarita
+          Docs</a>
+        <a href="https://www.banyango.com/Lime/latest/" target="_blank" rel="noopener noreferrer">Lime Docs</a>
+        <a href="https://github.com/banyango/margarita" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+      <p class="footer-copy">&copy; 2026 Banyango. MIT License. Logo courtesy Freepik</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+
+</html>
