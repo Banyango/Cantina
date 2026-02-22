@@ -18,6 +18,7 @@ module.exports = merge(common, {
         { from: 'img/icon.png', to: 'icon.png' },
         { from: 'robots.txt', to: 'robots.txt' },
         { from: '404.html', to: '404.html' },
+        { from: 'agents-md.html', to: 'agents-md.html' },
         { from: 'site.webmanifest', to: 'site.webmanifest' },
       ],
     }),

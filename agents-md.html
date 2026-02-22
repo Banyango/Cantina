@@ -1,0 +1,440 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>One AGENTS.md, Every Model – Cantina</title>
+  <meta name="description"
+        content="Learn how to use a single Margarita template to generate perfectly tailored AGENTS.md files for Claude, Gemini, and any other AI coding assistant.">
+
+  <meta property="og:title" content="One AGENTS.md, Every Model – Cantina">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="icon.png">
+  <meta property="og:description"
+        content="Write your agent instructions once. Margarita renders the right file for Claude, Gemini, or any model — no duplication, no drift.">
+
+  <link rel="icon" href="/img/favicon.ico" sizes="any">
+  <link rel="icon" href="/img/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#16A34A">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Cantina home">
+      <img src="img/lime.svg" alt="Cantina" class="nav-logo-img">
+      <span class="nav-logo-text">Cantina</span>
+    </a>
+
+    <button class="nav-hamburger" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false"
+            aria-controls="nav-links">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <ul class="nav-links" id="nav-links" role="list">
+      <li><a href="index.html#features">Margarita</a></li>
+      <li><a href="index.html#lime">Lime</a></li>
+      <li><a href="index.html#salt">Salt</a></li>
+      <li><a href="index.html#docs">Docs</a></li>
+      <li><a href="agents-md.html" class="nav-link-active">Guides</a></li>
+      <li>
+        <a href="https://github.com/banyango/margarita" class="nav-cta" target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-lime-bg hero-lime-bg-1" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-lime-img"></div>
+  <div class="hero-lime-bg hero-lime-bg-2" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-lime-img"></div>
+  <div class="hero-lime-bg hero-lime-bg-3" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-lime-img"></div>
+  <div class="container">
+    <p class="hero-eyebrow">Guide</p>
+    <h1 class="hero-heading">
+      One <span class="hero-accent">AGENTS.md</span>,<br>Every Model
+    </h1>
+    <p class="hero-sub">
+      Use a single Margarita template to generate perfectly tailored agent instructions
+      for Claude, Gemini, or any AI assistant — no copy-paste, no drift.
+    </p>
+    <div class="tut-model-chips">
+      <span class="tut-chip tut-chip--claude">Claude</span>
+      <span class="tut-chip tut-chip--plus">+</span>
+      <span class="tut-chip tut-chip--gemini">Gemini</span>
+    </div>
+  </div>
+</section>
+
+<!-- The Problem -->
+<section class="tut-section tut-section--light">
+  <div class="container">
+    <div class="tut-intro">
+      <div class="lime-badge">The Problem</div>
+      <h2 class="section-heading">Your models read different playbooks</h2>
+      <p class="section-sub">
+        Claude reads <code>CLAUDE.md</code>. Gemini reads <code>AGENTS.md</code>.
+        Each model has its own tool names, quirks, and preferred patterns.
+        Maintaining separate files means they inevitably drift — and your agents start making subtly different mistakes.
+      </p>
+    </div>
+    <div class="tut-pain-cards">
+      <div class="tut-pain-card">
+        <div class="tut-pain-icon">&#128260;</div>
+        <h3>Copy-paste drift</h3>
+        <p>Shared rules live in two files. One gets updated, the other doesn't. Your models quietly receive contradictory instructions.</p>
+      </div>
+      <div class="tut-pain-card">
+        <div class="tut-pain-icon">&#128269;</div>
+        <h3>Review overhead</h3>
+        <p>Every PR touching agent instructions means checking two files for consistency. Easy to miss, painful to catch in production.</p>
+      </div>
+      <div class="tut-pain-card">
+        <div class="tut-pain-icon">&#9889;</div>
+        <h3>Scales poorly</h3>
+        <p>Add a third model and you're maintaining three files. The problem compounds with every new assistant you adopt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Solution banner -->
+<section class="tut-section tut-section--dark">
+  <div class="container tut-solution-banner">
+    <div class="lime-badge">The Solution</div>
+    <h2 class="section-heading tut-dark-heading">One template, rendered per model</h2>
+    <p class="section-sub tut-dark-sub">
+      Write your shared project rules once. Use Margarita's <code class="tut-inline-code">if</code> blocks to branch
+      into model-specific sections. Render to <code class="tut-inline-code">CLAUDE.md</code> for Claude and
+      <code class="tut-inline-code">AGENTS.md</code> for Gemini. The common rules stay in sync automatically.
+    </p>
+  </div>
+</section>
+
+<!-- Step 1: The Template -->
+<section class="tut-section tut-section--surface" id="step-1">
+  <div class="container">
+    <div class="tut-step">
+      <div class="tut-step-label">
+        <span class="tut-step-number">1</span>
+        <div>
+          <div class="tut-step-title">Write the template</div>
+          <div class="tut-step-desc">
+            Create a single <code>agents.mg</code> file. Shared project rules go in the main body. Use
+            Margarita's <code>if</code> blocks to add model-specific sections that are only rendered
+            when that model is targeted.
+          </div>
+        </div>
+      </div>
+      <div class="tut-code-card">
+        <div class="tut-code-filename">agents.mg</div>
+        <pre class="fpanel-code"><code><span class="code-comment"># agents.mg</span>
+<span class="code-meta">---
+description: Universal agent instructions that adapt to Claude or Gemini.
+parameters: model (string): Target model — "claude" or "gemini".
+---</span>
+
+<span class="code-comment"># Shared rules — always rendered for every model</span>
+&lt;&lt; # Cantina – Agent Guide &gt;&gt;
+
+&lt;&lt;
+## Project Overview
+This repo contains three packages: Margarita (templating),
+Lime (agentic workflows), and Salt (package manager).
+All packages live under `packages/`.
+&gt;&gt;
+
+&lt;&lt;
+## Repository Layout
+```
+packages/
+  margarita/   core templating engine (Python)
+  lime/        agentic .mgx runner
+  salt/        package manager and registry client
+docs/          shared documentation source
+```
+&gt;&gt;
+
+&lt;&lt;
+## Running Tests
+```bash
+pip install -e packages/margarita[dev]
+pytest packages/
+```
+&gt;&gt;
+
+<span class="code-comment"># Model-specific sections — only one block is ever rendered</span>
+<span class="code-keyword">if</span> model == <span class="code-string">"claude"</span>:
+  &lt;&lt;
+  ## Working with Claude Code
+  - Use **TodoWrite** to track multi-step tasks before starting.
+  - Always **Read** a file before editing it — never modify blindly.
+  - Prefer small, focused edits; avoid rewriting files wholesale.
+  - After changes to `margarita/`, run `pytest` and confirm it passes.
+  - Commit messages: Conventional Commits (`feat:`, `fix:`, `chore:`).
+  &gt;&gt;
+
+<span class="code-keyword">if</span> model == <span class="code-string">"gemini"</span>:
+  &lt;&lt;
+  ## Working with Gemini
+  - Use `@google_search` to verify library versions or APIs before use.
+  - Prefer concise responses with fenced code blocks over long prose.
+  - After changes to `margarita/`, run `pytest packages/` to confirm.
+  - Commit messages: Conventional Commits (`feat:`, `fix:`, `chore:`).
+  &gt;&gt;
+
+<span class="code-comment"># Shared code style — always rendered for every model</span>
+&lt;&lt;
+## Code Style
+- Python 3.11+, type hints on all public functions.
+- Black formatter, line length 88.
+- Every public function needs a docstring.
+&gt;&gt;</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Step 2: Render -->
+<section class="tut-section tut-section--light" id="step-2">
+  <div class="container">
+    <div class="tut-step">
+      <div class="tut-step-label">
+        <span class="tut-step-number">2</span>
+        <div>
+          <div class="tut-step-title">Render for each model</div>
+          <div class="tut-step-desc">
+            Pass the <code>model</code> variable via the <code>--context</code> flag and pipe the output straight into
+            the right file. Drop this into a <code>Makefile</code> or CI step and your agent
+            instructions stay fresh on every commit.
+          </div>
+        </div>
+      </div>
+      <div class="tut-render-grid">
+        <div class="tut-render-card tut-render-card--claude">
+          <div class="tut-render-card-header">
+            <span class="tut-model-badge tut-model-badge--claude">Claude</span>
+            <span class="tut-render-target">&#8594; CLAUDE.md</span>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># Render instructions for Claude Code</span>
+margarita render agents.mg \
+  --context '{"model": "claude"}' \
+  &gt; CLAUDE.md</code></pre>
+        </div>
+        <div class="tut-render-card tut-render-card--gemini">
+          <div class="tut-render-card-header">
+            <span class="tut-model-badge tut-model-badge--gemini">Gemini</span>
+            <span class="tut-render-target">&#8594; AGENTS.md</span>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># Render instructions for Gemini</span>
+margarita render agents.mg \
+  --context '{"model": "gemini"}' \
+  &gt; AGENTS.md</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Step 3: Output Comparison -->
+<section class="tut-section tut-section--surface" id="step-3">
+  <div class="container">
+    <div class="tut-step">
+      <div class="tut-step-label">
+        <span class="tut-step-number">3</span>
+        <div>
+          <div class="tut-step-title">See what each model receives</div>
+          <div class="tut-step-desc">
+            Both files share the same project overview, layout, test commands, and code style rules.
+            Only the model-specific working section differs — everything else stays perfectly in sync.
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-explorer tut-explorer">
+        <div class="feature-tab-list" role="tablist" aria-label="Model output comparison">
+
+          <button class="feature-tab is-active" role="tab" aria-selected="true"
+                  aria-controls="panel-out-claude" data-panel="out-claude">
+            <span class="ftab-icon tut-ftab-icon tut-ftab-icon--claude">C</span>
+            <span class="ftab-text">
+              <span class="ftab-name">CLAUDE.md</span>
+              <span class="ftab-desc">What Claude Code reads</span>
+            </span>
+          </button>
+
+          <button class="feature-tab" role="tab" aria-selected="false"
+                  aria-controls="panel-out-gemini" data-panel="out-gemini">
+            <span class="ftab-icon tut-ftab-icon tut-ftab-icon--gemini">G</span>
+            <span class="ftab-text">
+              <span class="ftab-name">AGENTS.md</span>
+              <span class="ftab-desc">What Gemini reads</span>
+            </span>
+          </button>
+
+        </div>
+
+        <div class="feature-panels">
+
+          <div class="feature-panel is-active" id="panel-out-claude" role="tabpanel">
+            <div class="fpanel-header">
+              <h3>CLAUDE.md</h3>
+              <p>Rendered with <code>model = "claude"</code>. The Gemini section is omitted entirely — Claude only sees what's relevant to it.</p>
+            </div>
+            <pre class="fpanel-code"><code><span class="code-keyword"># Cantina – Agent Guide</span>
+
+<span class="code-keyword">## Project Overview</span>
+This repo contains three packages: Margarita (templating),
+Lime (agentic workflows), and Salt (package manager).
+All packages live under `packages/`.
+
+<span class="code-keyword">## Repository Layout</span>
+```
+packages/
+  margarita/   core templating engine (Python)
+  lime/        agentic .mgx runner
+  salt/        package manager and registry client
+docs/          shared documentation source
+```
+
+<span class="code-keyword">## Running Tests</span>
+```bash
+pip install -e packages/margarita[dev]
+pytest packages/
+```
+
+<span class="code-keyword">## Working with Claude Code</span>          <span class="tut-highlight-line">&#x25C4; model-specific</span>
+- Use **TodoWrite** to track multi-step tasks before starting.
+- Always **Read** a file before editing it — never modify blindly.
+- Prefer small, focused edits; avoid rewriting files wholesale.
+- After changes to `margarita/`, run `pytest` and confirm it passes.
+- Commit messages: Conventional Commits (`feat:`, `fix:`, `chore:`).
+
+<span class="code-keyword">## Code Style</span>
+- Python 3.11+, type hints on all public functions.
+- Black formatter, line length 88.
+- Every public function needs a docstring.</code></pre>
+          </div>
+
+          <div class="feature-panel" id="panel-out-gemini" role="tabpanel">
+            <div class="fpanel-header">
+              <h3>AGENTS.md</h3>
+              <p>Rendered with <code>model = "gemini"</code>. The Claude section is omitted entirely — Gemini only sees what's relevant to it.</p>
+            </div>
+            <pre class="fpanel-code"><code><span class="code-keyword"># Cantina – Agent Guide</span>
+
+<span class="code-keyword">## Project Overview</span>
+This repo contains three packages: Margarita (templating),
+Lime (agentic workflows), and Salt (package manager).
+All packages live under `packages/`.
+
+<span class="code-keyword">## Repository Layout</span>
+```
+packages/
+  margarita/   core templating engine (Python)
+  lime/        agentic .mgx runner
+  salt/        package manager and registry client
+docs/          shared documentation source
+```
+
+<span class="code-keyword">## Running Tests</span>
+```bash
+pip install -e packages/margarita[dev]
+pytest packages/
+```
+
+<span class="code-keyword">## Working with Gemini</span>             <span class="tut-highlight-line">&#x25C4; model-specific</span>
+- Use `@google_search` to verify library versions or APIs before use.
+- Prefer concise responses with fenced code blocks over long prose.
+- After changes to `margarita/`, run `pytest packages/` to confirm.
+- Commit messages: Conventional Commits (`feat:`, `fix:`, `chore:`).
+
+<span class="code-keyword">## Code Style</span>
+- Python 3.11+, type hints on all public functions.
+- Black formatter, line length 88.
+- Every public function needs a docstring.</code></pre>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Key Insight -->
+<section class="tut-section tut-section--light">
+  <div class="container">
+    <div class="tut-insight-grid">
+      <div class="tut-insight-card">
+        <div class="tut-insight-icon">&#128257;</div>
+        <h3>Single source of truth</h3>
+        <p>Shared rules — project layout, test commands, code style — live in one place. Update once and both model files stay in sync.</p>
+      </div>
+      <div class="tut-insight-card">
+        <div class="tut-insight-icon">&#128296;</div>
+        <h3>Model-aware branching</h3>
+        <p>Use Margarita's <code>if</code> blocks to tailor tool names, behavioral hints, and search instructions to each model's capabilities.</p>
+      </div>
+      <div class="tut-insight-card">
+        <div class="tut-insight-icon">&#128640;</div>
+        <h3>CI-friendly</h3>
+        <p>Drop the render commands into a <code>Makefile</code> target or CI step. Generated files are committed, so models always have fresh instructions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="tut-section tut-section--cta">
+  <div class="container tut-cta">
+    <h2 class="section-heading tut-dark-heading">Ready to unify your agent instructions?</h2>
+    <p class="section-sub tut-dark-sub">
+      Margarita handles the branching. You write the rules once.
+    </p>
+    <div class="hero-actions">
+      <a href="https://www.banyango.com/margarita/latest/" class="btn btn-primary" target="_blank"
+         rel="noopener noreferrer">Read the Margarita Docs</a>
+      <a href="index.html" class="btn btn-ghost">Back to Cantina</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="img/lime.svg" alt="Cantina" class="footer-logo-img">
+        <span class="footer-brand-name">Cantina</span>
+      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="https://www.banyango.com/margarita/latest/" target="_blank" rel="noopener noreferrer">Margarita Docs</a>
+        <a href="https://www.banyango.com/Lime/latest/" target="_blank" rel="noopener noreferrer">Lime Docs</a>
+        <a href="https://github.com/banyango/margarita" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+      <p class="footer-copy">&copy; 2026 Banyango. MIT License. Logo courtesy Freepik</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+
+</html>

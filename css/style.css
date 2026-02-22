@@ -1346,6 +1346,356 @@ code {
   }
 }
 
+/* ------------------------------------------------------------------
+   Tutorial Pages
+   ------------------------------------------------------------------ */
+
+/* Active nav link */
+.nav-link-active {
+  color: var(--color-accent) !important;
+}
+
+/* Section scaffolding */
+.tut-section {
+  padding: 5rem 0;
+}
+
+.tut-section--light   { background: var(--color-surface); }
+.tut-section--surface { background: var(--color-surface-2); }
+.tut-section--dark    { background: var(--color-dark); }
+
+.tut-section--cta {
+  background: var(--color-primary-dark);
+}
+
+.tut-dark-heading {
+  color: #fff !important;
+}
+
+.tut-dark-sub {
+  color: rgba(255, 255, 255, 0.65) !important;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.tut-inline-code {
+  font-family: var(--font-mono);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-accent);
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+  font-size: 0.875em;
+}
+
+/* Intro block */
+.tut-intro {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.tut-solution-banner {
+  text-align: center;
+}
+
+.tut-cta {
+  text-align: center;
+}
+
+/* Model chips in hero */
+.tut-model-chips {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.tut-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border: 2px solid transparent;
+}
+
+.tut-chip--claude {
+  background: rgba(124, 58, 237, 0.15);
+  color: #C4B5FD;
+  border-color: rgba(124, 58, 237, 0.35);
+}
+
+.tut-chip--gemini {
+  background: rgba(66, 133, 244, 0.15);
+  color: #93C5FD;
+  border-color: rgba(66, 133, 244, 0.35);
+}
+
+.tut-chip--plus {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1.1rem;
+  padding: 0;
+}
+
+/* Pain cards */
+.tut-pain-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.tut-pain-card {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+}
+
+.tut-pain-icon {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+
+.tut-pain-card h3 {
+  font-size: 1rem;
+  color: var(--color-dark);
+  margin-bottom: 0.5rem;
+}
+
+.tut-pain-card p {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0;
+  line-height: 1.6;
+}
+
+/* Step layout */
+.tut-step {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.tut-step-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.tut-step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.tut-step-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-dark);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.tut-step-desc {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+.tut-step-desc code {
+  font-size: 0.875em;
+}
+
+/* Code card (step 1 template) */
+.tut-code-card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-code-bg);
+}
+
+.tut-code-filename {
+  padding: 0.6rem 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* Render grid (step 2) */
+.tut-render-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.tut-render-card {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-code-bg);
+}
+
+.tut-render-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.tut-model-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 0.2rem 0.75rem;
+}
+
+.tut-model-badge--claude {
+  background: rgba(124, 58, 237, 0.2);
+  color: #C4B5FD;
+  border: 1px solid rgba(124, 58, 237, 0.4);
+}
+
+.tut-model-badge--gemini {
+  background: rgba(66, 133, 244, 0.2);
+  color: #93C5FD;
+  border: 1px solid rgba(66, 133, 244, 0.4);
+}
+
+.tut-render-target {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.04em;
+}
+
+.tut-render-card .fpanel-code {
+  font-size: 0.8rem;
+}
+
+/* Output comparison tab icons */
+.tut-ftab-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  color: #fff !important;
+}
+
+.tut-ftab-icon--claude {
+  background: #7C3AED;
+}
+
+.tut-ftab-icon--gemini {
+  background: #4285F4;
+}
+
+/* Highlighted annotation inside code output */
+.tut-highlight-line {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-accent);
+  opacity: 0.75;
+  margin-left: 1rem;
+}
+
+/* Feature explorer on light background */
+.tut-explorer {
+  border-color: var(--color-border);
+}
+
+/* Insight cards (below output comparison) */
+.tut-insight-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.tut-insight-card {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+}
+
+.tut-insight-icon {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+
+.tut-insight-card h3 {
+  font-size: 1rem;
+  color: var(--color-dark);
+  margin-bottom: 0.5rem;
+}
+
+.tut-insight-card p {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0;
+  line-height: 1.6;
+}
+
+.tut-insight-card code {
+  font-size: 0.875em;
+}
+
+/* Tutorial responsive */
+@media (max-width: 768px) {
+  .tut-section {
+    padding: 3rem 0;
+  }
+
+  .tut-pain-cards,
+  .tut-insight-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tut-render-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tut-step-label {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .tut-pain-cards,
+  .tut-insight-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */

@@ -1,0 +1,59 @@
+---
+description: Build a custom Ralph wiggum loop
+---
+from tasks import set_to_in_development, set_to_completed
+
+@state refinedFeature = ""
+
+// Add the product refiner
+[[ product-refiner.mg input="Your feature that your want to develop"]]
+
+<<
+Store the refined feature in the `refinedFeature` state variable
+>>
+
+@effect run
+@effect context clear
+
+@state tasks = []
+
+[[ use-case-task-breakdown.mg input=refinedFeature ]]
+
+<<
+Create a list to store the task breakdown. Each task should have the following structure:
+{
+    "task": "The refined feature description",
+    "acceptanceCriteria": "The acceptance criteria for the task",
+    "status": "The current status of the feature (e.g., 'in development', 'completed', 'needs review')"
+}
+
+Store the list of tasks in the `tasks` state variable.
+>>
+
+@effect context clear
+for task in tasks:
+    @effect func set_to_in_development(task)
+
+    // max iterations 5
+    for i in range(5):
+      @state isDone = false
+      <<
+      Check the current state of the project and attempt to implement ${task}
+      >>
+      @effect run
+
+      <<
+      Check the acceptance criteria ${task.acceptanceCriteria} and set `isDone` to true if the criteria are met, otherwise set it to false
+      >>
+      @effect run
+
+      if isDone:
+          @effect func set_to_completed(task)
+          break
+
+@effect context clear
+
+<<
+Write out a summary md file of the list of `tasks`
+>>
+@effect run
