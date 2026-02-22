@@ -183,21 +183,51 @@ pytest packages/
 <span class="code-comment"># Model-specific sections — only one block is ever rendered</span>
 <span class="code-keyword">if</span> model == <span class="code-string">"claude"</span>:
   &lt;&lt;
-  ## Working with Claude Code
-  - Use **TodoWrite** to track multi-step tasks before starting.
-  - Always **Read** a file before editing it — never modify blindly.
-  - Prefer small, focused edits; avoid rewriting files wholesale.
-  - After changes to `margarita/`, run `pytest` and confirm it passes.
-  - Commit messages: Conventional Commits (`feat:`, `fix:`, `chore:`).
+  ## Claude Code – Tools &amp; Workflow
+
+  ### File Operations
+  Use the purpose-built tools for every file operation — never shell
+  out for things the tools handle directly:
+  - **Read** before touching any file. No exceptions.
+  - **Edit** for targeted changes; **Write** only for new files.
+  - **Glob** / **Grep** to locate files — never `find` via Bash.
+  - **Bash** for test runs, git commands, and build steps only.
+
+  ### Task Management
+  For any task with more than two steps, start with **TodoWrite**.
+  Mark each item `in_progress` before starting and `completed` when
+  done. Keep the list current throughout the session.
+
+  ### Guardrails
+  - Make the smallest change that solves the problem. Do not clean up
+    surrounding code that wasn't part of the request.
+  - Never commit unless explicitly asked. Never use `--no-verify`.
+  - If a pre-commit hook fails, fix the root cause — don't bypass it.
+  - After touching `margarita/`, run `pytest packages/margarita` and
+    confirm the suite passes before calling the task done.
   &gt;&gt;
 
 <span class="code-keyword">if</span> model == <span class="code-string">"gemini"</span>:
   &lt;&lt;
-  ## Working with Gemini
-  - Use `@google_search` to verify library versions or APIs before use.
-  - Prefer concise responses with fenced code blocks over long prose.
-  - After changes to `margarita/`, run `pytest packages/` to confirm.
-  - Commit messages: Conventional Commits (`feat:`, `fix:`, `chore:`).
+  ## Gemini – Grounding &amp; Response Style
+
+  ### Search Before You Assume
+  Before using any third-party library, API endpoint, or version
+  number, call `@google_search` to verify it is current. Do not
+  rely on training-data knowledge for fast-moving dependencies.
+  If search returns conflicting results, surface them — don't pick one.
+
+  ### Response Format
+  - Lead with code, not explanation. Put prose after the block.
+  - Every code snippet must have an explicit language tag on the fence.
+  - If the task is ambiguous, ask one focused clarifying question
+    rather than making assumptions and proceeding.
+  - Keep answers short. If detail is needed, offer to expand.
+
+  ### Citations
+  When referencing a doc page, RFC, or external resource, include
+  the URL inline so the team can verify. Prefer official documentation
+  over blog posts or Stack Overflow. Flag anything that may be stale.
   &gt;&gt;
 
 <span class="code-comment"># Shared code style — always rendered for every model</span>
@@ -320,12 +350,28 @@ pip install -e packages/margarita[dev]
 pytest packages/
 ```
 
-<span class="code-keyword">## Working with Claude Code</span>          <span class="tut-highlight-line">&#x25C4; model-specific</span>
-- Use **TodoWrite** to track multi-step tasks before starting.
-- Always **Read** a file before editing it — never modify blindly.
-- Prefer small, focused edits; avoid rewriting files wholesale.
-- After changes to `margarita/`, run `pytest` and confirm it passes.
-- Commit messages: Conventional Commits (`feat:`, `fix:`, `chore:`).
+<span class="code-keyword">## Claude Code – Tools &amp; Workflow</span>    <span class="tut-highlight-line">&#x25C4; model-specific</span>
+
+<span class="code-keyword">### File Operations</span>
+Use the purpose-built tools for every file operation — never shell
+out for things the tools handle directly:
+- **Read** before touching any file. No exceptions.
+- **Edit** for targeted changes; **Write** only for new files.
+- **Glob** / **Grep** to locate files — never `find` via Bash.
+- **Bash** for test runs, git commands, and build steps only.
+
+<span class="code-keyword">### Task Management</span>
+For any task with more than two steps, start with **TodoWrite**.
+Mark each item `in_progress` before starting and `completed` when
+done. Keep the list current throughout the session.
+
+<span class="code-keyword">### Guardrails</span>
+- Make the smallest change that solves the problem. Do not clean up
+  surrounding code that wasn't part of the request.
+- Never commit unless explicitly asked. Never use `--no-verify`.
+- If a pre-commit hook fails, fix the root cause — don't bypass it.
+- After touching `margarita/`, run `pytest packages/margarita` and
+  confirm the suite passes before calling the task done.
 
 <span class="code-keyword">## Code Style</span>
 - Python 3.11+, type hints on all public functions.
@@ -360,11 +406,25 @@ pip install -e packages/margarita[dev]
 pytest packages/
 ```
 
-<span class="code-keyword">## Working with Gemini</span>             <span class="tut-highlight-line">&#x25C4; model-specific</span>
-- Use `@google_search` to verify library versions or APIs before use.
-- Prefer concise responses with fenced code blocks over long prose.
-- After changes to `margarita/`, run `pytest packages/` to confirm.
-- Commit messages: Conventional Commits (`feat:`, `fix:`, `chore:`).
+<span class="code-keyword">## Gemini – Grounding &amp; Response Style</span> <span class="tut-highlight-line">&#x25C4; model-specific</span>
+
+<span class="code-keyword">### Search Before You Assume</span>
+Before using any third-party library, API endpoint, or version
+number, call `@google_search` to verify it is current. Do not
+rely on training-data knowledge for fast-moving dependencies.
+If search returns conflicting results, surface them — don't pick one.
+
+<span class="code-keyword">### Response Format</span>
+- Lead with code, not explanation. Put prose after the block.
+- Every code snippet must have an explicit language tag on the fence.
+- If the task is ambiguous, ask one focused clarifying question
+  rather than making assumptions and proceeding.
+- Keep answers short. If detail is needed, offer to expand.
+
+<span class="code-keyword">### Citations</span>
+When referencing a doc page, RFC, or external resource, include
+the URL inline so the team can verify. Prefer official documentation
+over blog posts or Stack Overflow. Flag anything that may be stale.
 
 <span class="code-keyword">## Code Style</span>
 - Python 3.11+, type hints on all public functions.
