@@ -1,0 +1,412 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spend less tokens – Cantina</title>
+  <meta name="description"
+        content="Learn how Lime's @effect func runs Python locally and injects only what the LLM needs — slashing token spend compared to tool calls and MCP calls.">
+
+  <meta property="og:title" content="Spend less tokens – Cantina">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="icon.png">
+  <meta property="og:description"
+        content="@effect func runs Python in your process, stores the result in state, and injects only what the LLM needs. No tool schema, no call-and-response overhead.">
+
+  <link rel="icon" href="/img/favicon.ico" sizes="any">
+  <link rel="icon" href="/img/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#16A34A">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Cantina home">
+      <img src="img/lime.svg" alt="Cantina" class="nav-logo-img">
+      <span class="nav-logo-text">Cantina</span>
+    </a>
+
+    <button class="nav-hamburger" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false"
+            aria-controls="nav-links">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <ul class="nav-links" id="nav-links" role="list">
+      <li><a href="index.html#features">Margarita</a></li>
+      <li><a href="index.html#lime">Lime</a></li>
+      <li><a href="index.html#salt">Salt</a></li>
+      <li><a href="index.html#docs">Docs</a></li>
+      <li><a href="agents-md.html" class="nav-link-active">Guides</a></li>
+      <li>
+        <a href="https://github.com/banyango/margarita" class="nav-cta" target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-lime-bg hero-lime-bg-1" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-lime-img"></div>
+  <div class="hero-lime-bg hero-lime-bg-2" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-lime-img"></div>
+  <div class="hero-lime-bg hero-lime-bg-3" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-lime-img"></div>
+  <div class="container">
+    <p class="hero-eyebrow">Guide</p>
+    <h1 class="hero-heading">
+      Spend <span class="hero-accent">Less</span> Tokens
+    </h1>
+    <p class="hero-sub">
+      Tool calls and MCP calls spend tokens at every step — The schema, an LLM-generated call, storing the full result in context, all burn tokens.
+      Lime's <code style="font-size:1rem;background:rgba(255,255,255,0.15);padding:2px 6px;border-radius:4px;">@effect func</code>
+      runs Python locally and injects only what the LLM actually needs.
+    </p>
+    <div class="tut-model-chips">
+      <span class="tut-chip tut-chip--claude">Lime</span>
+      <span class="tut-chip tut-chip--plus">+</span>
+      <span class="tut-chip tut-chip--gemini">Python</span>
+    </div>
+  </div>
+</section>
+
+<!-- The Problem -->
+<section class="tut-section tut-section--light">
+  <div class="container">
+    <div class="tut-intro">
+      <div class="lime-badge">The Problem</div>
+      <h2 class="section-heading">Tool calls cost tokens twice</h2>
+      <p class="section-sub">
+        When the LLM fetches data through a tool or MCP call, every part of that exchange burns tokens
+        — the schema that defines the tool, the message the LLM generates to invoke it, and the raw
+        result that comes back. The LLM also decides <em>when</em> to call, adding an extra round-trip
+        you never needed.
+      </p>
+    </div>
+    <div class="tut-pain-cards">
+      <div class="tut-pain-card">
+        <div class="tut-pain-icon">&#128203;</div>
+        <h3>Schema overhead</h3>
+        <p>Every tool definition lives in context for the entire run. Complex schemas with descriptions, parameters, and types can cost hundreds of tokens before any work is done.</p>
+      </div>
+      <div class="tut-pain-card">
+        <div class="tut-pain-icon">&#128260;</div>
+        <h3>Call-and-response bloat</h3>
+        <p>The LLM generates a tool call message, the result comes back as another message — both stay in context. A single fetch can flood the window with raw data the LLM only skims.</p>
+      </div>
+      <div class="tut-pain-card">
+        <div class="tut-pain-icon">&#9201;</div>
+        <h3>An extra round-trip</h3>
+        <p>The LLM has to decide to call the tool, generate the call, wait for the result, then generate a response. Three API calls where one would do.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Solution banner -->
+<section class="tut-section tut-section--dark">
+  <div class="container tut-solution-banner">
+    <div class="lime-badge">The Solution</div>
+    <h2 class="section-heading tut-dark-heading">Run it locally. Inject only what you need.</h2>
+    <p class="section-sub tut-dark-sub">
+      <code class="tut-inline-code">@effect func</code> calls a plain Python function in your process —
+      no LLM involvement, no network round-trip to the model. The return value is stored in state.
+      You decide exactly what goes into the next prompt, keeping context lean and costs predictable.
+    </p>
+  </div>
+</section>
+
+<!-- Step 1: Write the function -->
+<section class="tut-section tut-section--surface" id="step-1">
+  <div class="container">
+    <div class="tut-step">
+      <div class="tut-step-label">
+        <span class="tut-step-number">1</span>
+        <div>
+          <div class="tut-step-title">Write a plain Python function</div>
+          <div class="tut-step-desc">
+            No special SDK, no decorator, no schema to maintain. Write the function you would have
+            written anyway. Fetch the data, filter it, reshape it — do all the work the LLM doesn't
+            need to do. Return only what the prompt actually needs.
+          </div>
+        </div>
+      </div>
+      <div class="tut-code-card">
+        <div class="tut-code-filename">tickets.py</div>
+        <pre class="fpanel-code"><code><span class="code-keyword">import</span> requests
+
+<span class="code-keyword">def</span> get_urgent_tickets() -> list:
+    resp = requests.get(
+        <span class="code-string">"https://api.example.com/tickets"</span>,
+        params={<span class="code-string">"status"</span>: <span class="code-string">"open"</span>},
+    )
+    tickets = resp.json()[<span class="code-string">"tickets"</span>]
+
+    <span class="code-comment"># Filter and trim locally — the LLM never sees the rest</span>
+    <span class="code-keyword">return</span> [
+        {
+            <span class="code-string">"id"</span>: t[<span class="code-string">"id"</span>],
+            <span class="code-string">"subject"</span>: t[<span class="code-string">"subject"</span>],
+            <span class="code-string">"body"</span>: t[<span class="code-string">"body"</span>],
+        }
+        <span class="code-keyword">for</span> t <span class="code-keyword">in</span> tickets
+        <span class="code-keyword">if</span> t[<span class="code-string">"priority"</span>] == <span class="code-string">"urgent"</span>
+    ]</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Step 2: Tool call vs @effect func -->
+<section class="tut-section tut-section--light" id="step-2">
+  <div class="container">
+    <div class="tut-step">
+      <div class="tut-step-label">
+        <span class="tut-step-number">2</span>
+        <div>
+          <div class="tut-step-title">Replace the tool call</div>
+          <div class="tut-step-desc">
+            With <code>@effect tools</code>, the LLM decides when to call the function and receives
+            the full raw result as a message in context. With <code>@effect func</code>, Python runs
+            it immediately and the filtered result lands directly in state — ready to be referenced
+            anywhere in the template.
+          </div>
+        </div>
+      </div>
+      <div class="tut-render-grid">
+
+        <div class="tut-render-card tut-render-card--claude">
+          <div class="tut-render-card-header">
+            <span class="tut-model-badge tut-model-badge--claude">Before</span>
+            <span class="tut-render-target">@effect tools</span>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># support-agent.mgx — tool call approach</span>
+<span class="code-keyword">import</span> get_urgent_tickets <span class="code-keyword">from</span> tickets
+
+<span class="code-comment">// Registers the function as an LLM tool.
+// Schema goes into context. LLM decides when
+// to call. Full result lands as a message.</span>
+<span class="code-keyword">@effect tools</span> get_urgent_tickets() <span class="code-keyword">=></span> tickets
+
+&lt;&lt;
+You are a support agent. Fetch the open tickets
+and draft a response for each urgent one.
+&gt;&gt;
+
+<span class="code-keyword">@effect run</span>
+<span class="code-comment">// LLM generates a tool call, waits for result,
+// then generates the final response.
+// That's three API calls.</span></code></pre>
+        </div>
+
+        <div class="tut-render-card tut-render-card--gemini">
+          <div class="tut-render-card-header">
+            <span class="tut-model-badge tut-model-badge--gemini">After</span>
+            <span class="tut-render-target">@effect func</span>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># support-agent.mgx — local function approach</span>
+<span class="code-keyword">import</span> get_urgent_tickets <span class="code-keyword">from</span> tickets
+
+<span class="code-comment">// Python runs now, in your process.
+// No LLM round-trip. No tool schema.
+// Result goes straight into state.</span>
+<span class="code-keyword">@effect func</span> get_urgent_tickets() <span class="code-keyword">=></span> tickets
+
+&lt;&lt;
+You are a support agent. Draft a response
+for each of these urgent tickets:
+
+<span class="code-var">${ tickets }</span>
+&gt;&gt;
+
+<span class="code-keyword">@effect run</span>
+<span class="code-comment">// One API call. That's it.</span></code></pre>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Step 3: What the LLM sees -->
+<section class="tut-section tut-section--surface" id="step-3">
+  <div class="container">
+    <div class="tut-step">
+      <div class="tut-step-label">
+        <span class="tut-step-number">3</span>
+        <div>
+          <div class="tut-step-title">What the LLM actually sees</div>
+          <div class="tut-step-desc">
+            The difference shows up in the context window. The tool call approach sends schema,
+            a generated call message, and a raw API response — all before the LLM writes a single
+            word of output. The <code>@effect func</code> approach sends one focused prompt with
+            only the pre-filtered data.
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-explorer tut-explorer">
+        <div class="feature-tab-list" role="tablist" aria-label="Context window comparison">
+
+          <button class="feature-tab is-active" role="tab" aria-selected="true"
+                  aria-controls="panel-ctx-tools" data-panel="ctx-tools">
+            <span class="ftab-icon tut-ftab-icon tut-ftab-icon--claude">&#9888;</span>
+            <span class="ftab-text">
+              <span class="ftab-name">@effect tools</span>
+              <span class="ftab-desc">What the model receives</span>
+            </span>
+          </button>
+
+          <button class="feature-tab" role="tab" aria-selected="false"
+                  aria-controls="panel-ctx-func" data-panel="ctx-func">
+            <span class="ftab-icon tut-ftab-icon tut-ftab-icon--gemini">&#10003;</span>
+            <span class="ftab-text">
+              <span class="ftab-name">@effect func</span>
+              <span class="ftab-desc">What the model receives</span>
+            </span>
+          </button>
+
+        </div>
+
+        <div class="feature-panels">
+
+          <div class="feature-panel is-active" id="panel-ctx-tools" role="tabpanel">
+            <div class="fpanel-header">
+              <h3>@effect tools — context window</h3>
+              <p>Three separate messages, plus the tool schema, before the LLM writes its first word
+                of output. All of it stays in context for any follow-up calls.</p>
+            </div>
+            <pre class="fpanel-code"><code><span class="code-comment">// ① Tool schema — present for the entire run</span>
+[tools]
+  get_urgent_tickets()                         <span class="tut-highlight-line">&#x25C4; ~60 tokens</span>
+    Returns open tickets with priority=urgent.
+    No parameters.
+
+<span class="code-comment">// ② LLM generates a call to decide it wants data</span>
+[assistant]
+  I'll fetch the urgent tickets now.
+  &lt;tool_call&gt;get_urgent_tickets()&lt;/tool_call&gt;  <span class="tut-highlight-line">&#x25C4; ~30 tokens</span>
+
+<span class="code-comment">// ③ Full API response lands in context</span>
+[tool result]
+  {"tickets": [                                <span class="tut-highlight-line">&#x25C4; ~600 tokens</span>
+    {"id":1,"priority":"low","subject":"...","body":"..."},
+    {"id":2,"priority":"urgent","subject":"...","body":"..."},
+    {"id":3,"priority":"low","subject":"...","body":"..."},
+    {"id":4,"priority":"low","subject":"...","body":"..."},
+    {"id":5,"priority":"urgent","subject":"...","body":"..."},
+    ... 45 more tickets of all priorities
+  ]}
+
+<span class="code-comment">// ④ Finally — the actual task prompt</span>
+[user]
+  You are a support agent. Fetch the open tickets  <span class="tut-highlight-line">&#x25C4; ~20 tokens</span>
+  and draft a response for each urgent one.</code></pre>
+          </div>
+
+          <div class="feature-panel" id="panel-ctx-func" role="tabpanel">
+            <div class="fpanel-header">
+              <h3>@effect func — context window</h3>
+              <p>One message. Only the pre-filtered urgent tickets. No schema, no call-and-response
+                overhead, no low-priority noise the LLM has to ignore.</p>
+            </div>
+            <pre class="fpanel-code"><code><span class="code-comment">// ① Single focused prompt — nothing else</span>
+[user]
+  You are a support agent. Draft a response      <span class="tut-highlight-line">&#x25C4; ~120 tokens total</span>
+  for each of these urgent tickets:
+
+  [
+    {"id":2,"subject":"Payment failing","body":"..."},
+    {"id":5,"subject":"Can't log in","body":"..."}
+  ]
+
+<span class="code-comment">// get_urgent_tickets() ran in Python before this
+// call was made. No schema. No extra messages.
+// 45 low-priority tickets never touched the context.</span></code></pre>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Key Insights -->
+<section class="tut-section tut-section--light">
+  <div class="container">
+    <div class="tut-insight-grid">
+      <div class="tut-insight-card">
+        <div class="tut-insight-icon">&#9889;</div>
+        <h3>Zero round-trips</h3>
+        <p>Python runs in your process the moment the line executes — no API call to the model, no
+          waiting. Latency drops and the LLM never has to decide whether or when to fetch anything.</p>
+      </div>
+      <div class="tut-insight-card">
+        <div class="tut-insight-icon">&#128256;</div>
+        <h3>Pre-filter before it lands</h3>
+        <p>Shape the data in Python before it ever reaches the prompt — filter rows, trim fields,
+          format strings. The LLM sees a clean, minimal payload instead of raw API output it has to
+          wade through.</p>
+      </div>
+      <div class="tut-insight-card">
+        <div class="tut-insight-icon">&#128200;</div>
+        <h3>Stack multiple calls cheaply</h3>
+        <p>Call several functions before a single <code>@effect run</code> and the LLM receives all
+          the results in one focused prompt. Each function adds state, not messages — context stays
+          flat no matter how many calls you stack.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="tut-section tut-section--cta">
+  <div class="container tut-cta">
+    <h2 class="section-heading tut-dark-heading">Ready to use expensive models more?</h2>
+    <p class="section-sub tut-dark-sub">
+      Any Python function becomes a local effect. No new API to learn — just import and call.
+    </p>
+    <div class="hero-actions">
+      <a href="https://www.banyango.com/Lime/latest/" class="btn btn-primary" target="_blank"
+         rel="noopener noreferrer">Read the Lime Docs</a>
+      <a href="index.html" class="btn btn-ghost">Back to Cantina</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="img/lime.svg" alt="Cantina" class="footer-logo-img">
+        <span class="footer-brand-name">Cantina</span>
+      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="https://www.banyango.com/margarita/latest/" target="_blank" rel="noopener noreferrer">Margarita Docs</a>
+        <a href="https://www.banyango.com/Lime/latest/" target="_blank" rel="noopener noreferrer">Lime Docs</a>
+        <a href="https://github.com/banyango/margarita" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+      <p class="footer-copy">&copy; 2026 Banyango. MIT License. Logo courtesy Freepik</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+
+</html>

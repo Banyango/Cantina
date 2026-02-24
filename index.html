@@ -83,30 +83,6 @@
          rel="noopener noreferrer">Get Started</a>
       <a href="#features" class="btn btn-ghost">See Features</a>
     </div>
-    <div class="hero-demo">
-      <div class="hero-code">
-        <div class="hero-code-label">template</div>
-        <pre><code><span class="code-comment"># hello.mg</span>
-<span class="code-meta">---
-description: any key/value metadata
----</span>
-&lt;&lt;
-Hello, <span class="code-var">${ user }</span>!
-&gt;&gt;
-<span class="code-keyword">if</span> user == "World":
-  &lt;&lt; Welcome to Margarita. &gt;&gt;
-</code></pre>
-      </div>
-
-      <div class="hero-arrow" aria-hidden="true">&#8594;</div>
-
-      <div class="hero-output">
-        <div class="hero-code-label">rendered output</div>
-        <pre><code>Hello, World!
-
-Welcome to Margarita.</code></pre>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -119,9 +95,14 @@ Welcome to Margarita.</code></pre>
       <p class="section-sub">Margarita templates bring structure and reusability to your prompts without the complexity
         of a full
         framework.</p>
-      <a href="https://www.banyango.com/margarita/latest/" class="btn btn-lime" target="_blank"
-         rel="noopener noreferrer">Explore
-        Margarita Docs</a>
+      <div class="hero-actions">
+        <a href="components.html" class="btn btn-ghost">Guide: Compose Once, Reuse Everywhere &rarr;</a>
+        <a href="agents-md.html" class="btn btn-ghost">Guide: One AGENTS.md, for Any Model &rarr;</a>
+      </div>
+      <div class="hero-explore">
+        <a href="https://www.banyango.com/margarita/latest/" class="btn btn-lime" target="_blank"
+           rel="noopener noreferrer">Explore Margarita Docs</a>
+      </div>
     </div>
     <div class="feature-explorer">
 
@@ -236,7 +217,7 @@ parameter2: project (string): The name of the project or product.
           </div>
           <pre class="fpanel-code"><code><span class="code-comment"># access.mg</span>
 <span class="code-meta">---
-parameters: level (string): Access level of the user, e.g. "admin" or "user".
+parameter: level (string): Access level of the user, e.g. "admin" or "user".
 ---</span>
 &lt;&lt; Access level: <span class="code-var">${ level }</span> &gt;&gt;
 <span class="code-keyword">if</span> level == <span class="code-string">"admin"</span>:
@@ -335,8 +316,13 @@ prompt = renderer.render(nodes)</code>
         with full agentic capabilities — giving you surgical control over the context, tools, and state sent to your
         LLM.
       </p>
-      <a href="https://www.banyango.com/Lime/latest/" class="btn btn-lime" target="_blank" rel="noopener noreferrer">Explore
-        Lime Docs</a>
+      <div class="hero-actions">
+        <a href="custom-ralph.html" class="btn btn-ghost">Guide: Build a Custom Ralph Wiggum Loop &rarr;</a>
+        <a href="local-functions.html" class="btn btn-ghost">Guide: Spend less $ on Tokens &rarr;</a>
+      </div>
+      <div class="hero-explore">
+        <a href="https://www.banyango.com/Lime/latest/" class="btn btn-lime" target="_blank" rel="noopener noreferrer">Explore Lime Docs</a>
+      </div>
     </div>
 
     <div class="feature-explorer">

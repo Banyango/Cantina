@@ -51,6 +51,7 @@ for task in tasks:
           @effect func set_to_completed(task)
           break
 
+
 @effect context clear
 
 <<

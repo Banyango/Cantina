@@ -1,0 +1,510 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compose Once, Reuse Everywhere – Cantina</title>
+  <meta name="description"
+        content="Learn how to split your prompts into small, single-responsibility Margarita components and assemble them into any agent your team needs.">
+
+  <meta property="og:title" content="Compose Once, Reuse Everywhere – Cantina">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="icon.png">
+  <meta property="og:description"
+        content="Write small, focused .mg component files and wire them together with Margarita's include syntax to build any agent without duplicating a line of prompt.">
+
+  <link rel="icon" href="/img/favicon.ico" sizes="any">
+  <link rel="icon" href="/img/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#16A34A">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Cantina home">
+      <img src="img/lime.svg" alt="Cantina" class="nav-logo-img">
+      <span class="nav-logo-text">Cantina</span>
+    </a>
+
+    <button class="nav-hamburger" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false"
+            aria-controls="nav-links">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <ul class="nav-links" id="nav-links" role="list">
+      <li><a href="index.html#features">Margarita</a></li>
+      <li><a href="index.html#lime">Lime</a></li>
+      <li><a href="index.html#salt">Salt</a></li>
+      <li><a href="index.html#docs">Docs</a></li>
+      <li><a href="agents-md.html" class="nav-link-active">Guides</a></li>
+      <li>
+        <a href="https://github.com/banyango/margarita" class="nav-cta" target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-lime-bg hero-lime-bg-1" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-lime-img"></div>
+  <div class="hero-lime-bg hero-lime-bg-2" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-lime-img"></div>
+  <div class="hero-lime-bg hero-lime-bg-3" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-lime-img"></div>
+  <div class="container">
+    <p class="hero-eyebrow">Guide</p>
+    <h1 class="hero-heading">
+      Compose Once,<br><span class="hero-accent">Reuse Everywhere</span>
+    </h1>
+    <p class="hero-sub">
+      Split your prompts into small, single-responsibility
+      <code style="font-size:1rem;background:rgba(255,255,255,0.15);padding:2px 6px;border-radius:4px;">.mg</code>
+      components. Wire them together with includes. Build any agent your team needs without duplicating a line.
+    </p>
+    <div class="tut-model-chips">
+      <span class="tut-chip tut-chip--gemini">Components</span>
+      <span class="tut-chip tut-chip--plus">+</span>
+      <span class="tut-chip tut-chip--gemini">Includes</span>
+      <span class="tut-chip tut-chip--plus">+</span>
+      <span class="tut-chip tut-chip--claude">Assembly</span>
+    </div>
+  </div>
+</section>
+
+<!-- The Problem -->
+<section class="tut-section tut-section--light">
+  <div class="container">
+    <div class="tut-intro">
+      <div class="lime-badge">The Problem</div>
+      <h2 class="section-heading">Monolithic prompts don't scale</h2>
+      <p class="section-sub">
+        When your whole prompt lives in one file, every team has to copy it to customise it.
+        The copies drift. A fix in one file doesn't reach the others. And the bigger the prompt gets,
+        the harder it is to know what each paragraph is actually doing.
+      </p>
+    </div>
+    <div class="tut-pain-cards">
+      <div class="tut-pain-card">
+        <div class="tut-pain-icon">&#128260;</div>
+        <h3>Copy-paste drift</h3>
+        <p>Every team that needs a slightly different agent copies the whole prompt. Shared rules diverge silently — until something breaks in production.</p>
+      </div>
+      <div class="tut-pain-card">
+        <div class="tut-pain-icon">&#128269;</div>
+        <h3>Hard to audit</h3>
+        <p>A 400-line prompt file is impossible to review meaningfully. Nobody knows which paragraph sets the tone, which enforces safety, or which is just stale copy.</p>
+      </div>
+      <div class="tut-pain-card">
+        <div class="tut-pain-icon">&#9889;</div>
+        <h3>Updates are risky</h3>
+        <p>Changing a shared rule means finding every file that contains it, editing each one, and hoping nothing else was accidentally changed in the surrounding text.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Solution banner -->
+<section class="tut-section tut-section--dark">
+  <div class="container tut-solution-banner">
+    <div class="lime-badge">The Solution</div>
+    <h2 class="section-heading tut-dark-heading">One component, one concern</h2>
+    <p class="section-sub tut-dark-sub">
+      Split each prompt concern into its own <code class="tut-inline-code">.mg</code> file — persona,
+      tone, task context. Then compose them with Margarita's
+      <code class="tut-inline-code">[[ include ]]</code> syntax. Fix a rule in one file and every
+      agent that includes it is updated automatically.
+    </p>
+  </div>
+</section>
+
+<!-- Step 1: The Components -->
+<section class="tut-section tut-section--surface" id="step-1">
+  <div class="container">
+    <div class="tut-step">
+      <div class="tut-step-label">
+        <span class="tut-step-number">1</span>
+        <div>
+          <div class="tut-step-title">Write focused components</div>
+          <div class="tut-step-desc">
+            Each component is a <code>.mg</code> file with a single job. Variables in the frontmatter
+            make them reusable — the same file works for any team just by passing different values at
+            include time. <code>if</code> blocks handle variation inside the file so you never need
+            two nearly-identical copies.
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-explorer tut-explorer">
+        <div class="feature-tab-list" role="tablist" aria-label="Component examples">
+
+          <button class="feature-tab is-active" role="tab" aria-selected="true"
+                  aria-controls="panel-role" data-panel="role">
+            <span class="ftab-icon">&#128100;</span>
+            <span class="ftab-text">
+              <span class="ftab-name">role.mg</span>
+              <span class="ftab-desc">Who the agent is</span>
+            </span>
+          </button>
+
+          <button class="feature-tab" role="tab" aria-selected="false"
+                  aria-controls="panel-tone" data-panel="tone">
+            <span class="ftab-icon">&#128172;</span>
+            <span class="ftab-text">
+              <span class="ftab-name">tone.mg</span>
+              <span class="ftab-desc">How it communicates</span>
+            </span>
+          </button>
+
+          <button class="feature-tab" role="tab" aria-selected="false"
+                  aria-controls="panel-context" data-panel="context">
+            <span class="ftab-icon">&#128203;</span>
+            <span class="ftab-text">
+              <span class="ftab-name">context-window.mg</span>
+              <span class="ftab-desc">What it's working on</span>
+            </span>
+          </button>
+
+        </div>
+
+        <div class="feature-panels">
+
+          <div class="feature-panel is-active" id="panel-role" role="tabpanel">
+            <div class="fpanel-header">
+              <h3>persona/role.mg</h3>
+              <p>Establishes the agent's identity. Pass a different <code>role_title</code>,
+                <code>team</code>, and <code>mission</code> and the same file works for any team in
+                your organisation.</p>
+            </div>
+            <pre class="fpanel-code"><code><span class="code-comment"># persona/role.mg</span>
+<span class="code-meta">---
+name: role
+description: Defines the agent's role, title, and core responsibilities.
+parameter: role_title (string) - The job title or agent role.
+parameter: team (string) - The team this agent belongs to.
+parameter: mission (string) - One-sentence description of the agent's core mission.
+---</span>
+&lt;&lt;
+## Role
+You are a **<span class="code-var">${ role_title }</span>** on the **<span class="code-var">${ team }</span>** team.
+
+**Your mission**: <span class="code-var">${ mission }</span>
+
+You are a trusted expert in your domain. You work with precision,
+clarity, and good judgment. You always consider the broader context
+before responding.
+&gt;&gt;</code></pre>
+          </div>
+
+          <div class="feature-panel" id="panel-tone" role="tabpanel">
+            <div class="fpanel-header">
+              <h3>style/tone.mg</h3>
+              <p>Sets how the agent communicates. A single file covers every style via
+                <code>if</code> blocks — no need for five separate tone files.</p>
+            </div>
+            <pre class="fpanel-code"><code><span class="code-comment"># style/tone.mg</span>
+<span class="code-meta">---
+name: tone
+description: Sets the communication tone. Mix with any persona.
+parameter: style (string) - One of: "professional", "friendly", "technical", "concise".
+---</span>
+&lt;&lt; ## Communication Style &gt;&gt;
+
+<span class="code-keyword">if</span> style == <span class="code-string">"professional"</span>:
+  &lt;&lt; Communicate in a professional, polished tone. Be direct, use
+  precise language, and avoid casual phrasing. &gt;&gt;
+
+<span class="code-keyword">elif</span> style == <span class="code-string">"friendly"</span>:
+  &lt;&lt; Communicate in a warm, approachable tone. Use plain language,
+  be encouraging, and make the user feel at ease. &gt;&gt;
+
+<span class="code-keyword">elif</span> style == <span class="code-string">"technical"</span>:
+  &lt;&lt; Communicate with technical depth and precision. Use correct
+  terminology and assume the reader has a strong technical background. &gt;&gt;
+
+<span class="code-keyword">elif</span> style == <span class="code-string">"concise"</span>:
+  &lt;&lt; Be extremely concise. Lead with the answer. No preamble,
+  no filler. If something can be said in five words, use five words. &gt;&gt;</code></pre>
+          </div>
+
+          <div class="feature-panel" id="panel-context" role="tabpanel">
+            <div class="fpanel-header">
+              <h3>context/context-window.mg</h3>
+              <p>Injects the live task. The <code>background</code> block is optional — if it's an
+                empty string the section is omitted entirely, keeping the prompt clean.</p>
+            </div>
+            <pre class="fpanel-code"><code><span class="code-comment"># context/context-window.mg</span>
+<span class="code-meta">---
+name: context-window
+description: Injects the user's request and any supporting background.
+parameter: user_request (string) - The raw user request or task description.
+parameter: background (string) - Optional background or supporting context.
+---</span>
+&lt;&lt;
+## Task Context
+
+**User request**:
+<span class="code-var">${ user_request }</span>
+&gt;&gt;
+
+<span class="code-keyword">if</span> background != <span class="code-string">""</span>:
+  &lt;&lt;
+  **Background / supporting context**:
+  <span class="code-var">${ background }</span>
+  &gt;&gt;</code></pre>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Step 2: Assembly -->
+<section class="tut-section tut-section--light" id="step-2">
+  <div class="container">
+    <div class="tut-step">
+      <div class="tut-step-label">
+        <span class="tut-step-number">2</span>
+        <div>
+          <div class="tut-step-title">Assemble the agent</div>
+          <div class="tut-step-desc">
+            Use <code>[[ include ]]</code> to pull the components in, passing values inline.
+            The order is the rendered order — persona first, then style, then task. Different
+            teams use the same three files with different values and get a completely different agent.
+          </div>
+        </div>
+      </div>
+      <div class="tut-render-grid">
+
+        <div class="tut-render-card tut-render-card--claude">
+          <div class="tut-render-card-header">
+            <span class="tut-model-badge tut-model-badge--claude">Support agent</span>
+            <span class="tut-render-target">customer-support.mgx</span>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment">// ── Persona ─────────────────────────────────</span>
+<span class="code-var">[[ components/persona/role.mg
+    role_title="Support Engineer"
+    team="Customer Success"
+    mission="Diagnose and resolve customer
+             issues with clarity and care." ]]</span>
+
+<span class="code-comment">// ── Style ────────────────────────────────────</span>
+<span class="code-var">[[ components/style/tone.mg
+    style="friendly" ]]</span>
+
+<span class="code-comment">// ── Task ─────────────────────────────────────</span>
+<span class="code-var">[[ components/context/context-window.mg
+    user_request="${ ticket }"
+    background="" ]]</span>
+
+<span class="code-keyword">@effect run</span></code></pre>
+        </div>
+
+        <div class="tut-render-card tut-render-card--gemini">
+          <div class="tut-render-card-header">
+            <span class="tut-model-badge tut-model-badge--gemini">Code review agent</span>
+            <span class="tut-render-target">code-review.mgx</span>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment">// ── Persona ─────────────────────────────────</span>
+<span class="code-var">[[ components/persona/role.mg
+    role_title="Senior Platform Engineer"
+    team="Platform Engineering"
+    mission="Review pull requests for
+             correctness and team standards." ]]</span>
+
+<span class="code-comment">// ── Style ────────────────────────────────────</span>
+<span class="code-var">[[ components/style/tone.mg
+    style="technical" ]]</span>
+
+<span class="code-comment">// ── Task ─────────────────────────────────────</span>
+<span class="code-var">[[ components/context/context-window.mg
+    user_request="Review this pull request."
+    background="${ pr_description }" ]]</span>
+
+<span class="code-keyword">@effect run</span></code></pre>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Step 3: The rendered output -->
+<section class="tut-section tut-section--surface" id="step-3">
+  <div class="container">
+    <div class="tut-step">
+      <div class="tut-step-label">
+        <span class="tut-step-number">3</span>
+        <div>
+          <div class="tut-step-title">See what the agent receives</div>
+          <div class="tut-step-desc">
+            At runtime, Margarita resolves every <code>[[ include ]]</code>, substitutes variables,
+            and evaluates <code>if</code> blocks. The agent sees a single, clean prompt — assembled
+            from the three components — with no trace of the template structure.
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-explorer tut-explorer">
+        <div class="feature-tab-list" role="tablist" aria-label="Rendered output comparison">
+
+          <button class="feature-tab is-active" role="tab" aria-selected="true"
+                  aria-controls="panel-out-support" data-panel="out-support">
+            <span class="ftab-icon tut-ftab-icon tut-ftab-icon--claude">S</span>
+            <span class="ftab-text">
+              <span class="ftab-name">Support agent</span>
+              <span class="ftab-desc">style="friendly"</span>
+            </span>
+          </button>
+
+          <button class="feature-tab" role="tab" aria-selected="false"
+                  aria-controls="panel-out-review" data-panel="out-review">
+            <span class="ftab-icon tut-ftab-icon tut-ftab-icon--gemini">E</span>
+            <span class="ftab-text">
+              <span class="ftab-name">Code review agent</span>
+              <span class="ftab-desc">style="technical"</span>
+            </span>
+          </button>
+
+        </div>
+
+        <div class="feature-panels">
+
+          <div class="feature-panel is-active" id="panel-out-support" role="tabpanel">
+            <div class="fpanel-header">
+              <h3>Support agent — rendered prompt</h3>
+              <p>The <code>background</code> was an empty string so that section was omitted.
+                The friendly tone block was selected. All three components merged into one prompt.</p>
+            </div>
+            <pre class="fpanel-code"><code><span class="code-keyword">## Role</span>
+You are a **Support Engineer** on the **Customer Success** team.
+
+**Your mission**: Diagnose and resolve customer issues with clarity and care.
+
+You are a trusted expert in your domain. You work with precision,
+clarity, and good judgment. You always consider the broader context
+before responding.
+
+<span class="code-keyword">## Communication Style</span>
+Communicate in a warm, approachable tone. Use plain language,       <span class="tut-highlight-line">&#x25C4; friendly</span>
+be encouraging, and make the user feel at ease.
+
+<span class="code-keyword">## Task Context</span>
+
+**User request**:
+My payment isn't going through on the checkout page.</code></pre>
+          </div>
+
+          <div class="feature-panel" id="panel-out-review" role="tabpanel">
+            <div class="fpanel-header">
+              <h3>Code review agent — rendered prompt</h3>
+              <p><code>background</code> contained a PR description so that section was included.
+                The technical tone block was selected. Same three files, completely different agent.</p>
+            </div>
+            <pre class="fpanel-code"><code><span class="code-keyword">## Role</span>
+You are a **Senior Platform Engineer** on the **Platform Engineering** team.
+
+**Your mission**: Review pull requests for correctness and team standards.
+
+You are a trusted expert in your domain. You work with precision,
+clarity, and good judgment. You always consider the broader context
+before responding.
+
+<span class="code-keyword">## Communication Style</span>
+Communicate with technical depth and precision. Use correct        <span class="tut-highlight-line">&#x25C4; technical</span>
+terminology and assume the reader has a strong technical background.
+
+<span class="code-keyword">## Task Context</span>
+
+**User request**:
+Review this pull request.
+
+**Background / supporting context**:                               <span class="tut-highlight-line">&#x25C4; optional, included</span>
+Adds rate limiting middleware to the API gateway. Touches
+auth.py, middleware.py, and three test files.</code></pre>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Key Insights -->
+<section class="tut-section tut-section--light">
+  <div class="container">
+    <div class="tut-insight-grid">
+      <div class="tut-insight-card">
+        <div class="tut-insight-icon">&#128257;</div>
+        <h3>Single source of truth</h3>
+        <p>A rule that lives in <code>tone.mg</code> is updated once and every agent that includes it
+          gets the fix. No hunting through copies. No inconsistent behaviour across teams.</p>
+      </div>
+      <div class="tut-insight-card">
+        <div class="tut-insight-icon">&#128296;</div>
+        <h3>Variation without duplication</h3>
+        <p><code>if</code> blocks inside a component handle variation — five tone styles in one file,
+          optional sections that disappear when empty. The assembly file stays clean and readable.</p>
+      </div>
+      <div class="tut-insight-card">
+        <div class="tut-insight-icon">&#128640;</div>
+        <h3>New agent in minutes</h3>
+        <p>A new team creates a new <code>.mgx</code> file, picks the components they need, and passes
+          their own values. The shared library does the rest — no prompt engineering from scratch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="tut-section tut-section--cta">
+  <div class="container tut-cta">
+    <h2 class="section-heading tut-dark-heading">Ready to build your component library?</h2>
+    <p class="section-sub tut-dark-sub">
+      Start with three components. Every new one you add is immediately available to every team.
+    </p>
+    <div class="hero-actions">
+      <a href="https://www.banyango.com/margarita/latest/" class="btn btn-primary" target="_blank"
+         rel="noopener noreferrer">Read the Margarita Docs</a>
+      <a href="index.html" class="btn btn-ghost">Back to Cantina</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="img/lime.svg" alt="Cantina" class="footer-logo-img">
+        <span class="footer-brand-name">Cantina</span>
+      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="https://www.banyango.com/margarita/latest/" target="_blank" rel="noopener noreferrer">Margarita Docs</a>
+        <a href="https://www.banyango.com/Lime/latest/" target="_blank" rel="noopener noreferrer">Lime Docs</a>
+        <a href="https://github.com/banyango/margarita" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+      <p class="footer-copy">&copy; 2026 Banyango. MIT License. Logo courtesy Freepik</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+
+</html>
