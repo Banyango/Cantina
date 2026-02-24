@@ -10,6 +10,21 @@ module.exports = merge(common, {
       template: './index.html',
       minify: false,
     }),
+    new HtmlWebpackPlugin({
+      template: './components.html',
+      filename: 'components.html',
+      minify: false,
+    }),
+    new HtmlWebpackPlugin({
+      template: './custom-ralph.html',
+      filename: 'custom-ralph.html',
+      minify: false,
+    }),
+    new HtmlWebpackPlugin({
+      template: './local-functions.html',
+      filename: 'local-functions.html',
+      minify: false,
+    }),
     new CopyPlugin({
       patterns: [
         { from: 'img', to: 'img' },
