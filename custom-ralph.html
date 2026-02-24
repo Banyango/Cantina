@@ -1,0 +1,481 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Build a Custom Ralph Wiggum Loop – Cantina</title>
+  <meta name="description"
+        content="Learn how to chain Margarita prompt templates and Lime effects to build a fully automated feature development pipeline — from rough idea to working code.">
+
+  <meta property="og:title" content="Build a Custom Agent Loop – Cantina">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="icon.png">
+  <meta property="og:description"
+        content="Compose specialized Margarita templates in a Lime orchestration file to refine features, break them into tasks, and iterate to completion automatically.">
+
+  <link rel="icon" href="/img/favicon.ico" sizes="any">
+  <link rel="icon" href="/img/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#16A34A">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+<script defer src="./js/app.js"></script></head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Cantina home">
+      <img src="img/lime.svg" alt="Cantina" class="nav-logo-img">
+      <span class="nav-logo-text">Cantina</span>
+    </a>
+
+    <button class="nav-hamburger" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false"
+            aria-controls="nav-links">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <ul class="nav-links" id="nav-links" role="list">
+      <li><a href="index.html#features">Margarita</a></li>
+      <li><a href="index.html#lime">Lime</a></li>
+      <li><a href="index.html#salt">Salt</a></li>
+      <li><a href="index.html#docs">Docs</a></li>
+      <li><a href="agents-md.html" class="nav-link-active">Guides</a></li>
+      <li>
+        <a href="https://github.com/banyango/margarita" class="nav-cta" target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-lime-bg hero-lime-bg-1" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-lime-img"></div>
+  <div class="hero-lime-bg hero-lime-bg-2" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-lime-img"></div>
+  <div class="hero-lime-bg hero-lime-bg-3" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-lime-img"></div>
+  <div class="container">
+    <p class="hero-eyebrow">Guide</p>
+    <h1 class="hero-heading">
+      Build a Custom<br><span class="hero-accent">Ralph Wiggum Loop</span>
+    </h1>
+    <p class="hero-sub">
+      Use Lime orchestration file to build a custom Ralph Wiggum loop tailored to your own specific workflow.
+    </p>
+    <div class="tut-model-chips">
+      <span class="tut-chip tut-chip--claude">Lime</span>
+      <span class="tut-chip tut-chip--plus">+</span>
+      <span class="tut-chip tut-chip--gemini">Margarita</span>
+      <span class="tut-chip tut-chip--plus">+</span>
+      <span class="tut-chip tut-chip--gemini">Python</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- The Problem -->
+<section class="tut-section tut-section--light">
+  <div class="container">
+    <div class="tut-intro">
+      <div class="lime-badge">The Problem</div>
+      <h2 class="section-heading">Other Ralph Tools dont fit your workflow?</h2>
+      <p class="section-sub">
+        Maybe you want it to post to JIRA after tasking out the implementation plan. Maybe you want to run a code quality analysis after each implementation step. With a single monolithic prompt, you have no way to inject custom logic or effects at specific points in the workflow.
+      </p>
+    </div>
+    <div class="tut-pain-cards">
+      <div class="tut-pain-card">
+        <div class="tut-pain-icon">&#128260;</div>
+        <h3>Context bloat</h3>
+        <p>As the agent accumulates conversation history, earlier instructions and code get pushed out of focus — leading to drift and repeated mistakes.</p>
+      </div>
+      <div class="tut-pain-card">
+        <div class="tut-pain-icon">&#10067;</div>
+        <h3>Need more custom steps</h3>
+        <p>Need a JIRA step? A code quality check? A Slack update? You might not have the tight control that you want.</p>
+      </div>
+      <div class="tut-pain-card">
+        <div class="tut-pain-icon">&#128200;</div>
+        <h3>One giant prompt</h3>
+        <p>Mixing product refinement, task planning, and implementation into a single prompt produces a generalist agent that is mediocre at all three.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Solution banner -->
+<section class="tut-section tut-section--dark">
+  <div class="container tut-solution-banner">
+    <div class="lime-badge">The Solution</div>
+    <h2 class="section-heading tut-dark-heading">Compose. Orchestrate. Iterate.</h2>
+    <p class="section-sub tut-dark-sub">
+      Break the workflow into focused Margarita prompt templates — one to refine a product feature,
+      one to break it into tasks. Wire them together in a Lime
+      <code class="tut-inline-code">.mgx</code> orchestration file that manages state, clears context
+      between phases, and loops over each task until its acceptance criteria are met.
+    </p>
+  </div>
+</section>
+
+<!-- Step 1: The Orchestration File -->
+<section class="tut-section tut-section--surface" id="step-1">
+  <div class="container">
+    <div class="tut-step">
+      <div class="tut-step-label">
+        <span class="tut-step-number">1</span>
+        <div>
+          <div class="tut-step-title">Create the .mdx</div>
+          <div class="tut-step-desc">
+            The <code>custom-ralph.mgx</code> file orchestrates the entire workflow. It includes the
+            specialist templates, manages state variables for the refined feature and task list, and
+            contains the implementation loop with acceptance criteria checks and status updates.
+          </div>
+        </div>
+      </div>
+      <div class="tut-code-card">
+        <div class="tut-code-filename">custom-ralph.mgx</div>
+        <pre class="fpanel-code"><code><span class="code-meta">---
+description: Build a custom Ralph wiggum loop
+---</span>
+<span class="code-keyword">from</span> tasks <span class="code-keyword">import</span> set_to_in_development, set_to_completed
+
+<span class="code-comment">// ── Phase 1: Refine the feature ──────────────────────────</span>
+<span class="code-keyword">@state</span> refinedFeature = ""
+
+<span class="code-var">[[ product-refiner.mg input="Your feature that you want to develop" ]]</span>
+
+&lt;&lt;
+Store the refined feature in the <span class="code-var">`refinedFeature`</span> state variable
+&gt;&gt;
+
+<span class="code-keyword">@effect run</span>
+<span class="code-keyword">@effect context clear</span>
+
+<span class="code-comment">// ── Phase 2: Break it into tasks ─────────────────────────</span>
+<span class="code-keyword">@state</span> tasks = []
+
+<span class="code-var">[[ use-case-task-breakdown.mg input=refinedFeature ]]</span>
+
+&lt;&lt;
+Create a list to store the task breakdown. Each task should have:
+{
+    "task": "The refined feature description",
+    "acceptanceCriteria": "The acceptance criteria for the task",
+    "status": "The current status (e.g., 'in development', 'completed')"
+}
+Store the list in the <span class="code-var">`tasks`</span> state variable.
+&gt;&gt;
+
+<span class="code-keyword">@effect context clear</span>
+
+<span class="code-comment">// ── Phase 3: Implement each task ─────────────────────────</span>
+<span class="code-keyword">for</span> task <span class="code-keyword">in</span> tasks:
+    <span class="code-keyword">@effect func</span> set_to_in_development(task)
+
+    <span class="code-comment">// max iterations 5</span>
+    <span class="code-keyword">for</span> i <span class="code-keyword">in</span> range(5):
+        <span class="code-keyword">@state</span> isDone = <span class="code-keyword">false</span>
+        &lt;&lt; Check the current state of the project and attempt to implement <span class="code-var">${ task }</span> &gt;&gt;
+        <span class="code-keyword">@effect run</span>
+
+        &lt;&lt; Check acceptance criteria <span class="code-var">${ task.acceptanceCriteria }</span> and set <span class="code-var">`isDone`</span> to true if met &gt;&gt;
+        <span class="code-keyword">@effect run</span>
+
+        <span class="code-keyword">if</span> isDone:
+            <span class="code-keyword">@effect func</span> set_to_completed(task)
+            <span class="code-keyword">break</span>
+
+<span class="code-keyword">@effect context clear</span>
+
+<span class="code-comment">// ── Phase 4: Write a summary ──────────────────────────────</span>
+&lt;&lt; Write out a summary md file of the list of <span class="code-var">`tasks`</span> &gt;&gt;
+<span class="code-keyword">@effect run</span></code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Step 2: The Prompt Templates -->
+<section class="tut-section tut-section--light" id="step-2">
+  <div class="container">
+    <div class="tut-step">
+      <div class="tut-step-label">
+        <span class="tut-step-number">2</span>
+        <div>
+          <div class="tut-step-title">Define specialized prompt templates</div>
+          <div class="tut-step-desc">
+            Each <code>.mg</code> template is a deep-specialist prompt focused on a single job.
+            <code>product-refiner.mg</code> transforms a rough idea into a comprehensive product spec.
+            <code>use-case-task-breakdown.mg</code> decomposes that spec into an ordered implementation
+            plan. Both receive their input via a <code>${ input }</code> variable injected at include time.
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-explorer tut-explorer">
+        <div class="feature-tab-list" role="tablist" aria-label="Prompt template comparison">
+
+          <button class="feature-tab is-active" role="tab" aria-selected="true"
+                  aria-controls="panel-product-refiner" data-panel="product-refiner">
+            <span class="ftab-icon">&#128196;</span>
+            <span class="ftab-text">
+              <span class="ftab-name">product-refiner.mg</span>
+              <span class="ftab-desc">Spec from a rough idea</span>
+            </span>
+          </button>
+
+          <button class="feature-tab" role="tab" aria-selected="false"
+                  aria-controls="panel-task-breakdown" data-panel="task-breakdown">
+            <span class="ftab-icon">&#9998;</span>
+            <span class="ftab-text">
+              <span class="ftab-name">use-case-task-breakdown.mg</span>
+              <span class="ftab-desc">Tasks from a spec</span>
+            </span>
+          </button>
+
+        </div>
+
+        <div class="feature-panels">
+
+          <div class="feature-panel is-active" id="panel-product-refiner" role="tabpanel">
+            <div class="fpanel-header">
+              <h3>product-refiner.mg</h3>
+              <p>A Product Use Case Refinement Specialist. Included via
+                <code>[[ product-refiner.mg input="..." ]]</code>. The <code>${ input }</code> variable
+                is injected at include time.</p>
+            </div>
+            <pre class="fpanel-code"><code><span class="code-meta">---
+description: Product refiner prompt template
+parameters: input (string) - A rough, incomplete, or ambiguous use case description.
+---</span>
+&lt;&lt;
+## Role
+You are a Product Use Case Refinement Specialist with deep expertise in product
+management, user experience design, business analysis, and technical requirements
+documentation. Your mission is to transform rough, incomplete, or ambiguous use
+case descriptions into comprehensive, actionable specifications.
+
+## Your Refinement Process
+
+### 1. Use Case Identification &amp; Context
+   - Use Case Title, ID, Priority, Status, Business Context,
+     Strategic Alignment...
+
+### 2. Actor &amp; Stakeholder Analysis
+   - Primary Actor, Secondary Actors, Stakeholders, User Personas
+     (demographics, goals, pain points, workarounds)...
+
+### 3. Preconditions &amp; Assumptions
+### 4. Main Success Scenario (Happy Path)
+### 5. Alternative Flows &amp; Variations
+### 6. Exception Flows &amp; Error Handling
+### 7. Postconditions &amp; Success Criteria
+### 8–17. UI, Functional &amp; Non-Functional Requirements,
+         Data Model, Business Rules, Integrations, Testing,
+         Metrics, Open Questions...
+
+## Key Principles
+- Clarity, Completeness, Consistency, Traceability, Testability
+- Do not ask questions — make informed assumptions to fill any gaps.
+
+<span class="code-var">${ input }</span>
+&gt;&gt;</code></pre>
+          </div>
+
+          <div class="feature-panel" id="panel-task-breakdown" role="tabpanel">
+            <div class="fpanel-header">
+              <h3>use-case-task-breakdown.mg</h3>
+              <p>A Use Case Task Breakdown Specialist. Accepts a refined spec via
+                <code>${ input }</code> and produces a sprint-ready implementation plan with
+                acceptance criteria on every task.</p>
+            </div>
+            <pre class="fpanel-code"><code><span class="code-meta">---
+description: Use Case Task Breakdown Specialist
+parameters: input (string) - A refined use case specification to decompose.
+---</span>
+&lt;&lt;
+## Role
+You are a Use Case Task Breakdown Specialist with deep expertise in software
+engineering, project management, and agile development. Your mission is to
+decompose refined product use cases into clear, actionable, implementable subtasks.
+
+## Your Breakdown Process
+
+### 1. Implementation Strategy
+   - Architecture Pattern, Technology Stack, Development Phases,
+     Integration &amp; Deployment Strategy...
+
+### 2. Task Categories
+
+#### A. Data &amp; Backend Tasks
+   - Database schema, API endpoints, business logic, auth...
+
+#### B. Frontend Tasks
+   - Components, state management, API integration, routing...
+
+#### C. Testing Tasks
+   - Unit, integration, E2E, performance, security, accessibility...
+
+#### D–F. DevOps, Design &amp; UX, Documentation Tasks
+
+### 3. Per-Task Template
+   Category, Priority, Effort (story points), Complexity,
+   Acceptance Criteria, Implementation Steps, Dependencies,
+   Definition of Done, Notes...
+
+### 4–10. Dependency Map, Sprint Planning, Resource Allocation,
+          Risk Assessment, Quality Gates, Success Metrics...
+
+## Estimation Guidelines
+1 pt = &lt;4 hrs  |  3 pts = 1-2 days  |  5 pts = 2-3 days  |  8 pts = 3-5 days
+
+<span class="code-var">${ input }</span>
+&gt;&gt;</code></pre>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Step 3: The Implementation Loop -->
+<section class="tut-section tut-section--surface" id="step-3">
+  <div class="container">
+    <div class="tut-step">
+      <div class="tut-step-label">
+        <span class="tut-step-number">3</span>
+        <div>
+          <div class="tut-step-title">Drive the implementation loop</div>
+          <div class="tut-step-desc">
+            For each task, Lime calls <code>set_to_in_development</code> then enters an inner loop
+            that runs the agent, checks acceptance criteria, and breaks when <code>isDone</code> is
+            <code>true</code> — capped at five iterations per task. The Python helpers handle status
+            bookkeeping without spending any tokens.
+          </div>
+        </div>
+      </div>
+      <div class="tut-render-grid">
+        <div class="tut-render-card tut-render-card--claude">
+          <div class="tut-render-card-header">
+            <span class="tut-model-badge tut-model-badge--claude">custom-ralph.mgx</span>
+            <span class="tut-render-target">Loop logic</span>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-keyword">for</span> task <span class="code-keyword">in</span> tasks:
+    <span class="code-comment">// Mark as in development — no tokens spent</span>
+    <span class="code-keyword">@effect func</span> set_to_in_development(task)
+
+    <span class="code-comment">// Retry up to 5 times per task</span>
+    <span class="code-keyword">for</span> i <span class="code-keyword">in</span> range(5):
+        <span class="code-keyword">@state</span> isDone = <span class="code-keyword">false</span>
+
+        &lt;&lt; Check the current state of the project
+and attempt to implement <span class="code-var">${ task }</span> &gt;&gt;
+        <span class="code-keyword">@effect run</span>
+
+        &lt;&lt; Check <span class="code-var">${ task.acceptanceCriteria }</span>
+and set <span class="code-var">`isDone`</span> to true if the criteria are met,
+otherwise set it to false &gt;&gt;
+        <span class="code-keyword">@effect run</span>
+
+        <span class="code-keyword">if</span> isDone:
+            <span class="code-keyword">@effect func</span> set_to_completed(task)
+            <span class="code-keyword">break</span></code></pre>
+        </div>
+        <div class="tut-render-card tut-render-card--gemini">
+          <div class="tut-render-card-header">
+            <span class="tut-model-badge tut-model-badge--gemini">tasks.py</span>
+            <span class="tut-render-target">Python helpers</span>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># tasks.py — called via @effect func
+# Runs in your process. Zero LLM round-trips.</span>
+
+<span class="code-keyword">def</span> set_to_in_development(task):
+    task[<span class="code-string">"status"</span>] = <span class="code-string">"in_progress"</span>
+
+<span class="code-keyword">def</span> set_to_completed(task):
+    task[<span class="code-string">"status"</span>] = <span class="code-string">"completed"</span></code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Key Insights -->
+<section class="tut-section tut-section--light">
+  <div class="container">
+    <div class="tut-insight-grid">
+      <div class="tut-insight-card">
+        <div class="tut-insight-icon">&#9999;&#65039;</div>
+        <h3>Context stays clean</h3>
+        <p><code>@effect context clear</code> resets accumulated history between phases. Each
+          specialist prompt sees only what it needs — preventing refinement noise from bleeding into
+          the implementation loop.</p>
+      </div>
+      <div class="tut-insight-card">
+        <div class="tut-insight-icon">&#127381;</div>
+        <h3>State spans the whole run</h3>
+        <p><code>@state</code> variables persist for the lifetime of the <code>.mgx</code> run.
+          <code>refinedFeature</code> and <code>tasks</code> are written by the agent in one phase
+          and read by the loop in the next — no manual wiring needed.</p>
+      </div>
+      <div class="tut-insight-card">
+        <div class="tut-insight-icon">&#9881;&#65039;</div>
+        <h3>Local functions cost zero tokens</h3>
+        <p><code>@effect func</code> calls plain Python. Status updates like
+          <code>set_to_in_development</code> happen in your process instantly — the LLM is never
+          involved in bookkeeping.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="tut-section tut-section--cta">
+  <div class="container tut-cta">
+    <h2 class="section-heading tut-dark-heading">Ready to build your own loop?</h2>
+    <p class="section-sub tut-dark-sub">
+      Grab the example files from GitHub and start composing your own specialized prompt templates.
+    </p>
+    <div class="hero-actions">
+      <a href="https://www.banyango.com/Lime/latest/" class="btn btn-primary" target="_blank"
+         rel="noopener noreferrer">Read the Lime Docs</a>
+      <a href="index.html" class="btn btn-ghost">Back to Cantina</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="img/lime.svg" alt="Cantina" class="footer-logo-img">
+        <span class="footer-brand-name">Cantina</span>
+      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="https://www.banyango.com/margarita/latest/" target="_blank" rel="noopener noreferrer">Margarita Docs</a>
+        <a href="https://www.banyango.com/Lime/latest/" target="_blank" rel="noopener noreferrer">Lime Docs</a>
+        <a href="https://github.com/banyango/margarita" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+      <p class="footer-copy">&copy; 2026 Banyango. MIT License. Logo courtesy Freepik</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+
+</html>

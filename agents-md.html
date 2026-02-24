@@ -73,8 +73,9 @@
     </h1>
     <p class="hero-sub">
       Use a single Margarita template to generate perfectly tailored agent instructions
-      for Claude, Gemini, or any AI assistant — no copy-paste, no drift.
+      for Claude, Gemini, etc.
     </p>
+    <p>Cut the parts that cause a model to underperform, without maintaining multiple files or copying and pasting updates across them.</p>
     <div class="tut-model-chips">
       <span class="tut-chip tut-chip--claude">Claude</span>
       <span class="tut-chip tut-chip--plus">+</span>
@@ -90,7 +91,6 @@
       <div class="lime-badge">The Problem</div>
       <h2 class="section-heading">Your models read different playbooks</h2>
       <p class="section-sub">
-        Claude reads <code>CLAUDE.md</code>. Gemini reads <code>AGENTS.md</code>.
         Each model has its own tool names, quirks, and preferred patterns.
         Maintaining separate files means they inevitably drift — and your agents start making subtly different mistakes.
       </p>
@@ -148,7 +148,7 @@
         <pre class="fpanel-code"><code><span class="code-comment"># agents.mg</span>
 <span class="code-meta">---
 description: Universal agent instructions that adapt to Claude or Gemini.
-parameters: model (string): Target model — "claude" or "gemini".
+parameter: model (string): Target model — "claude" or "gemini".
 ---</span>
 
 <span class="code-comment"># Shared rules — always rendered for every model</span>
@@ -471,7 +471,7 @@ over blog posts or Stack Overflow. Flag anything that may be stale.
     <div class="hero-actions">
       <a href="https://www.banyango.com/margarita/latest/" class="btn btn-primary" target="_blank"
          rel="noopener noreferrer">Read the Margarita Docs</a>
-      <a href="index.html" class="btn btn-ghost">Back to Cantina</a>
+      <a href="custom-ralph.html" class="btn btn-ghost">Next Guide: Custom Agent Loop &rarr;</a>
     </div>
   </div>
 </section>
