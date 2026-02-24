@@ -368,14 +368,14 @@ code {
 .nav-dropdown-menu {
   display: none;
   position: absolute;
-  top: calc(100% + 0.5rem);
+  top: 100%;
   right: 0;
   min-width: 240px;
   background: var(--color-dark-2);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-md);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-  padding: 0.4rem 0;
+  padding: 0.5rem 0 0.4rem;
   list-style: none;
   margin: 0;
   z-index: 200;
