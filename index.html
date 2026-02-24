@@ -53,7 +53,17 @@
       <li><a href="#lime">Lime</a></li>
       <li><a href="#salt">Salt</a></li>
       <li><a href="#docs">Docs</a></li>
-      <li><a href="agents-md.html">Guides</a></li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+          Guides <span class="nav-dropdown-arrow" aria-hidden="true">&#9662;</span>
+        </button>
+        <ul class="nav-dropdown-menu" role="list">
+          <li><a href="agents-md.html">One AGENTS.md, for Any Model</a></li>
+          <li><a href="components.html">Compose Once, Reuse Everywhere</a></li>
+          <li><a href="custom-ralph.html">Build a Custom Ralph Wiggum Loop</a></li>
+          <li><a href="local-functions.html">Spend Less on Tokens</a></li>
+        </ul>
+      </li>
       <li>
         <a href="https://github.com/banyango/margarita" class="nav-cta" target="_blank" rel="noopener noreferrer">
           GitHub
@@ -92,9 +102,7 @@
     <div class="margarita-intro">
       <div class="lime-badge">Ecosystem</div>
       <h2 class="section-heading">Margarita</h2>
-      <p class="section-sub">Margarita templates bring structure and reusability to your prompts without the complexity
-        of a full
-        framework.</p>
+      <p class="section-sub">Margarita templates bring structure and reusability to your prompts - renders to plain old markdown so you can use it anywhere you were already using markdown.</p>
       <div class="hero-actions">
         <a href="components.html" class="btn btn-ghost">Guide: Compose Once, Reuse Everywhere &rarr;</a>
         <a href="agents-md.html" class="btn btn-ghost">Guide: One AGENTS.md, for Any Model &rarr;</a>
@@ -311,10 +319,8 @@ prompt = renderer.render(nodes)</code>
       <div class="lime-badge">Ecosystem</div>
       <h2 class="section-heading">Meet <span class="lime-accent">Lime</span></h2>
       <p class="section-sub">
-        Lime is an agent programming framework built directly on top of Margarita. It extends <code class="code-var">.mgx</code>
-        files
-        with full agentic capabilities — giving you surgical control over the context, tools, and state sent to your
-        LLM.
+        Lime is an extension that <span class="lime-accent">wraps</span> your existing AI tools like <span class="lime-accent">Copilot/ Claude Code</span>.
+        Create <code class="code-var">.mgx</code> files and get surgical control over the context, tools, and state sent to them.
       </p>
       <div class="hero-actions">
         <a href="custom-ralph.html" class="btn btn-ghost">Guide: Build a Custom Ralph Wiggum Loop &rarr;</a>
