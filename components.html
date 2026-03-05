@@ -60,6 +60,7 @@
           <li><a href="components.html">Compose Once, Reuse Everywhere</a></li>
           <li><a href="custom-ralph.html">Build a Custom Ralph Wiggum Loop</a></li>
           <li><a href="local-functions.html">Spend Less on Tokens</a></li>
+          <li><a href="github-issue-summary.html">Auto-Triage GitHub Issues</a></li>
         </ul>
       </li>
       <li>
@@ -208,9 +209,9 @@ parameter: mission (string) - One-sentence description of the agent's core missi
 ---</span>
 &lt;&lt;
 ## Role
-You are a **<span class="code-var">${ role_title }</span>** on the **<span class="code-var">${ team }</span>** team.
+You are a **<span class="code-var">${role_title}</span>** on the **<span class="code-var">${ team }</span>** team.
 
-**Your mission**: <span class="code-var">${ mission }</span>
+**Your mission**: <span class="code-var">${mission}</span>
 
 You are a trusted expert in your domain. You work with precision,
 clarity, and good judgment. You always consider the broader context
@@ -266,13 +267,13 @@ parameter: background (string) - Optional background or supporting context.
 ## Task Context
 
 **User request**:
-<span class="code-var">${ user_request }</span>
+<span class="code-var">${user_request}</span>
 &gt;&gt;
 
 <span class="code-keyword">if</span> background != <span class="code-string">""</span>:
   &lt;&lt;
   **Background / supporting context**:
-  <span class="code-var">${ background }</span>
+  <span class="code-var">${background}</span>
   &gt;&gt;</code></pre>
           </div>
 
@@ -317,7 +318,7 @@ parameter: background (string) - Optional background or supporting context.
 
 <span class="code-comment">// ── Task ─────────────────────────────────────</span>
 <span class="code-var">[[ components/context/context-window.mg
-    user_request="${ ticket }"
+    user_request="${ticket}"
     background="" ]]</span>
 
 <span class="code-keyword">@effect run</span></code></pre>
@@ -342,7 +343,7 @@ parameter: background (string) - Optional background or supporting context.
 <span class="code-comment">// ── Task ─────────────────────────────────────</span>
 <span class="code-var">[[ components/context/context-window.mg
     user_request="Review this pull request."
-    background="${ pr_description }" ]]</span>
+    background="${pr_description}" ]]</span>
 
 <span class="code-keyword">@effect run</span></code></pre>
         </div>

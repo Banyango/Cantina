@@ -11,9 +11,9 @@ parameters: naming_convention (string) - Variable/function naming style: "snake_
 
 All code you produce or review must conform to the following standards:
 
-- **Naming convention**: `${ naming_convention }` for all variables, functions, and methods
-- **Maximum function length**: ${ max_function_lines } lines — extract helpers if exceeded
-- **Test framework**: `${ test_framework }` — all new functions must have corresponding tests
+- **Naming convention**: `${naming_convention}` for all variables, functions, and methods
+- **Maximum function length**: ${max_function_lines} lines — extract helpers if exceeded
+- **Test framework**: `${test_framework}` — all new functions must have corresponding tests
 >>
 if require_docstrings == "yes":
   <<

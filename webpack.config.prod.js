@@ -25,6 +25,11 @@ module.exports = merge(common, {
       filename: 'local-functions.html',
       minify: false,
     }),
+    new HtmlWebpackPlugin({
+      template: './github-issue-summary.html',
+      filename: 'github-issue-summary.html',
+      minify: false,
+    }),
     new CopyPlugin({
       patterns: [
         { from: 'img', to: 'img' },
@@ -35,6 +40,8 @@ module.exports = merge(common, {
         { from: '404.html', to: '404.html' },
         { from: 'agents-md.html', to: 'agents-md.html' },
         { from: 'site.webmanifest', to: 'site.webmanifest' },
+        { from: 'ghissues.cast', to: 'ghissues.cast' },
+        { from: 'examples/helloworld', to: 'examples/helloworld' },
       ],
     }),
   ],

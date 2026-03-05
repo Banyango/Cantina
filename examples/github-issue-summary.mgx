@@ -1,0 +1,58 @@
+---
+description: Grab a summary of a github issuses and create AI use case fix templates for each issue.
+---
+
+@memory var issues
+@state noIssues = false
+
+<<
+Your task is to grab a summary of the github issues for a given repository.
+The summary should include the following information for each issue:
+```json
+{
+    "title": "The title of the issue",
+    "number": "The issue number",
+    "body": "The description of the issue",
+    "state": "The state of the issue (open or closed)",
+    "created_at": "The date and time when the issue was created",
+    "updated_at": "The date and time when the issue was last updated"
+}
+```
+
+the variable `issues` holds a dictionary with the key being the issue number and the value being a dictionary with the above information for each issue.
+
+Run `gh issue list --json title,body,number,state,createdAt,updatedAt | cat`
+
+If there are no issues just print out "No issues found for this repository." and set `noIssues` variable to true.
+>>
+
+@effect run
+
+if noIssues:
+    @effect log "No issues found for this repository."
+elif:
+    for issue in issues:
+        @effect context clear
+        <<
+        Here is the information for issue #${issue['number']}:
+        ${isssue['body']}
+
+        Translate the above information into a file, here is the template:
+
+        # Bug: ${issue['title']} ${issue['number']}
+
+        ## Objective:
+        <create a concise summary of how to fix the issue based on the title and any other available information.>
+
+        ## Steps to reproduce:
+        - <Create a specific, actionable step that can be followed to reproduce the issue.>
+
+        ## Acceptance Criteria:
+        - <Create a specific, measurable outcome that indicates the issue is successfully resolved.>
+        - <Create another specific, measurable outcome that indicates the issue is successfully resolved.>
+        - <Add additional criteria as needed to fully capture the requirements for resolving the issue.>
+
+        Output the file in ./temp/bugfix_${issue['number']}.md
+        >>
+
+        @effect run

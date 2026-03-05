@@ -8,11 +8,11 @@ parameters: user_request (string) - The raw user request or task description.
 ## Task Context
 
 **User request**:
-${ user_request }
+${user_request}
 >>
 if background != "":
   <<
   **Background / supporting context**:
-  ${ background }
+  ${background}
   >>
 

@@ -1,0 +1,12 @@
+---
+description: Call a Python function and use the result in a prompt.
+---
+from scripts.template import load_template
+
+// Run the summarize function and store into template var
+@effect func load_template() => template
+
+// Summary was stored into state vars so we can use it here!
+<< Write a poem with the template: ${template} >>
+
+@effect run

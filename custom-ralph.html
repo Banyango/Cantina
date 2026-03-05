@@ -60,6 +60,7 @@
           <li><a href="components.html">Compose Once, Reuse Everywhere</a></li>
           <li><a href="custom-ralph.html">Build a Custom Ralph Wiggum Loop</a></li>
           <li><a href="local-functions.html">Spend Less on Tokens</a></li>
+          <li><a href="github-issue-summary.html">Auto-Triage GitHub Issues</a></li>
         </ul>
       </li>
       <li>
@@ -88,8 +89,6 @@
       <span class="tut-chip tut-chip--claude">Lime</span>
       <span class="tut-chip tut-chip--plus">+</span>
       <span class="tut-chip tut-chip--gemini">Margarita</span>
-      <span class="tut-chip tut-chip--plus">+</span>
-      <span class="tut-chip tut-chip--gemini">Python</span>
     </div>
   </div>
 </section>
@@ -131,10 +130,10 @@
     <div class="lime-badge">The Solution</div>
     <h2 class="section-heading tut-dark-heading">Compose. Orchestrate. Iterate.</h2>
     <p class="section-sub tut-dark-sub">
-      Break the workflow into focused Margarita prompt templates — one to refine a product feature,
-      one to break it into tasks. Wire them together in a Lime
+      Break the workflow into focused Margarita prompt templates — one to break an idea into tasks,
+      one to guide each iteration with domain rules. Wire them together in a Lime
       <code class="tut-inline-code">.mgx</code> orchestration file that manages state, clears context
-      between phases, and loops over each task until its acceptance criteria are met.
+      between tasks, and loops over each task until its acceptance criteria are met.
     </p>
   </div>
 </section>
@@ -148,9 +147,9 @@
         <div>
           <div class="tut-step-title">Create the .mdx</div>
           <div class="tut-step-desc">
-            The <code>custom-ralph.mgx</code> file orchestrates the entire workflow. It includes the
-            specialist templates, manages state variables for the refined feature and task list, and
-            contains the implementation loop with acceptance criteria checks and status updates.
+            The <code>custom-ralph.mgx</code> file orchestrates the entire workflow. It prompts the
+            user for input, delegates task breakdown to a specialist template, then loops over each
+            task — injecting domain guidance and checking acceptance criteria on every iteration.
           </div>
         </div>
       </div>
@@ -159,59 +158,42 @@
         <pre class="fpanel-code"><code><span class="code-meta">---
 description: Build a custom Ralph wiggum loop
 ---</span>
-<span class="code-keyword">from</span> tasks <span class="code-keyword">import</span> set_to_in_development, set_to_completed
 
-<span class="code-comment">// ── Phase 1: Refine the feature ──────────────────────────</span>
-<span class="code-keyword">@state</span> refinedFeature = ""
-
-<span class="code-var">[[ product-refiner.mg input="Your feature that you want to develop" ]]</span>
-
-&lt;&lt;
-Store the refined feature in the <span class="code-var">`refinedFeature`</span> state variable
-&gt;&gt;
-
-<span class="code-keyword">@effect run</span>
-<span class="code-keyword">@effect context clear</span>
-
-<span class="code-comment">// ── Phase 2: Break it into tasks ─────────────────────────</span>
+<span class="code-keyword">@state</span> maxIterations = 5
 <span class="code-keyword">@state</span> tasks = []
 
-<span class="code-var">[[ use-case-task-breakdown.mg input=refinedFeature ]]</span>
+<span class="code-comment">// ── Phase 1: Get user input ───────────────────────────────</span>
+<span class="code-keyword">@effect</span> input <span class="code-string">"What do you want to build?:"</span> =&gt; userInput
 
-&lt;&lt;
-Create a list to store the task breakdown. Each task should have:
-{
-    "task": "The refined feature description",
-    "acceptanceCriteria": "The acceptance criteria for the task",
-    "status": "The current status (e.g., 'in development', 'completed')"
-}
-Store the list in the <span class="code-var">`tasks`</span> state variable.
-&gt;&gt;
+<span class="code-comment">// ── Phase 2: Break it into tasks ─────────────────────────</span>
+<span class="code-var">[[ use-case-task-breakdown.mg input=userInput ]]</span>
 
-<span class="code-keyword">@effect context clear</span>
+<span class="code-keyword">@effect run</span>
 
 <span class="code-comment">// ── Phase 3: Implement each task ─────────────────────────</span>
 <span class="code-keyword">for</span> task <span class="code-keyword">in</span> tasks:
-    <span class="code-keyword">@effect func</span> set_to_in_development(task)
+    <span class="code-keyword">@effect context clear</span>
+    <span class="code-keyword">@state</span> isDone = <span class="code-keyword">false</span>
 
-    <span class="code-comment">// max iterations 5</span>
+    &lt;&lt;
+    Check the current state of the project and attempt to implement:
+    <span class="code-var">${task}</span>
+    &gt;&gt;
+    <span class="code-comment">// Add domain rules that help the loop run better.</span>
+    <span class="code-var">[[ additional_guidance.mg ]]</span>
+    &lt;&lt;
+    Mandatory last step: Once you're done check the acceptance criteria <span class="code-var">${task.acceptanceCriteria}</span>.
+    Set variable <span class="code-var">`isDone`</span> = true ONLY if ALL criteria are met.
+    Set variable <span class="code-var">`isDone`</span> = false if any criteria are not met.
+    &gt;&gt;
+
+    <span class="code-comment">// Run the agent 5 times and try to complete the task. </span>
     <span class="code-keyword">for</span> i <span class="code-keyword">in</span> range(5):
-        <span class="code-keyword">@state</span> isDone = <span class="code-keyword">false</span>
-        &lt;&lt; Check the current state of the project and attempt to implement <span class="code-var">${ task }</span> &gt;&gt;
         <span class="code-keyword">@effect run</span>
 
-        &lt;&lt; Check acceptance criteria <span class="code-var">${ task.acceptanceCriteria }</span> and set <span class="code-var">`isDone`</span> to true if met &gt;&gt;
-        <span class="code-keyword">@effect run</span>
-
+        <span class="code-comment">// If the agent says the task is done break and move onto the next task. </span>
         <span class="code-keyword">if</span> isDone:
-            <span class="code-keyword">@effect func</span> set_to_completed(task)
-            <span class="code-keyword">break</span>
-
-<span class="code-keyword">@effect context clear</span>
-
-<span class="code-comment">// ── Phase 4: Write a summary ──────────────────────────────</span>
-&lt;&lt; Write out a summary md file of the list of <span class="code-var">`tasks`</span> &gt;&gt;
-<span class="code-keyword">@effect run</span></code></pre>
+            <span class="code-keyword">break</span></code></pre>
       </div>
     </div>
   </div>
@@ -226,10 +208,10 @@ Store the list in the <span class="code-var">`tasks`</span> state variable.
         <div>
           <div class="tut-step-title">Define specialized prompt templates</div>
           <div class="tut-step-desc">
-            Each <code>.mg</code> template is a deep-specialist prompt focused on a single job.
-            <code>product-refiner.mg</code> transforms a rough idea into a comprehensive product spec.
-            <code>use-case-task-breakdown.mg</code> decomposes that spec into an ordered implementation
-            plan. Both receive their input via a <code>${ input }</code> variable injected at include time.
+            Each <code>.mg</code> template is a focused prompt with a single job.
+            <code>use-case-task-breakdown.mg</code> decomposes the user's idea into an ordered
+            implementation plan with acceptance criteria. <code>additional_guidance.mg</code> injects
+            domain-specific rules into every iteration of the loop — no parameters needed.
           </div>
         </div>
       </div>
@@ -238,20 +220,20 @@ Store the list in the <span class="code-var">`tasks`</span> state variable.
         <div class="feature-tab-list" role="tablist" aria-label="Prompt template comparison">
 
           <button class="feature-tab is-active" role="tab" aria-selected="true"
-                  aria-controls="panel-product-refiner" data-panel="product-refiner">
-            <span class="ftab-icon">&#128196;</span>
-            <span class="ftab-text">
-              <span class="ftab-name">product-refiner.mg</span>
-              <span class="ftab-desc">Spec from a rough idea</span>
-            </span>
-          </button>
-
-          <button class="feature-tab" role="tab" aria-selected="false"
                   aria-controls="panel-task-breakdown" data-panel="task-breakdown">
             <span class="ftab-icon">&#9998;</span>
             <span class="ftab-text">
               <span class="ftab-name">use-case-task-breakdown.mg</span>
-              <span class="ftab-desc">Tasks from a spec</span>
+              <span class="ftab-desc">Tasks from user input</span>
+            </span>
+          </button>
+
+          <button class="feature-tab" role="tab" aria-selected="false"
+                  aria-controls="panel-additional-guidance" data-panel="additional-guidance">
+            <span class="ftab-icon">&#128221;</span>
+            <span class="ftab-text">
+              <span class="ftab-name">additional_guidance.mg</span>
+              <span class="ftab-desc">Domain rules for the loop</span>
             </span>
           </button>
 
@@ -259,99 +241,69 @@ Store the list in the <span class="code-var">`tasks`</span> state variable.
 
         <div class="feature-panels">
 
-          <div class="feature-panel is-active" id="panel-product-refiner" role="tabpanel">
+          <div class="feature-panel is-active" id="panel-task-breakdown" role="tabpanel">
             <div class="fpanel-header">
-              <h3>product-refiner.mg</h3>
-              <p>A Product Use Case Refinement Specialist. Included via
-                <code>[[ product-refiner.mg input="..." ]]</code>. The <code>${ input }</code> variable
-                is injected at include time.</p>
+              <h3>use-case-task-breakdown.mg</h3>
+              <p>Decomposes the user's idea into an ordered implementation plan. Included via
+                <code>[[ use-case-task-breakdown.mg input=userInput ]]</code>. Stores results in the
+                <code>tasks</code> state variable.</p>
             </div>
             <pre class="fpanel-code"><code><span class="code-meta">---
-description: Product refiner prompt template
-parameters: input (string) - A rough, incomplete, or ambiguous use case description.
+description: Task Breakdown - Converts use cases into actionable implementation tasks
+parameters: input (string) - Use case to break down into tasks
 ---</span>
 &lt;&lt;
-## Role
-You are a Product Use Case Refinement Specialist with deep expertise in product
-management, user experience design, business analysis, and technical requirements
-documentation. Your mission is to transform rough, incomplete, or ambiguous use
-case descriptions into comprehensive, actionable specifications.
+Your task is to expand the following ask into a more detailed set of
+requirements / task breakdown.
 
-## Your Refinement Process
+- The output should be a more detailed description of the task,
+  without implementation details.
+- Consult AGENTS.md for code standards and best practices for
+  writing clear, actionable tasks.
+- Ask any follow up questions to reduce ambiguity and ensure the
+  task is well defined.
+- Keep the number of tasks to a small amount ideally 1-3.
+- We should follow Red, Green, Refactor where possible.
 
-### 1. Use Case Identification &amp; Context
-   - Use Case Title, ID, Priority, Status, Business Context,
-     Strategic Alignment...
+Create a list to store the task breakdown. Each task should have
+the following structure:
+{
+    "task": "The refined feature description",
+    "acceptanceCriteria": [
+        "A specific, measurable outcome that indicates the task
+         is successfully implemented.",
+        "Another specific, measurable outcome..."
+    ]
+}
 
-### 2. Actor &amp; Stakeholder Analysis
-   - Primary Actor, Secondary Actors, Stakeholders, User Personas
-     (demographics, goals, pain points, workarounds)...
+Store the list of tasks in the <span class="code-var">`tasks`</span> state variable.
 
-### 3. Preconditions &amp; Assumptions
-### 4. Main Success Scenario (Happy Path)
-### 5. Alternative Flows &amp; Variations
-### 6. Exception Flows &amp; Error Handling
-### 7. Postconditions &amp; Success Criteria
-### 8–17. UI, Functional &amp; Non-Functional Requirements,
-         Data Model, Business Rules, Integrations, Testing,
-         Metrics, Open Questions...
-
-## Key Principles
-- Clarity, Completeness, Consistency, Traceability, Testability
-- Do not ask questions — make informed assumptions to fill any gaps.
-
-<span class="code-var">${ input }</span>
+## This is the use case that should be broken down:
+<span class="code-var">${input}</span>
 &gt;&gt;</code></pre>
           </div>
 
-          <div class="feature-panel" id="panel-task-breakdown" role="tabpanel">
+          <div class="feature-panel" id="panel-additional-guidance" role="tabpanel">
             <div class="fpanel-header">
-              <h3>use-case-task-breakdown.mg</h3>
-              <p>A Use Case Task Breakdown Specialist. Accepts a refined spec via
-                <code>${ input }</code> and produces a sprint-ready implementation plan with
-                acceptance criteria on every task.</p>
+              <h3>additional_guidance.mg</h3>
+              <p>Domain-specific rules injected into every iteration of the implementation loop.
+                Included via <code>[[ additional_guidance.mg ]]</code> — no parameters needed.</p>
             </div>
             <pre class="fpanel-code"><code><span class="code-meta">---
-description: Use Case Task Breakdown Specialist
-parameters: input (string) - A refined use case specification to decompose.
+description: "Additional guidance for custom Ralph, based on project feedback."
 ---</span>
 &lt;&lt;
-## Role
-You are a Use Case Task Breakdown Specialist with deep expertise in software
-engineering, project management, and agile development. Your mission is to
-decompose refined product use cases into clear, actionable, implementable subtasks.
-
-## Your Breakdown Process
-
-### 1. Implementation Strategy
-   - Architecture Pattern, Technology Stack, Development Phases,
-     Integration &amp; Deployment Strategy...
-
-### 2. Task Categories
-
-#### A. Data &amp; Backend Tasks
-   - Database schema, API endpoints, business logic, auth...
-
-#### B. Frontend Tasks
-   - Components, state management, API integration, routing...
-
-#### C. Testing Tasks
-   - Unit, integration, E2E, performance, security, accessibility...
-
-#### D–F. DevOps, Design &amp; UX, Documentation Tasks
-
-### 3. Per-Task Template
-   Category, Priority, Effort (story points), Complexity,
-   Acceptance Criteria, Implementation Steps, Dependencies,
-   Definition of Done, Notes...
-
-### 4–10. Dependency Map, Sprint Planning, Resource Allocation,
-          Risk Assessment, Quality Gates, Success Metrics...
-
-## Estimation Guidelines
-1 pt = &lt;4 hrs  |  3 pts = 1-2 days  |  5 pts = 2-3 days  |  8 pts = 3-5 days
-
-<span class="code-var">${ input }</span>
+Here are some things to keep in mind:
+- There is no SQL involved in the task list, so don't do any SQL
+  queries or database interactions.
+- We should not commit to git or do any version control operations
+  as part of the task list.
+- Don't add any temp files to docs. If you absolutely need to
+  create a temp file do it in the ./temp directory.
+- If you get into a scenario where a criterion is not met but the
+  guidance forbids it, just set the task to done, but make a note
+  to the user.
+- Use <span class="code-var">`make test`</span> to run tests.
 &gt;&gt;</code></pre>
           </div>
 
@@ -370,10 +322,9 @@ decompose refined product use cases into clear, actionable, implementable subtas
         <div>
           <div class="tut-step-title">Drive the implementation loop</div>
           <div class="tut-step-desc">
-            For each task, Lime calls <code>set_to_in_development</code> then enters an inner loop
-            that runs the agent, checks acceptance criteria, and breaks when <code>isDone</code> is
-            <code>true</code> — capped at five iterations per task. The Python helpers handle status
-            bookkeeping without spending any tokens.
+            For each task, Lime clears context then enters an inner loop that injects the task
+            prompt, includes <code>additional_guidance.mg</code>, runs the agent, and breaks when
+            <code>isDone</code> is <code>true</code> — capped at five iterations per task.
           </div>
         </div>
       </div>
@@ -384,39 +335,41 @@ decompose refined product use cases into clear, actionable, implementable subtas
             <span class="tut-render-target">Loop logic</span>
           </div>
           <pre class="fpanel-code"><code><span class="code-keyword">for</span> task <span class="code-keyword">in</span> tasks:
-    <span class="code-comment">// Mark as in development — no tokens spent</span>
-    <span class="code-keyword">@effect func</span> set_to_in_development(task)
+    <span class="code-comment">// Fresh context for every task</span>
+    <span class="code-keyword">@effect context clear</span>
+    <span class="code-keyword">@state</span> isDone = <span class="code-keyword">false</span>
+
+    &lt;&lt; Check the current state of the project
+and attempt to implement: <span class="code-var">${task}</span> &gt;&gt;
+    <span class="code-comment">// Inject domain rules each iteration</span>
+    <span class="code-var">[[ additional_guidance.mg ]]</span>
+    &lt;&lt; Mandatory last step: check <span class="code-var">${task.acceptanceCriteria}</span>.
+Set <span class="code-var">`isDone`</span> = true ONLY if ALL criteria are met. &gt;&gt;
 
     <span class="code-comment">// Retry up to 5 times per task</span>
     <span class="code-keyword">for</span> i <span class="code-keyword">in</span> range(5):
-        <span class="code-keyword">@state</span> isDone = <span class="code-keyword">false</span>
-
-        &lt;&lt; Check the current state of the project
-and attempt to implement <span class="code-var">${ task }</span> &gt;&gt;
-        <span class="code-keyword">@effect run</span>
-
-        &lt;&lt; Check <span class="code-var">${ task.acceptanceCriteria }</span>
-and set <span class="code-var">`isDone`</span> to true if the criteria are met,
-otherwise set it to false &gt;&gt;
         <span class="code-keyword">@effect run</span>
 
         <span class="code-keyword">if</span> isDone:
-            <span class="code-keyword">@effect func</span> set_to_completed(task)
             <span class="code-keyword">break</span></code></pre>
         </div>
         <div class="tut-render-card tut-render-card--gemini">
           <div class="tut-render-card-header">
-            <span class="tut-model-badge tut-model-badge--gemini">tasks.py</span>
-            <span class="tut-render-target">Python helpers</span>
+            <span class="tut-model-badge tut-model-badge--gemini">additional_guidance.mg</span>
+            <span class="tut-render-target">Domain rules</span>
           </div>
-          <pre class="fpanel-code"><code><span class="code-comment"># tasks.py — called via @effect func
-# Runs in your process. Zero LLM round-trips.</span>
-
-<span class="code-keyword">def</span> set_to_in_development(task):
-    task[<span class="code-string">"status"</span>] = <span class="code-string">"in_progress"</span>
-
-<span class="code-keyword">def</span> set_to_completed(task):
-    task[<span class="code-string">"status"</span>] = <span class="code-string">"completed"</span></code></pre>
+          <pre class="fpanel-code"><code><span class="code-meta">---
+description: "Additional guidance for custom Ralph."
+---</span>
+&lt;&lt;
+Here are some things to keep in mind:
+- No SQL queries or database interactions.
+- No git commits or version control operations.
+- Temp files go in <span class="code-string">./temp</span>, never in docs.
+- If guidance prevents meeting a criterion,
+  mark the task done and note it for the user.
+- Use <span class="code-var">`make test`</span> to run tests.
+&gt;&gt;</code></pre>
         </div>
       </div>
     </div>
@@ -438,15 +391,15 @@ otherwise set it to false &gt;&gt;
         <div class="tut-insight-icon">&#127381;</div>
         <h3>State spans the whole run</h3>
         <p><code>@state</code> variables persist for the lifetime of the <code>.mgx</code> run.
-          <code>refinedFeature</code> and <code>tasks</code> are written by the agent in one phase
-          and read by the loop in the next — no manual wiring needed.</p>
+          The <code>tasks</code> list is written by the agent in the breakdown phase and read by
+          the loop in the next — no manual wiring needed.</p>
       </div>
       <div class="tut-insight-card">
-        <div class="tut-insight-icon">&#9881;&#65039;</div>
-        <h3>Local functions cost zero tokens</h3>
-        <p><code>@effect func</code> calls plain Python. Status updates like
-          <code>set_to_in_development</code> happen in your process instantly — the LLM is never
-          involved in bookkeeping.</p>
+        <div class="tut-insight-icon">&#128221;</div>
+        <h3>Inject domain rules anywhere</h3>
+        <p><code>[[ additional_guidance.mg ]]</code> can be dropped into any iteration of the loop.
+          Domain constraints — no SQL, no git commits, where to put temp files — are expressed once
+          and applied consistently, without repeating them in every prompt.</p>
       </div>
     </div>
   </div>

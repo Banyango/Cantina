@@ -55,7 +55,7 @@ Each component file contains one focused piece of a prompt. Team agents in the `
 [[ ../components/style/output-format.mg format="markdown" max_length="detailed" ]]
 
 // Inject task context and run
-[[ ../components/context/context-window.mg user_request="${ question }" background="${ schema }" ]]
+[[ ../components/context/context-window.mg user_request="${question}" background="${ schema }" ]]
 
 @effect run
 ```

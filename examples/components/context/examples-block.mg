@@ -7,13 +7,13 @@ parameters: task_description (string) - Brief description of the task so the exa
 <<
 ## Examples
 
-To guide your response, here are some examples of the expected input/output pattern for: **${ task_description }**
+To guide your response, here are some examples of the expected input/output pattern for: **${task_description}**
 >>
 for example in examples:
   <<
   ---
-  **Input**: ${ example.input }
-  **Output**: ${ example.output }
+  **Input**: ${example.input}
+  **Output**: ${example.output}
   >>
 <<
 ---
