@@ -4,17 +4,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cantina – Margarita + Lime + Salt</title>
+  <title>Margarita + Lime + Salt</title>
   <meta name="description"
         content="Cantina: A powerful ecosystem for reusable prompts and agentic workflows — home of Margarita, Lime, and Salt. Build, compose, and manage your AI pipelines with ease.">
 
-  <meta property="og:title" content="Cantina – Margarita + Lime + Salt">
+  <meta property="og:title" content=" Margarita + Lime + Salt">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://banyango.com/margarita/">
   <meta property="og:image" content="icon.png">
   <meta property="og:image:alt" content="Cantina logo">
   <meta property="og:description"
-        content="Cantina is the home of Margarita, Lime, and Salt — lightweight tools for building reusable prompt templates and agentic workflows.">
+        content="This is the home of Margarita, Lime, and Salt — lightweight tools for building reusable prompt templates and agentic workflows.">
 
   <link rel="icon" href="/img/favicon.ico" sizes="any">
   <link rel="icon" href="/img/icon.svg" type="image/svg+xml">
@@ -29,6 +29,7 @@
     rel="stylesheet">
 
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/asciinema-player@3/dist/bundle/asciinema-player.min.css">
 <script defer src="./js/app.js"></script></head>
 
 <body>
@@ -38,7 +39,7 @@
   <div class="nav-inner">
     <a href="#" class="nav-logo" aria-label="Cantina home">
       <img src="img/lime.svg" alt="Cantina" class="nav-logo-img">
-      <span class="nav-logo-text">Cantina</span>
+      <span class="nav-logo-text">Margarita + Lime + Salt</span>
     </a>
 
     <button class="nav-hamburger" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false"
@@ -62,6 +63,7 @@
           <li><a href="components.html">Compose Once, Reuse Everywhere</a></li>
           <li><a href="custom-ralph.html">Build a Custom Ralph Wiggum Loop</a></li>
           <li><a href="local-functions.html">Spend Less on Tokens</a></li>
+          <li><a href="github-issue-summary.html">Auto-Triage GitHub Issues</a></li>
         </ul>
       </li>
       <li>
@@ -81,7 +83,6 @@
   <div class="hero-lime-bg hero-lime-bg-4" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-lime-img"></div>
   <div class="hero-lime-bg hero-lime-bg-5" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-lime-img"></div>
   <div class="container">
-    <p class="hero-eyebrow">Cantina</p>
     <h1 class="hero-heading">
       Margarita <span class="hero-accent">+</span> Lime <span class="hero-accent">+</span> Salt
     </h1>
@@ -196,14 +197,14 @@ A **bold** statement followwed by *italics* and a [link](https://www.banyango.co
 Anything you can do in markdown you can do here.
 &gt;&gt;
 <span class="code-keyword">for</span> item <span class="code-keyword">in</span> items:
-  &lt;&lt; - This is also markdown -> <span class="code-var">${ item }</span> &gt;&gt;</code></pre>
+  &lt;&lt; - This is also markdown -> <span class="code-var">${item}</span> &gt;&gt;</code></pre>
         </div>
 
         <div class="feature-panel" id="panel-variables" role="tabpanel">
           <div class="fpanel-header">
             <h3>Variable Substitution</h3>
             <p>Pass data in through json context on the CLI or directly via includes and use
-              <code>${ variable }</code> anywhere in the body.</p>
+              <code>${variable}</code> anywhere in the body.</p>
           </div>
           <pre class="fpanel-code"><code><span class="code-comment"># greet.mg</span>
 <span class="code-meta">---
@@ -212,8 +213,8 @@ description: A simple template that demonstrates variable substitution.
 parameter1: name (string): The name of the person to greet.
 parameter2: project (string): The name of the project or product.
 ---</span>
-&lt;&lt; Hello, <span class="code-var">${ name }</span>! &gt;&gt;
-&lt;&lt; You are using <span class="code-var">${ project }</span>. &gt;&gt;</code></pre>
+&lt;&lt; Hello, <span class="code-var">${name}</span>! &gt;&gt;
+&lt;&lt; You are using <span class="code-var">${project}</span>. &gt;&gt;</code></pre>
         </div>
 
         <div class="feature-panel" id="panel-conditionals" role="tabpanel">
@@ -227,7 +228,7 @@ parameter2: project (string): The name of the project or product.
 <span class="code-meta">---
 parameter: level (string): Access level of the user, e.g. "admin" or "user".
 ---</span>
-&lt;&lt; Access level: <span class="code-var">${ level }</span> &gt;&gt;
+&lt;&lt; Access level: <span class="code-var">${level}</span> &gt;&gt;
 <span class="code-keyword">if</span> level == <span class="code-string">"admin"</span>:
   &lt;&lt; You have full access. &gt;&gt;
 <span class="code-keyword">else</span>:
@@ -246,7 +247,7 @@ description: A template that demonstrates looping over a list of tasks.
 ---</span>
 << ## My Tasks >>
 <span class="code-keyword">for</span> task <span class="code-keyword">in</span> tasks:
-  &lt;&lt; - <span class="code-var">${ task }</span> &gt;&gt;</code></pre>
+  &lt;&lt; - <span class="code-var">${task}</span> &gt;&gt;</code></pre>
         </div>
 
         <div class="feature-panel" id="panel-includes" role="tabpanel">
@@ -259,7 +260,7 @@ description: A template that demonstrates looping over a list of tasks.
 description: A simple greeting component that can be included in other templates.
 parameters: user (string): The name of the person to greet. (metadata is not required but good practice!)
 ---</span>
-&lt;&lt; Hello, <span class="code-var">${ user }</span>! &gt;&gt;
+&lt;&lt; Hello, <span class="code-var">${user}</span>! &gt;&gt;
 
 <span class="code-comment"># report.mg</span>
 <span class="code-meta">---
@@ -324,6 +325,7 @@ prompt = renderer.render(nodes)</code>
       </p>
       <div class="hero-actions">
         <a href="custom-ralph.html" class="btn btn-ghost">Guide: Build a Custom Ralph Wiggum Loop &rarr;</a>
+        <a href="github-issue-summary.html" class="btn btn-ghost">Guide: Auto-Triage GitHub Issues &rarr;</a>
         <a href="local-functions.html" class="btn btn-ghost">Guide: Spend less $ on Tokens &rarr;</a>
       </div>
       <div class="hero-explore">
@@ -331,9 +333,20 @@ prompt = renderer.render(nodes)</code>
       </div>
     </div>
 
+    <div id="lime-demo-player" style="border-radius:8px;overflow:hidden;max-width:900px;margin:0 auto 2.5rem;"></div>
+
     <div class="feature-explorer">
       <div class="feature-tab-list" role="tablist" aria-label="Lime feature examples">
         <button class="feature-tab is-active" role="tab" aria-selected="true"
+                aria-controls="panel-lime-helloworld" data-panel="lime-helloworld">
+          <span class="ftab-icon">&#128075;</span>
+          <span class="ftab-text">
+            <span class="ftab-name">Hello World</span>
+            <span class="ftab-desc">Your first .mgx file</span>
+          </span>
+        </button>
+
+        <button class="feature-tab" role="tab" aria-selected="false"
                 aria-controls="panel-lime-run" data-panel="lime-run">
           <span class="ftab-icon">&#9654;</span>
           <span class="ftab-text">
@@ -341,6 +354,7 @@ prompt = renderer.render(nodes)</code>
             <span class="ftab-desc">Execute the agent</span>
           </span>
         </button>
+
 
         <button class="feature-tab" role="tab" aria-selected="false"
                 aria-controls="panel-lime-func" data-panel="lime-func">
@@ -378,11 +392,42 @@ prompt = renderer.render(nodes)</code>
           </span>
         </button>
 
+        <button class="feature-tab" role="tab" aria-selected="false"
+                aria-controls="panel-lime-input" data-panel="lime-input">
+          <span class="ftab-icon">?</span>
+          <span class="ftab-text">
+            <span class="ftab-name">User Input</span>
+            <span class="ftab-desc">Prompt for input</span>
+          </span>
+        </button>
+
       </div><!-- /.feature-tab-list -->
 
       <div class="feature-panels">
 
-        <div class="feature-panel is-active" id="panel-lime-run" role="tabpanel">
+        <div class="feature-panel is-active" id="panel-lime-helloworld" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Hello World</h3>
+            <p>Your first <code>.mgx</code> file. Log a message, declare a state variable, write a prompt block, and run the agent — that's all it takes to get started with Lime.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-meta">---
+description: Hello World!
+---</span>
+
+<span class="code-comment">// Log a message before the agent starts</span>
+<span class="code-keyword">@effect log</span> <span class="code-var">"Welcome to Lime, let's get started!"</span>
+
+<span class="code-comment">// Declare a state variable</span>
+<span class="code-keyword">@state</span> variableA = <span class="code-string">"Hello World"</span>
+
+<span class="code-comment">// Build the prompt</span>
+&lt;&lt; Why do we create <span class="code-var">${variableA}</span> programs? &gt;&gt;
+
+<span class="code-comment">// Run the agent</span>
+<span class="code-keyword">@effect run</span></code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-lime-run" role="tabpanel">
           <div class="fpanel-header">
             <h3>Run Agent</h3>
             <p>Use <code>@effect run</code> to execute the agent at any point in your <code>.mgx</code> file. Margarita
@@ -424,7 +469,7 @@ description: Call a Python function and store the result into state vars.
               class="code-keyword">=></span> summary
 
 <span class="code-comment">// Summary was stored into state vars so we can use it here!</span>
-&lt;&lt; Write a poem about the summary: <span class="code-var">${ summary }</span> &gt;&gt;
+&lt;&lt; Write a poem about the summary: <span class="code-var">${summary}</span> &gt;&gt;
 
 <span class="code-keyword">@effect run</span></code></pre>
         </div>
@@ -469,13 +514,13 @@ description: Fetch data with a tool, then pass it to the agent.
 description: Two focused agent calls with a clean context boundary.
 ---</span>
 &lt;&lt; You are a code reviewer. &gt;&gt;
-&lt;&lt; Review: <span class="code-var">${ code }</span> &gt;&gt;
+&lt;&lt; Review: <span class="code-var">${code}</span> &gt;&gt;
 
 <span class="code-keyword">@effect run</span>
 <span class="code-keyword">@effect context clear</span>
 
 &lt;&lt; You are a documentation writer. &gt;&gt;
-&lt;&lt; Write docs for: <span class="code-var">${ code }</span> &gt;&gt;
+&lt;&lt; Write docs for: <span class="code-var">${code}</span> &gt;&gt;
 
 <span class="code-keyword">@effect run</span></code></pre>
         </div>
@@ -498,6 +543,26 @@ The agent can get/set state variables using markdown.
 
 Update the count variable to 10 and print out the user variable.
 &gt;&gt;
+
+<span class="code-keyword">@effect run</span></code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-lime-input" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>User Input</h3>
+            <p>Use <code>@effect input</code> to pause execution and prompt the user for a value. The response is
+              stored in state and available to the rest of the template.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># build-assistant.mgx</span>
+<span class="code-meta">---
+description: Prompt the user, then run the agent with their input.
+---</span>
+<span class="code-comment">// Pause and ask the user a question</span>
+<span class="code-keyword">@effect input</span> <span class="code-var">"What do you want to build?:"</span> <span class="code-keyword">=&gt;</span> userInput
+
+<span class="code-comment">// Use the captured input in context</span>
+&lt;&lt; You are a helpful build assistant. &gt;&gt;
+&lt;&lt; Help the user build: <span class="code-var">${userInput}</span> &gt;&gt;
 
 <span class="code-keyword">@effect run</span></code></pre>
         </div>
@@ -629,6 +694,15 @@ Update the count variable to 10 and print out the user variable.
 </footer>
 
 <script src="js/app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/asciinema-player@3/dist/bundle/asciinema-player.min.js"></script>
+<script>
+  AsciinemaPlayer.create('examples/helloworld/helloworld.cast', document.getElementById('lime-demo-player'), {
+    autoPlay: false,
+    theme: 'monokai',
+    fit: 'width',
+    terminalLineHeight: 1.2,
+  });
+</script>
 </body>
 
 </html>
