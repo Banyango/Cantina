@@ -403,6 +403,15 @@ prompt = renderer.render(nodes)</code>
           </span>
         </button>
 
+        <button class="feature-tab" role="tab" aria-selected="false"
+                aria-controls="panel-lime-memory" data-panel="lime-memory">
+          <span class="ftab-icon">&#128190;</span>
+          <span class="ftab-text">
+            <span class="ftab-name">Memory</span>
+            <span class="ftab-desc">Persist values across runs</span>
+          </span>
+        </button>
+
       </div><!-- /.feature-tab-list -->
 
       <div class="feature-panels">
@@ -431,8 +440,8 @@ description: Hello World!
 
         <div class="feature-panel" id="panel-lime-run" role="tabpanel">
           <div class="fpanel-header">
-            <h3>Run Agent</h3>
-            <p>Use <code>@effect run</code> to execute the agent at any point in your <code>.mgx</code> file. Margarita
+            <h3>Running the Agent</h3>
+            <p>Use <code>@effect run</code> to execute the agent at any point in your <code>.mgx</code> file. Run it multiple times. Margarita
               renders all accumulated
               <code>&lt;&lt; &gt;&gt;</code> blocks into the prompt before the agent is called.</p>
           </div>
@@ -479,18 +488,17 @@ description: Call a Python function and store the result into state vars.
         <div class="feature-panel" id="panel-lime-tools" role="tabpanel">
           <div class="fpanel-header">
             <h3>Dynamic Tools</h3>
-            <p>Use <code>@effect tools</code> to call a tool method directly from your <code>.mgx</code> file. The
-              result is stored in state and
-              available to the rest of the template. Use <code>@effect tools clear</code> to reset tool state.</p>
+            <p>Use <code>@effect tools</code> to add a tool function to your <code>agent</code>. Register only the tools you need. Use <code>@effect tools clear</code> to drop all tools.</p>
           </div>
           <pre class="fpanel-code"><code><span class="code-comment"># analyst.mgx</span>
 <span class="code-meta">---
 description: Fetch data with a tool, then pass it to the agent.
 ---</span>
-<span class="code-keyword">import</span> fetch <span class="code-keyword">from</span> module
+<span class="code-keyword">from</span> modules <span class="code-keyword">import</span> fetch, MyPydanticParams
 
 <span class="code-comment">// This registers your fetch Python function with the agent's tools.</span>
-<span class="code-keyword">@effect tools</span> fetch(url: str) <span class="code-keyword">=></span> data
+<span class="code-comment">// We specify the params with a pydantic model.</span>
+<span class="code-keyword">@effect tools</span> fetch(params: MyPydanticParams) <span class="code-keyword">=></span> data
 
 &lt;&lt; You are a helpful assistant. You can fetch data from urls if you need... &gt;&gt;
 
@@ -565,6 +573,27 @@ description: Prompt the user, then run the agent with their input.
 <span class="code-comment">// Use the captured input in context</span>
 &lt;&lt; You are a helpful build assistant. &gt;&gt;
 &lt;&lt; Help the user build: <span class="code-var">${userInput}</span> &gt;&gt;
+
+<span class="code-keyword">@effect run</span></code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-lime-memory" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Memory</h3>
+            <p>Use <code>@memory var</code> to declare a persistent variable that survives across runs. Values are
+              read on startup and written back at the end — letting you build workflows that remember what happened last time.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># memory-example.mgx</span>
+<span class="code-meta">---
+description: Test Memory
+---</span>
+<span class="code-comment">// Declare a memory variable — loaded from persistent storage</span>
+<span class="code-keyword">@memory</span> <span class="code-keyword">var</span> valueA
+
+&lt;&lt;
+If valueA is not set, Set `valueA` to <span class="code-string">"This is a test of memory."</span>
+Otherwise write out it's set!
+&gt;&gt;
 
 <span class="code-keyword">@effect run</span></code></pre>
         </div>
