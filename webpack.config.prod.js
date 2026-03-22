@@ -30,6 +30,11 @@ module.exports = merge(common, {
       filename: 'github-issue-summary.html',
       minify: false,
     }),
+    new HtmlWebpackPlugin({
+      template: './template-packages.html',
+      filename: 'template-packages.html',
+      minify: false,
+    }),
     new CopyPlugin({
       patterns: [
         { from: 'img', to: 'img' },
