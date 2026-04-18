@@ -4,15 +4,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Build a Custom Ralph Wiggum Loop – Lime</title>
+  <title>Build a Custom Ralph Wiggum Loop – Margarita</title>
   <meta name="description"
-        content="Learn how to chain Margarita prompt templates and Lime effects to build a fully automated feature development pipeline — from rough idea to working code.">
+        content="Learn how to chain Margarita prompt templates and Margarita effects to build a fully automated feature development pipeline — from rough idea to working code.">
 
-  <meta property="og:title" content="Build a Custom Agent Loop – Lime">
+  <meta property="og:title" content="Build a Custom Agent Loop – Margarita">
   <meta property="og:type" content="website">
   <meta property="og:image" content="icon.png">
   <meta property="og:description"
-        content="Compose specialized Margarita templates in a Lime orchestration file to refine features, break them into tasks, and iterate to completion automatically.">
+        content="Compose specialized Margarita templates in a Margarita orchestration file to refine features, break them into tasks, and iterate to completion automatically.">
 
   <link rel="icon" href="/img/favicon.ico" sizes="any">
   <link rel="icon" href="/img/icon.svg" type="image/svg+xml">
@@ -34,9 +34,9 @@
 <!-- Navigation -->
 <nav class="site-nav" aria-label="Main navigation">
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo" aria-label="Cantina home">
-      <img src="img/lime.svg" alt="Cantina" class="nav-logo-img">
-      <span class="nav-logo-text">Margarita + Lime</span>
+    <a href="index.html" class="nav-logo" aria-label="Margarita home">
+      <img src="img/lime.svg" alt="Margarita" class="nav-logo-img">
+      <span class="nav-logo-text">Margarita</span>
     </a>
 
     <button class="nav-hamburger" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false"
@@ -47,9 +47,19 @@
     </button>
 
     <ul class="nav-links" id="nav-links" role="list">
-      <li><a href="index.html#features">Margarita</a></li>
-      <li><a href="index.html#lime">Lime</a></li>
+      <li><a href="index.html#features">.mg</a></li>
+      <li><a href="index.html#margarita">.mgx</a></li>
       <li><a href="index.html#docs">Docs</a></li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+          Tutorials <span class="nav-dropdown-arrow" aria-hidden="true">&#9662;</span>
+        </button>
+        <ul class="nav-dropdown-menu" role="list">
+          <li><a href="margarita-getting-started.html">Getting Started With Agents</a></li>
+          <li><a href="margarita-tutorial-state.html">State</a></li>
+          <li><a href="margarita-tutorial-user-input.html">User Input</a></li>
+        </ul>
+      </li>
       <li class="nav-dropdown">
         <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
           Guides <span class="nav-dropdown-arrow" aria-hidden="true">&#9662;</span>
@@ -74,19 +84,19 @@
 
 <!-- Hero -->
 <section class="hero">
-  <div class="hero-lime-bg hero-lime-bg-1" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-lime-img"></div>
-  <div class="hero-lime-bg hero-lime-bg-2" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-lime-img"></div>
-  <div class="hero-lime-bg hero-lime-bg-3" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-lime-img"></div>
+  <div class="hero-mg-bg hero-mg-bg-1" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-mg-img"></div>
+  <div class="hero-mg-bg hero-mg-bg-2" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-mg-img"></div>
+  <div class="hero-mg-bg hero-mg-bg-3" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-mg-img"></div>
   <div class="container">
     <p class="hero-eyebrow">Guide</p>
     <h1 class="hero-heading">
       Build a Custom<br><span class="hero-accent">Ralph Wiggum Loop</span>
     </h1>
     <p class="hero-sub">
-      Use Lime orchestration file to build a custom Ralph Wiggum loop tailored to your own specific workflow.
+      Use Margarita orchestration file to build a custom Ralph Wiggum loop tailored to your own specific workflow.
     </p>
     <div class="tut-model-chips">
-      <span class="tut-chip tut-chip--claude">Lime</span>
+      <span class="tut-chip tut-chip--claude">Margarita</span>
       <span class="tut-chip tut-chip--plus">+</span>
       <span class="tut-chip tut-chip--gemini">Margarita</span>
     </div>
@@ -98,7 +108,7 @@
 <section class="tut-section tut-section--light">
   <div class="container">
     <div class="tut-intro">
-      <div class="lime-badge">The Problem</div>
+      <div class="mg-badge">The Problem</div>
       <h2 class="section-heading">Other Ralph Tools dont fit your workflow?</h2>
       <p class="section-sub">
         Maybe you want it to post to JIRA after tasking out the implementation plan. Maybe you want to run a code quality analysis after each implementation step. With a single monolithic prompt, you have no way to inject custom logic or effects at specific points in the workflow.
@@ -127,11 +137,11 @@
 <!-- Solution banner -->
 <section class="tut-section tut-section--dark">
   <div class="container tut-solution-banner">
-    <div class="lime-badge">The Solution</div>
+    <div class="mg-badge">The Solution</div>
     <h2 class="section-heading tut-dark-heading">Compose. Orchestrate. Iterate.</h2>
     <p class="section-sub tut-dark-sub">
       Break the workflow into focused Margarita prompt templates — one to break an idea into tasks,
-      one to guide each iteration with domain rules. Wire them together in a Lime
+      one to guide each iteration with domain rules. Wire them together in a Margarita
       <code class="tut-inline-code">.mgx</code> orchestration file that manages state, clears context
       between tasks, and loops over each task until its acceptance criteria are met.
     </p>
@@ -145,7 +155,7 @@
       <div class="tut-step-label">
         <span class="tut-step-number">1</span>
         <div>
-          <div class="tut-step-title">Create the .mdx</div>
+          <div class="tut-step-title">Create the .mgx</div>
           <div class="tut-step-desc">
             The <code>custom-ralph.mgx</code> file orchestrates the entire workflow. It prompts the
             user for input, delegates task breakdown to a specialist template, then loops over each
@@ -322,7 +332,7 @@ Here are some things to keep in mind:
         <div>
           <div class="tut-step-title">Drive the implementation loop</div>
           <div class="tut-step-desc">
-            For each task, Lime clears context then enters an inner loop that injects the task
+            For each task, Margarita clears context then enters an inner loop that injects the task
             prompt, includes <code>additional_guidance.mg</code>, runs the agent, and breaks when
             <code>isDone</code> is <code>true</code> — capped at five iterations per task.
           </div>
@@ -413,9 +423,9 @@ Here are some things to keep in mind:
       Grab the example files from GitHub and start composing your own specialized prompt templates.
     </p>
     <div class="hero-actions">
-      <a href="https://www.banyango.com/Lime/latest/" class="btn btn-primary" target="_blank"
-         rel="noopener noreferrer">Read the Lime Docs</a>
-      <a href="index.html" class="btn btn-ghost">Back to Margarita + Lime</a>
+      <a href="https://www.banyango.com/margarita/latest/" class="btn btn-primary" target="_blank"
+         rel="noopener noreferrer">Read the Margarita Docs</a>
+      <a href="index.html" class="btn btn-ghost">Back to Margarita</a>
     </div>
   </div>
 </section>
@@ -425,12 +435,12 @@ Here are some things to keep in mind:
   <div class="container">
     <div class="footer-inner">
       <div class="footer-brand">
-        <img src="img/lime.svg" alt="Margarita + Lime" class="footer-logo-img">
-        <span class="footer-brand-name">Margarita + Lime</span>
+        <img src="img/lime.svg" alt="Margarita" class="footer-logo-img">
+        <span class="footer-brand-name">Margarita</span>
       </div>
       <nav class="footer-links" aria-label="Footer navigation">
         <a href="https://www.banyango.com/margarita/latest/" target="_blank" rel="noopener noreferrer">Margarita Docs</a>
-        <a href="https://www.banyango.com/Lime/latest/" target="_blank" rel="noopener noreferrer">Lime Docs</a>
+        <a href="https://www.banyango.com/margarita/latest/" target="_blank" rel="noopener noreferrer">Margarita Docs</a>
         <a href="https://github.com/banyango/margarita" target="_blank" rel="noopener noreferrer">GitHub</a>
       </nav>
       <p class="footer-copy">&copy; 2026 Banyango. MIT License. Logo courtesy Freepik</p>
