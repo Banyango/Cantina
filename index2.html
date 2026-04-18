@@ -1,0 +1,1236 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Margarita</title>
+  <meta name="description" content="Margarita: A powerful ecosystem for reusable prompts and agentic workflows — Build, compose, and manage your AI pipelines with ease.">
+  <meta property="og:title" content="Margarita">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://banyango.com/margarita/">
+  <meta property="og:image" content="icon.png">
+  <meta property="og:description" content="This is the home of Margarita — lightweight tools for building reusable prompt templates and agentic workflows.">
+  <link rel="icon" href="/img/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="img/icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#16A34A">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Variables ── */
+    :root {
+      --green:       #16A34A;
+      --green-dark:  #14532D;
+      --green-mid:   #166534;
+      --green-soft:  #DCFCE7;
+      --green-pale:  #F0FDF4;
+      --bg:          #FAFAF7;
+      --surface:     #FFFFFF;
+      --text:        #1C2B1F;
+      --text-muted:  #52705C;
+      --border:      #D1E8D8;
+      --radius-sm:   6px;
+      --radius-md:   12px;
+      --radius-lg:   16px;
+      --max:         1200px;
+      --pad:         0 clamp(1.25rem, 5vw, 3rem);
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; }
+    ul { list-style: none; }
+    code, pre { font-family: 'DM Mono', monospace; }
+
+    /* ── Utility ── */
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: var(--pad);
+    }
+
+    /* ══════════════════════════════════
+       NAV
+    ══════════════════════════════════ */
+    .site-nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: var(--pad);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      height: 60px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      margin-right: 1rem;
+    }
+    .nav-logo-img { width: 22px; height: 22px; }
+    .nav-logo-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      color: var(--green-dark);
+      letter-spacing: 0.05em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-left: auto;
+    }
+    .nav-links > li > a,
+    .nav-dropdown-toggle {
+      display: block;
+      padding: 0.4rem 0.85rem;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-weight: 500;
+      border: none;
+      background: none;
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-links > li > a:hover,
+    .nav-dropdown-toggle:hover { background: var(--green-pale); color: var(--green-dark); text-decoration: none; }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-arrow { font-size: 0.6em; margin-left: 0.2rem; }
+    .nav-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      min-width: 240px;
+      z-index: 200;
+      padding: 0.4rem;
+    }
+    .nav-dropdown-menu li a {
+      display: block;
+      padding: 0.55rem 0.85rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-radius: var(--radius-sm);
+    }
+    .nav-dropdown-menu li a:hover { background: var(--green-pale); color: var(--green-dark); text-decoration: none; }
+    .nav-dropdown.is-open .nav-dropdown-menu { display: block; }
+    .nav-cta {
+      display: inline-block;
+      padding: 0.45rem 1.1rem;
+      background: var(--green);
+      color: #fff !important;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      margin-left: 0.5rem;
+      transition: background 0.15s;
+    }
+    .nav-cta:hover { background: var(--green-dark); text-decoration: none; }
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      margin-left: auto;
+      padding: 8px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+    }
+
+    /* ══════════════════════════════════
+       HERO
+    ══════════════════════════════════ */
+    .hero {
+      background: var(--green-pale);
+      border-bottom: 1px solid var(--border);
+      padding: 5rem 0 4.5rem;
+    }
+    .hero-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: var(--pad);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--green-mid);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .hero-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4.5rem, 10vw, 8rem);
+      line-height: 0.95;
+      color: var(--green-dark);
+      letter-spacing: 0.02em;
+      margin-bottom: 1.25rem;
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 1.8vw, 1.15rem);
+      color: var(--text-muted);
+      max-width: 38ch;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+    .hero-cta {
+      display: inline-block;
+      padding: 0.7rem 1.75rem;
+      background: var(--green);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: var(--radius-md);
+      transition: background 0.15s;
+    }
+    .hero-cta:hover { background: var(--green-dark); text-decoration: none; }
+
+    .hero-install-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+    }
+    .hero-install-block-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.65rem;
+    }
+    .hero-install-card {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--green-pale);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.7rem 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero-install-label { display: none; }
+    .hero-install-cmd {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.88rem;
+      color: var(--green-dark);
+      flex: 1;
+      background: transparent;
+      padding: 0;
+    }
+    .hero-install-copy {
+      background: var(--green);
+      color: #fff;
+      border: none;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      padding: 0.3rem 0.65rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .hero-install-copy:hover { background: var(--green-dark); }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+    }
+    .hero-stat {
+      background: var(--green-pale);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 0.5rem;
+      text-align: center;
+    }
+    .hero-stat-val {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.75rem;
+      color: var(--green-dark);
+      line-height: 1;
+    }
+    .hero-stat-lbl {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 0.2rem;
+    }
+
+    /* ══════════════════════════════════
+       SECTION STRUCTURE
+    ══════════════════════════════════ */
+    .section-mg {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 5rem 0;
+    }
+    .section-mgx {
+      background: var(--green-pale);
+      border-bottom: 1px solid var(--border);
+      padding: 5rem 0;
+    }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2rem;
+      align-items: start;
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 5rem;
+      line-height: 1;
+      color: var(--green);
+      opacity: 0.15;
+      user-select: none;
+    }
+    .section-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--green-mid);
+      margin-bottom: 0.4rem;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      color: var(--green-dark);
+      margin-bottom: 0.75rem;
+    }
+    .section-body {
+      font-size: 0.975rem;
+      line-height: 1.7;
+      max-width: 60ch;
+      color: var(--text-muted);
+    }
+    .section-body code {
+      font-size: 0.875em;
+      background: var(--green-soft);
+      color: var(--green-dark);
+      padding: 0.1em 0.35em;
+      border-radius: 4px;
+    }
+
+    /* ══════════════════════════════════
+       FEATURE EXPLORER
+    ══════════════════════════════════ */
+    .feature-explorer {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+    .section-mgx .feature-explorer {
+      background: var(--surface);
+    }
+
+    .feature-tab-list {
+      display: flex;
+      flex-wrap: wrap;
+      background: var(--green-soft);
+      border-bottom: 1px solid var(--border);
+      padding: 0.4rem 0.4rem 0;
+      gap: 2px;
+    }
+
+    .feature-tab {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.9rem;
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.15s, color 0.15s;
+      margin-bottom: -1px;
+    }
+    .feature-tab:hover { background: rgba(255,255,255,0.6); color: var(--green-dark); }
+    .feature-tab.is-active {
+      background: var(--surface);
+      color: var(--green-dark);
+      border: 1px solid var(--border);
+      border-bottom-color: var(--surface);
+    }
+
+    .ftab-icon {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--green);
+      min-width: 24px;
+    }
+    .ftab-text { display: flex; flex-direction: column; }
+    .ftab-name { font-size: 0.8rem; font-weight: 600; }
+    .ftab-desc { font-size: 0.63rem; color: var(--text-muted); }
+    .feature-tab.is-active .ftab-desc { color: var(--text-muted); }
+
+    .feature-panels { background: var(--surface); }
+    .feature-panel { display: none; }
+    .feature-panel.is-active { display: block; }
+
+    .fpanel-header {
+      padding: 1.4rem 1.5rem 1rem;
+      border-bottom: 1px solid var(--green-soft);
+    }
+    .fpanel-header h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.03em;
+      color: var(--green-dark);
+      margin-bottom: 0.2rem;
+    }
+    .fpanel-header p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.55; }
+    .fpanel-header code {
+      font-size: 0.82em;
+      background: var(--green-soft);
+      color: var(--green-dark);
+      padding: 0.1em 0.35em;
+      border-radius: 4px;
+    }
+
+    .fpanel-code {
+      padding: 1.4rem 1.5rem;
+      font-size: 0.82rem;
+      line-height: 1.75;
+      overflow-x: auto;
+      color: var(--text);
+      background: var(--surface);
+      white-space: pre;
+    }
+
+    .code-meta    { color: var(--text-muted); }
+    .code-comment { color: var(--text-muted); font-style: italic; }
+    .code-keyword { color: var(--green-dark); font-weight: 600; }
+    .code-var     { color: var(--green-mid); }
+    .code-string  { color: #6B7B50; }
+
+    /* ══════════════════════════════════
+       GUIDE CARDS
+    ══════════════════════════════════ */
+    .guide-cards { margin-top: 0; }
+    .guide-cards-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.65rem;
+    }
+    .guide-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+    }
+    .guide-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 1.1rem 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text);
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 1.4;
+      transition: border-color 0.15s, background 0.15s;
+      text-decoration: none;
+    }
+    .guide-card:hover { border-color: var(--green); background: var(--green-pale); color: var(--green-dark); text-decoration: none; }
+    .section-mgx .guide-card { background: var(--surface); }
+    .section-mgx .guide-card:hover { background: var(--green-pale); border-color: var(--green); }
+
+    .guide-card-title { flex: 1; }
+    .guide-card-arrow { flex-shrink: 0; color: var(--green); font-size: 1rem; transition: transform 0.15s; }
+    .guide-card:hover .guide-card-arrow { transform: translateX(3px); }
+
+    /* ══════════════════════════════════
+       DOCS SECTION
+    ══════════════════════════════════ */
+    .docs-section {
+      background: var(--bg);
+      padding: 5rem 0;
+    }
+    .docs-header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .docs-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--green-mid);
+      margin-bottom: 0.4rem;
+    }
+    .docs-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      letter-spacing: 0.02em;
+      color: var(--green-dark);
+    }
+    .docs-sub {
+      margin-top: 0.4rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 50ch;
+    }
+    .docs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .docs-card {
+      display: block;
+      padding: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      color: var(--text);
+      text-decoration: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .docs-card:hover { border-color: var(--green); background: var(--green-pale); text-decoration: none; }
+    .docs-card-icon {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--green);
+      margin-bottom: 1rem;
+    }
+    .docs-card-icon svg { display: block; color: var(--green); }
+    .docs-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.03em;
+      color: var(--green-dark);
+      margin-bottom: 0.4rem;
+    }
+    .docs-card p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.1rem; }
+    .docs-card-link {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--green);
+      font-family: 'DM Mono', monospace;
+    }
+
+    /* ══════════════════════════════════
+       FOOTER
+    ══════════════════════════════════ */
+    .site-footer {
+      background: var(--green-pale);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 0;
+    }
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: var(--pad);
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .footer-logo-img { width: 20px; height: 20px; }
+    .footer-brand-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.25rem;
+      color: var(--green-dark);
+      letter-spacing: 0.05em;
+    }
+    .footer-links {
+      display: flex;
+      gap: 0.25rem;
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      display: block;
+      padding: 0.35rem 0.75rem;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 500;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s, color 0.15s;
+    }
+    .footer-links a:hover { background: var(--green-soft); color: var(--green-dark); text-decoration: none; }
+    .footer-copy {
+      width: 100%;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-family: 'DM Mono', monospace;
+      opacity: 0.6;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ══════════════════════════════════
+       DARK MODE
+    ══════════════════════════════════ */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --green:       #22C55E;
+        --green-dark:  #86EFAC;
+        --green-mid:   #4ADE80;
+        --green-soft:  #14532D;
+        --green-pale:  #0F2318;
+        --bg:          #0B1610;
+        --surface:     #111E16;
+        --text:        #DFF0E4;
+        --text-muted:  #7AAD8A;
+        --border:      #243D2C;
+      }
+
+      .nav-logo-img { filter: brightness(0.85) saturate(0.7); }
+      .footer-logo-img { filter: brightness(0.85) saturate(0.7); }
+
+      .hero-install-copy { color: var(--bg); }
+      .nav-cta { color: var(--bg) !important; }
+      .hero-cta { color: var(--bg); }
+      .guide-card:hover { color: var(--bg); }
+    }
+
+    /* ══════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════ */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .hero-heading { font-size: clamp(3.5rem, 15vw, 6rem); }
+      .hero-stats { }
+      .guide-cards-grid { grid-template-columns: 1fr; }
+      .docs-grid { grid-template-columns: 1fr; }
+      .section-header { grid-template-columns: 1fr; }
+      .section-number { font-size: 3rem; }
+    }
+
+    @media (max-width: 700px) {
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: var(--surface); border-bottom: 1px solid var(--border); padding: 0.5rem; }
+      .nav-links.is-open { display: flex; }
+      .nav-links > li > a,
+      .nav-dropdown-toggle { height: auto; line-height: 1; padding: 0.7rem 0.85rem; border-radius: var(--radius-sm); }
+      .nav-cta { margin: 0.5rem 0.85rem; }
+      .nav-hamburger { display: flex; }
+      .nav-dropdown-menu { position: static; border: none; background: var(--green-pale); margin-top: 2px; }
+      .nav-dropdown-menu li a { padding-left: 1.5rem; }
+      .feature-tab { padding: 0.5rem 0.65rem; }
+      .ftab-desc { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" aria-label="Margarita home">
+      <img src="img/lime.svg" alt="Margarita" class="nav-logo-img">
+      <span class="nav-logo-text">Margarita</span>
+    </a>
+
+    <button class="nav-hamburger" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="nav-links" id="nav-links" role="list">
+      <li><a href="#features">.mg</a></li>
+      <li><a href="#margarita">.mgx</a></li>
+      <li><a href="#docs">Docs</a></li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+          Tutorials <span class="nav-dropdown-arrow" aria-hidden="true">&#9662;</span>
+        </button>
+        <ul class="nav-dropdown-menu" role="list">
+          <li><a href="margarita-getting-started.html">Getting Started with Margarita</a></li>
+          <li><a href="margarita-tutorial-state.html">State</a></li>
+          <li><a href="margarita-tutorial-user-input.html">User Input</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+          Guides <span class="nav-dropdown-arrow" aria-hidden="true">&#9662;</span>
+        </button>
+        <ul class="nav-dropdown-menu" role="list">
+          <li><a href="agents-md.html">One AGENTS.md, for Any Model</a></li>
+          <li><a href="components.html">Compose Once, Reuse Everywhere</a></li>
+          <li><a href="custom-ralph.html">Build a Custom Ralph Wiggum Loop</a></li>
+          <li><a href="local-functions.html">Spend Less on Tokens</a></li>
+          <li><a href="github-issue-summary.html">Auto-Triage GitHub Issues</a></li>
+          <li><a href="template-packages.html">Share Templates Across Projects</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="https://github.com/banyango/margarita" class="nav-cta" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Prompt engineering / Agentic workflows</p>
+      <h1 class="hero-heading">Margarita</h1>
+      <p class="hero-sub">Writing agents should be as easy as writing Markdown.</p>
+      <a href="https://www.banyango.com/margarita/latest/" class="hero-cta" target="_blank" rel="noopener noreferrer">Get Started &rarr;</a>
+    </div>
+    <div class="hero-right">
+      <div class="hero-install-block">
+        <p class="hero-install-block-label">Quick install</p>
+        <div class="hero-install-card">
+          <span class="hero-install-label">Quick Install</span>
+          <code class="hero-install-cmd">uv tool install margarita</code>
+          <button class="hero-install-copy" aria-label="Copy install command"
+            onclick="navigator.clipboard.writeText('uv tool install margarita').then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)})">Copy</button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-val">.mg</div>
+            <div class="hero-stat-lbl">Templates</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-val">.mgx</div>
+            <div class="hero-stat-lbl">Agents</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-val">uv</div>
+            <div class="hero-stat-lbl">Powered</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- .mg Features -->
+<section class="section-mg" id="features">
+  <div class="wrap">
+    <div class="section-header">
+      <div class="section-number" aria-hidden="true">01</div>
+      <div class="section-header-right">
+        <p class="section-tag">Ecosystem</p>
+        <h2 class="section-title">.mg</h2>
+        <p class="section-body">Enhance your Markdown with easy to read logic. You don't need to know Python or any other Programming Language. Powerful concepts like Templates with variables, conditionals, loops, and includes that render to plain Markdown. More importantly .mg files enable agentic workflows with .mgx!</p>
+      </div>
+    </div>
+
+    <div class="feature-explorer">
+      <div class="feature-tab-list" role="tablist" aria-label="Feature examples">
+        <button class="feature-tab is-active" role="tab" aria-selected="true" aria-controls="panel-markdown" data-panel="markdown">
+          <span class="ftab-icon">&lt;&gt;</span>
+          <span class="ftab-text"><span class="ftab-name">Markdown</span><span class="ftab-desc">Plain markdown output</span></span>
+        </button>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-variables" data-panel="variables">
+          <span class="ftab-icon">{}</span>
+          <span class="ftab-text"><span class="ftab-name">Variables</span><span class="ftab-desc">Inject context values</span></span>
+        </button>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-conditionals" data-panel="conditionals">
+          <span class="ftab-icon">if:</span>
+          <span class="ftab-text"><span class="ftab-name">Conditionals</span><span class="ftab-desc">if / else branching</span></span>
+        </button>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-loops" data-panel="loops">
+          <span class="ftab-icon">for:</span>
+          <span class="ftab-text"><span class="ftab-name">Loops</span><span class="ftab-desc">Iterate over lists</span></span>
+        </button>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-includes" data-panel="includes">
+          <span class="ftab-icon">&lt;+&gt;</span>
+          <span class="ftab-text"><span class="ftab-name">Includes</span><span class="ftab-desc">Compose from fragments</span></span>
+        </button>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-uv" data-panel="uv">
+          <span class="ftab-icon">&#9889;</span>
+          <span class="ftab-text"><span class="ftab-name">uv</span><span class="ftab-desc">Fast Python packaging</span></span>
+        </button>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-python" data-panel="python">
+          <span class="ftab-icon">&#955;</span>
+          <span class="ftab-text"><span class="ftab-name">Python API</span><span class="ftab-desc">Programmatic access</span></span>
+        </button>
+      </div>
+
+      <div class="feature-panels">
+        <div class="feature-panel is-active" id="panel-markdown" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Markdown Output</h3>
+            <p>Anything between <code>&lt;&lt;</code> and <code>&gt;&gt;</code> is plain Markdown</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-meta">---
+description: A template that demonstrates basic markdown formatting.
+---</span>
+&lt;&lt;
+# This is a normal heading
+  - A list
+A **bold** statement followed by *italics* and a [link](https://www.banyango.com/margarita/latest).
+
+Anything you can do in markdown you can do here.
+&gt;&gt;
+<span class="code-keyword">for</span> item <span class="code-keyword">in</span> items:
+  &lt;&lt; - This is also markdown -&gt; <span class="code-var">${item}</span> &gt;&gt;</code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-variables" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Variable Substitution</h3>
+            <p>Pass data into your templates using <code>${variable}</code> anywhere in the body.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># greet.mg</span>
+<span class="code-meta">---
+name: greet
+description: A simple template that demonstrates variable substitution.
+parameter1: name (string): The name of the person to greet.
+parameter2: project (string): The name of the project or product.
+---</span>
+&lt;&lt; Hello, <span class="code-var">${name}</span>! &gt;&gt;
+&lt;&lt; You are using <span class="code-var">${project}</span>. &gt;&gt;</code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-conditionals" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Conditionals</h3>
+            <p>Use <code>if var == value:</code> / <code>else:</code> to include or exclude sections based on context.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># access.mg</span>
+<span class="code-meta">---
+parameter: level (string): Access level of the user, e.g. "admin" or "user".
+---</span>
+&lt;&lt; Access level: <span class="code-var">${level}</span> &gt;&gt;
+<span class="code-keyword">if</span> level == <span class="code-string">"admin"</span>:
+  &lt;&lt; You have full access. &gt;&gt;
+<span class="code-keyword">else</span>:
+  &lt;&lt; Read-only mode. &gt;&gt;</code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-loops" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Loops</h3>
+            <p>Loop over data just like in your programming languages.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># tasks.mg</span>
+<span class="code-meta">---
+description: A template that demonstrates looping over a list of tasks.
+---</span>
+&lt;&lt; ## My Tasks &gt;&gt;
+<span class="code-keyword">for</span> task <span class="code-keyword">in</span> tasks:
+  &lt;&lt; - <span class="code-var">${task}</span> &gt;&gt;</code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-includes" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Includes</h3>
+            <p>React-like composability with includes.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># components/greeting.mg</span>
+<span class="code-meta">---
+description: A simple greeting component that can be included in other templates.
+parameters: user (string): The name of the person to greet.
+---</span>
+&lt;&lt; Hello, <span class="code-var">${user}</span>! &gt;&gt;
+
+<span class="code-comment"># report.mg</span>
+<span class="code-meta">---
+description: A report template that includes a greeting component.
+---</span>
+<span class="code-var">[[ components/greeting.mg user="Batman" ]]</span></code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-uv" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Using Margarita with uv</h3>
+            <p>Use <code>uvx</code> to run it as a one-off tool, or add it as a project dependency.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># run margarita directly without installing</span>
+uvx margarita render greet.mg
+
+<span class="code-comment"># add margarita to your project</span>
+uv add margarita
+
+<span class="code-comment"># run via uv in a project that has margarita as a dependency</span>
+uv run margarita render greet.mg
+
+<span class="code-comment"># install globally as a uv tool</span>
+uv tool install margarita
+
+<span class="code-comment"># include a template shipped inside a uv-managed package</span>
+<span class="code-var">[[ my-prompt-package/summarize.mg topic="AI agents" ]]</span></code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-python" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Python API</h3>
+            <p>Import Margarita directly into Python for agentic loop patterns — render templates, inject dynamic context, and pipe the output straight into your LLM calls.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-keyword">from</span> margarita.parser <span class="code-keyword">import</span> Parser
+<span class="code-keyword">from</span> margarita.renderer <span class="code-keyword">import</span> Renderer
+
+metadata, nodes = Parser().parse(template)
+renderer = Renderer(context={
+    "task": "Summarize the key points",
+    "context": "User is researching AI agents"
+})
+
+prompt = renderer.render(nodes)</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="guide-cards">
+      <p class="guide-cards-label">Guides</p>
+      <div class="guide-cards-grid">
+        <a href="components.html" class="guide-card">
+          <span class="guide-card-title">Compose Once, Reuse Everywhere</span>
+          <span class="guide-card-arrow">&rarr;</span>
+        </a>
+        <a href="agents-md.html" class="guide-card">
+          <span class="guide-card-title">One AGENTS.md, for Any Model</span>
+          <span class="guide-card-arrow">&rarr;</span>
+        </a>
+        <a href="template-packages.html" class="guide-card">
+          <span class="guide-card-title">Share Templates Across Projects</span>
+          <span class="guide-card-arrow">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- .mgx Features -->
+<section class="section-mgx" id="margarita">
+  <div class="wrap">
+    <div class="section-header">
+      <div class="section-number" aria-hidden="true">02</div>
+      <div class="section-header-right">
+        <p class="section-tag">Ecosystem</p>
+        <h2 class="section-title">.mgx</h2>
+        <p class="section-body">AI agents should be as easy to program as writing Markdown. Margarita wraps your existing tools like Github Copilot and lets you programmatically control the context, tools, and state sent to them via <code>.mgx</code> files.</p>
+      </div>
+    </div>
+
+    <div class="feature-explorer">
+      <div class="feature-tab-list" role="tablist" aria-label="Margarita feature examples">
+        <button class="feature-tab is-active" role="tab" aria-selected="true" aria-controls="panel-mg-helloworld" data-panel="mg-helloworld">
+          <span class="ftab-icon">&#128075;</span>
+          <span class="ftab-text"><span class="ftab-name">Hello World</span><span class="ftab-desc">Your first .mgx file</span></span>
+        </button>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-mg-run" data-panel="mg-run">
+          <span class="ftab-icon">&#9654;</span>
+          <span class="ftab-text"><span class="ftab-name">Run Agent</span><span class="ftab-desc">Execute the agent</span></span>
+        </button>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-mg-func" data-panel="mg-func">
+          <span class="ftab-icon">fn</span>
+          <span class="ftab-text"><span class="ftab-name">Local Functions</span><span class="ftab-desc">Run Python locally</span></span>
+        </button>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-mg-tools" data-panel="mg-tools">
+          <span class="ftab-icon">[]</span>
+          <span class="ftab-text"><span class="ftab-name">Dynamic Tools</span><span class="ftab-desc">Call tool methods</span></span>
+        </button>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-mg-context" data-panel="mg-context">
+          <span class="ftab-icon">ctx</span>
+          <span class="ftab-text"><span class="ftab-name">Context Control</span><span class="ftab-desc">Prevent context bloat</span></span>
+        </button>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-mg-state" data-panel="mg-state">
+          <span class="ftab-icon">~</span>
+          <span class="ftab-text"><span class="ftab-name">State</span><span class="ftab-desc">Persistent variables</span></span>
+        </button>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-mg-input" data-panel="mg-input">
+          <span class="ftab-icon">?</span>
+          <span class="ftab-text"><span class="ftab-name">User Input</span><span class="ftab-desc">Prompt for input</span></span>
+        </button>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-mg-memory" data-panel="mg-memory">
+          <span class="ftab-icon">&#128190;</span>
+          <span class="ftab-text"><span class="ftab-name">Memory</span><span class="ftab-desc">Persist values across runs</span></span>
+        </button>
+      </div>
+
+      <div class="feature-panels">
+        <div class="feature-panel is-active" id="panel-mg-helloworld" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Hello World</h3>
+            <p>Your first <code>.mgx</code> file. Log a message, declare a state variable, write a prompt block, and run the agent — that's all it takes to get started with Margarita.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-meta">---
+description: Hello World!
+---</span>
+
+<span class="code-comment">// Log a message before the agent starts</span>
+<span class="code-keyword">@effect log</span> <span class="code-var">"Welcome to Margarita, let's get started!"</span>
+
+<span class="code-comment">// Declare a state variable</span>
+<span class="code-keyword">@state</span> variableA = <span class="code-string">"Hello World"</span>
+
+<span class="code-comment">// Build the prompt</span>
+&lt;&lt; Why do we create <span class="code-var">${variableA}</span> programs? &gt;&gt;
+
+<span class="code-comment">// Run the agent</span>
+<span class="code-keyword">@effect run</span></code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-mg-run" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Running the Agent</h3>
+            <p>Use <code>@effect run</code> to execute the agent at any point in your <code>.mgx</code> file. Run it multiple times. Margarita renders all accumulated <code>&lt;&lt; &gt;&gt;</code> blocks into the prompt before the agent is called.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># assistant.mgx</span>
+<span class="code-meta">---
+description: A simple Margarita agent that answers a question.
+---</span>
+<span class="code-comment">// All statements are sequential</span>
+
+<span class="code-comment">// 1. Add this to the context</span>
+&lt;&lt; You are a helpful assistant. What is the answer to life the universe and everything? &gt;&gt;
+
+<span class="code-comment">// 2. Run the agent</span>
+<span class="code-keyword">@effect run</span>
+
+<span class="code-comment">// 3. Add more to the context</span>
+&lt;&lt; You need to think harder this time? &gt;&gt;
+
+<span class="code-comment">// 4. Run the agent again!</span>
+<span class="code-keyword">@effect run</span></code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-mg-func" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Local Functions</h3>
+            <p>Use <code>@effect func</code> to run a local Python function and store the return value in state — no LLM round-trip, no tokens consumed.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># processor.mgx</span>
+<span class="code-meta">---
+description: Call a Python function and store the result into state vars.
+---</span>
+<span class="code-keyword">import</span> summarize <span class="code-keyword">from</span> module
+
+<span class="code-comment">// Run the summarize function and store into summary var</span>
+<span class="code-keyword">@effect func</span> summarize(<span class="code-var">"A really long text input"</span>) <span class="code-keyword">=&gt;</span> summary
+
+<span class="code-comment">// Summary was stored into state vars so we can use it here!</span>
+&lt;&lt; Write a poem about the summary: <span class="code-var">${summary}</span> &gt;&gt;
+
+<span class="code-keyword">@effect run</span></code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-mg-tools" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Dynamic Tools</h3>
+            <p>Use <code>@effect tools</code> to add a tool function to your <code>agent</code>. Register only the tools you need. Use <code>@effect tools clear</code> to drop all tools.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># analyst.mgx</span>
+<span class="code-meta">---
+description: Fetch data with a tool, then pass it to the agent.
+---</span>
+<span class="code-keyword">from</span> modules <span class="code-keyword">import</span> fetch, MyPydanticParams
+
+<span class="code-comment">// This registers your fetch Python function with the agent's tools.</span>
+<span class="code-keyword">@effect tools</span> fetch(params: MyPydanticParams) <span class="code-keyword">=&gt;</span> data
+
+&lt;&lt; You are a helpful assistant. You can fetch data from urls if you need... &gt;&gt;
+
+<span class="code-keyword">@effect run</span>
+<span class="code-keyword">@effect tools clear</span>
+
+<span class="code-comment">// Tools are cleared so no context is wasted on that tool.</span>
+&lt;&lt; Write a summary... &gt;&gt;
+<span class="code-keyword">@effect run</span></code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-mg-context" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Context Control</h3>
+            <p>Use <code>@effect context clear</code> to reset the accumulated context between agent calls. Keeps each step focused and prevents context from ballooning across a multi-step workflow.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># multi-step.mgx</span>
+<span class="code-meta">---
+description: Two focused agent calls with a clean context boundary.
+---</span>
+&lt;&lt; You are a code reviewer. &gt;&gt;
+&lt;&lt; Review: <span class="code-var">${code}</span> &gt;&gt;
+
+<span class="code-keyword">@effect run</span>
+<span class="code-keyword">@effect context clear</span>
+
+&lt;&lt; You are a documentation writer. &gt;&gt;
+&lt;&lt; Write docs for: <span class="code-var">${code}</span> &gt;&gt;
+
+<span class="code-keyword">@effect run</span></code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-mg-state" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>State</h3>
+            <p>Values stored by <code>@effect func</code> and <code>@effect tools</code> persist for the lifetime of the run — templates and the agent can read from state at any point.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># stateful.mgx</span>
+<span class="code-meta">---
+description: Show how the agent state works.
+---</span>
+<span class="code-keyword">@state</span> count = 5
+<span class="code-keyword">@state</span> user = "Batman"
+
+&lt;&lt;
+The agent can get/set state variables using markdown.
+
+Update the count variable to 10 and print out the user variable.
+&gt;&gt;
+
+<span class="code-keyword">@effect run</span></code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-mg-input" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>User Input</h3>
+            <p>Use <code>@effect input</code> to pause execution and prompt the user for a value. The response is stored in state and available to the rest of the template.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># build-assistant.mgx</span>
+<span class="code-meta">---
+description: Prompt the user, then run the agent with their input.
+---</span>
+<span class="code-comment">// Pause and ask the user a question</span>
+<span class="code-keyword">@effect input</span> <span class="code-var">"What do you want to build?:"</span> <span class="code-keyword">=&gt;</span> userInput
+
+<span class="code-comment">// Use the captured input in context</span>
+&lt;&lt; You are a helpful build assistant. &gt;&gt;
+&lt;&lt; Help the user build: <span class="code-var">${userInput}</span> &gt;&gt;
+
+<span class="code-keyword">@effect run</span></code></pre>
+        </div>
+
+        <div class="feature-panel" id="panel-mg-memory" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Memory</h3>
+            <p>Use <code>@memory var</code> to declare a persistent variable that survives across runs. Values are read on startup and written back at the end — letting you build workflows that remember what happened last time.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># memory-example.mgx</span>
+<span class="code-meta">---
+description: Test Memory
+---</span>
+<span class="code-comment">// Declare a memory variable — loaded from persistent storage</span>
+<span class="code-keyword">@memory</span> <span class="code-keyword">var</span> valueA
+
+&lt;&lt;
+If valueA is not set, Set `valueA` to <span class="code-string">"This is a test of memory."</span>
+Otherwise write out it's set!
+&gt;&gt;
+
+<span class="code-keyword">@effect run</span></code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="guide-cards">
+      <p class="guide-cards-label">Guides</p>
+      <div class="guide-cards-grid">
+        <a href="custom-ralph.html" class="guide-card">
+          <span class="guide-card-title">Build a Custom Ralph Wiggum Loop</span>
+          <span class="guide-card-arrow">&rarr;</span>
+        </a>
+        <a href="github-issue-summary.html" class="guide-card">
+          <span class="guide-card-title">Auto-Triage GitHub Issues</span>
+          <span class="guide-card-arrow">&rarr;</span>
+        </a>
+        <a href="local-functions.html" class="guide-card">
+          <span class="guide-card-title">Spend Less on Tokens</span>
+          <span class="guide-card-arrow">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Docs -->
+<section class="docs-section" id="docs">
+  <div class="wrap">
+    <div class="docs-header">
+      <p class="docs-eyebrow">03 / Documentation</p>
+      <h2 class="docs-title">Ready to Dive In?</h2>
+      <p class="docs-sub">Explore the full documentation for Margarita, or jump straight to the source on GitHub.</p>
+    </div>
+    <div class="docs-grid">
+      <a href="https://www.banyango.com/margarita/latest/" class="docs-card" target="_blank" rel="noopener noreferrer">
+        <div class="docs-card-icon">M</div>
+        <h3>Margarita Docs</h3>
+        <p>Language reference, CLI guide, Python API, and examples for building templates.</p>
+        <span class="docs-card-link">Read the docs &rarr;</span>
+      </a>
+      <a href="https://github.com/banyango/margarita" class="docs-card" target="_blank" rel="noopener noreferrer">
+        <div class="docs-card-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="36" height="36" aria-hidden="true">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+        </div>
+        <h3>GitHub</h3>
+        <p>Browse the source, open issues, contribute, and follow the latest releases.</p>
+        <span class="docs-card-link">View on GitHub &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="img/lime.svg" alt="Margarita" class="footer-logo-img">
+      <span class="footer-brand-name">Margarita</span>
+    </div>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="https://www.banyango.com/margarita/latest/" target="_blank" rel="noopener noreferrer">Margarita Docs</a>
+      <a href="https://github.com/banyango/margarita" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="mailto:kyle@banyango.com">Investors</a>
+    </nav>
+    <p class="footer-copy">&copy; 2026 Banyango. MIT License. Logo courtesy Freepik</p>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -23,7 +23,7 @@ parameters: customer_name (string) - The customer's name.
 
 // ── Domain knowledge ───────────────────────────────────────────────────────
 [[ ../components/domain/support-kb.mg
-    product_name="Cantina"
+    product_name="Margarita"
     refund_policy="Customers on the Pro plan can request a full refund within 14 days of purchase. Enterprise contracts follow the terms in the signed agreement. Free-plan users are not eligible for refunds."
     sla_hours="4"
     known_issues=["Intermittent login failures for SSO users (fix deploying within 24h)", "Slow export times for reports over 10,000 rows (workaround: export in smaller date ranges)"] ]]

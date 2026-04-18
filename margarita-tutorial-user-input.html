@@ -1,0 +1,402 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>User Input in Margarita – Tutorial</title>
+  <meta name="description"
+        content="Learn how to pause a Margarita agent mid-run, ask the user a question, and feed their answer back into the next prompt.">
+
+  <meta property="og:title" content="User Input in Margarita – Tutorial">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="icon.png">
+  <meta property="og:description"
+        content="Learn how to pause a Margarita agent mid-run, ask the user a question, and feed their answer back into the next prompt.">
+
+  <link rel="icon" href="/img/favicon.ico" sizes="any">
+  <link rel="icon" href="/img/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#16A34A">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ── shared terminal chrome ── */
+    .mg-terminal {
+      background: #1a1e1c;
+      border-radius: 8px;
+      padding: 1.5rem 1.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #d1d5db;
+      margin-top: 1.5rem;
+    }
+    .mg-terminal-ascii {
+      color: #b5e853;
+      margin: 0 0 1.25rem;
+      font-size: 0.78rem;
+      line-height: 1.25;
+    }
+    .mg-terminal-run-block {
+      border-left: 3px solid #7c3aed;
+      padding-left: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .mg-run-header { margin-bottom: 0.35rem; }
+    .mg-run-arrow { color: #d1d5db; margin-right: 0.4rem; }
+    .mg-run-label { color: #f3f4f6; font-weight: 600; margin-right: 0.5rem; }
+
+    /* running state (orange) */
+    .mg-run-dot-running { color: #f97316; margin-right: 0.35rem; }
+    .mg-run-running     { color: #f97316; font-weight: 600; }
+
+    /* completed state (green) */
+    .mg-run-dot      { color: #4ade80; margin-right: 0.35rem; }
+    .mg-run-completed { color: #4ade80; font-weight: 600; margin-right: 0.5rem; }
+    .mg-run-time     { color: #9ca3af; }
+
+    .mg-response-label { color: #a78bfa; font-weight: 600; }
+    .mg-response-text  { color: #f3f4f6; }
+
+    /* question box — the agent's formatted question */
+    .mg-question-box {
+      border: 1px solid #374151;
+      border-radius: 4px;
+      padding: 0.75rem 1rem;
+      margin: 0.5rem 0 0.75rem;
+      background: #111714;
+      color: #f3f4f6;
+    }
+    .mg-question-box-list {
+      margin: 0.4rem 0 0 0.25rem;
+      padding: 0;
+      list-style: none;
+    }
+    .mg-question-box-list li::before {
+      content: "• ";
+      color: #d1d5db;
+    }
+
+    /* executing separator */
+    .mg-executing-line {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      border-top: 1px solid #22d3ee;
+      padding-top: 0.6rem;
+      margin: 0.25rem 0 1rem;
+      color: #22d3ee;
+      font-size: 0.8rem;
+    }
+    .mg-executing-dot  { font-size: 0.65rem; }
+    .mg-executing-label { font-style: normal; }
+    .mg-executing-detail { font-style: italic; color: #22d3ee; }
+
+    /* user input section */
+    .mg-input-prompt-line {
+      color: #4ade80;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+    .mg-input-arrow   { color: #4ade80; font-weight: 600; }
+    .mg-input-question { color: #4ade80; font-weight: 600; }
+    .mg-input-box {
+      border: 2px solid #7c3aed;
+      border-radius: 4px;
+      padding: 0.75rem 1rem;
+      color: #6b7280;
+      font-style: italic;
+    }
+
+    .mg-meta          { color: #6b7280; }
+    .mg-terminal-footer { color: #6b7280; margin-top: 0.25rem; }
+    .mg-footer-dot    { color: #4ade80; margin-right: 0.5rem; }
+    .mg-footer-key    { color: #f3f4f6; }
+  </style>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Margarita home">
+      <img src="img/lime.svg" alt="Margarita" class="nav-logo-img">
+      <span class="nav-logo-text">Margarita</span>
+    </a>
+
+    <button class="nav-hamburger" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false"
+            aria-controls="nav-links">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <ul class="nav-links" id="nav-links" role="list">
+      <li><a href="index.html#features">.mg</a></li>
+      <li><a href="index.html#margarita">.mgx</a></li>
+      <li><a href="index.html#docs">Docs</a></li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+          Tutorials <span class="nav-dropdown-arrow" aria-hidden="true">&#9662;</span>
+        </button>
+        <ul class="nav-dropdown-menu" role="list">
+          <li><a href="margarita-getting-started.html">Getting Started With Agents</a></li>
+          <li><a href="margarita-tutorial-state.html">State</a></li>
+          <li><a href="margarita-tutorial-user-input.html">User Input</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+          Guides <span class="nav-dropdown-arrow" aria-hidden="true">&#9662;</span>
+        </button>
+        <ul class="nav-dropdown-menu" role="list">
+          <li><a href="agents-md.html">One AGENTS.md, for Any Model</a></li>
+          <li><a href="components.html">Compose Once, Reuse Everywhere</a></li>
+          <li><a href="custom-ralph.html">Build a Custom Ralph Wiggum Loop</a></li>
+          <li><a href="local-functions.html">Spend Less on Tokens</a></li>
+          <li><a href="github-issue-summary.html">Auto-Triage GitHub Issues</a></li>
+          <li><a href="template-packages.html">Share Templates Across Projects</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="https://github.com/banyango/margarita" class="nav-cta" target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" style="clip-path: none; margin-bottom: 0;">
+  <div class="hero-mg-bg hero-mg-bg-1" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-mg-img"></div>
+  <div class="hero-mg-bg hero-mg-bg-2" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-mg-img"></div>
+  <div class="hero-mg-bg hero-mg-bg-3" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-mg-img"></div>
+  <div class="container">
+    <p class="hero-eyebrow">Tutorial</p>
+    <h1 class="hero-heading">
+      Collecting <span class="hero-accent">User Input</span>
+    </h1>
+    <p class="hero-sub">
+      Pause your agent mid-run, ask the user a question, and feed their answer
+      straight back into the next prompt — all with a single
+      <code style="font-size:1rem;background:rgba(255,255,255,0.15);padding:2px 6px;border-radius:4px;">@effect input</code>.
+      The agent can ask questions too.
+    </p>
+    <div class="tut-model-chips">
+      <span class="tut-chip tut-chip--claude">Margarita</span>
+    </div>
+  </div>
+</section>
+
+<!-- Step 1: @effect input -->
+<section class="tut-section tut-section--surface" id="step-1">
+  <div class="container">
+    <div class="tut-step">
+      <div class="tut-step-label">
+        <span class="tut-step-number">1</span>
+        <div>
+          <div class="tut-step-title">Ask the user with <code>@effect input</code></div>
+          <div class="tut-step-desc">
+            <code>@effect input</code> pauses execution, prints a prompt to the terminal,
+            and waits for the user to type a response. The <code>=&gt;</code> arrow captures
+            their answer into a variable — here, <code>userTheme</code>.
+          </div>
+        </div>
+      </div>
+      <div class="tut-code-card">
+        <div class="tut-code-filename">input.mgx</div>
+        <pre class="fpanel-code"><code><span class="code-keyword">@effect input</span> <span class="code-string">"Choose a workspace theme (pick one):\n• Light\n• Dark\n• System (follow OS)"</span> =&gt; userTheme</code></pre>
+      </div>
+
+      <!-- Terminal replica -->
+      <div class="mg-terminal" role="img" aria-label="Margarita terminal paused waiting for user input">
+         <pre class="mg-terminal-ascii">
+┳┳┓
+┃┃┃┏┓┏┓┏┓┏┓┏┓┓╋┏┓
+┛ ┗┗┻┛ ┗┫┗┻┛ ┗┗┗┻
+        ┛
+        </pre>
+        <div class="mg-terminal-run-block">
+          <div class="mg-run-header">
+            <span class="mg-run-arrow">▼</span>
+            <span class="mg-run-label">Run 1</span>
+            <span class="mg-run-dot-running">●</span>
+            <span class="mg-run-running">running</span>
+          </div>
+          <div class="mg-response-label">Response:</div>
+          <div class="mg-response-text">Asking a 3-option question to start; this collects a preference to base the follow-up on.</div>
+          <div class="mg-question-box">
+            [Question] Choose a workspace theme (pick one):
+            <ul class="mg-question-box-list">
+              <li>Light</li>
+              <li>Dark</li>
+              <li>System (follow OS)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mg-executing-line">
+          <span class="mg-executing-dot">&#9679;</span>
+          <span class="mg-executing-label">Executing&hellip;</span>
+          <span class="mg-executing-detail">Clarifying tool call sequences</span>
+        </div>
+        <div class="mg-input-prompt-line">
+          <span class="mg-input-arrow">&#x276F;</span>
+          <span class="mg-input-question">Choose a workspace theme (pick one):</span>
+        </div>
+        <div class="mg-input-box">Type your answer and press Enter&hellip;</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Step 2: Use the answer -->
+<section class="tut-section tut-section--light" id="step-2">
+  <div class="container">
+    <div class="tut-step">
+      <div class="tut-step-label">
+        <span class="tut-step-number">2</span>
+        <div>
+          <div class="tut-step-title">Use the answer in the next prompt</div>
+          <div class="tut-step-desc">
+            Once the user hits Enter, <code>userTheme</code> holds their response.
+            Inject it into a <code>&lt;&lt; &gt;&gt;</code> block with <code>${userTheme}</code>
+            just like any other variable — the LLM sees the actual value.
+          </div>
+        </div>
+      </div>
+      <div class="tut-code-card">
+        <div class="tut-code-filename">input.mgx</div>
+        <pre class="fpanel-code"><code><span class="code-keyword">@effect input</span> <span class="code-string">"Choose a workspace theme (pick one):\n• Light\n• Dark\n• System (follow OS)"</span> =&gt; userTheme
+
+<span class="code-comment">// ${userTheme} is now whatever the user typed</span>
+&lt;&lt;
+The user chose the <span class="code-var">${userTheme}</span> theme.
+Write a two-sentence description of what that experience looks and feels like.
+&gt;&gt;
+
+<span class="code-keyword">@effect run</span></code></pre>
+      </div>
+      <div class="mg-terminal" role="img" aria-label="Margarita terminal after user answered Dark and agent responded">
+         <pre class="mg-terminal-ascii">
+┳┳┓
+┃┃┃┏┓┏┓┏┓┏┓┏┓┓╋┏┓
+┛ ┗┗┻┛ ┗┫┗┻┛ ┗┗┗┻
+        ┛
+        </pre>
+        <div class="mg-terminal-run-block">
+          <div class="mg-run-header">
+            <span class="mg-run-arrow">▼</span>
+            <span class="mg-run-label">Run 1</span>
+            <span class="mg-run-dot">●</span>
+            <span class="mg-run-completed">completed</span>
+            <span class="mg-run-time">6.1s</span>
+          </div>
+          <div class="mg-response-label">Response:</div>
+          <div class="mg-response-text">The Dark theme wraps the interface in deep charcoal tones that are easy on the eyes during long sessions.<br>Syntax highlights pop against the muted background, keeping focus exactly where it belongs.</div>
+          <div class="mg-meta">Tokens:&nbsp;&nbsp;&nbsp;&nbsp;11,312 in&nbsp;&nbsp; 298 out</div>
+          <div class="mg-meta">Requests:&nbsp; 1</div>
+        </div>
+        <div class="mg-terminal-footer">
+          <span class="mg-footer-dot">●</span>All turns completed&nbsp;&nbsp;<span class="mg-footer-key">q</span> to quit
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Step 3: Chain multiple questions -->
+<section class="tut-section tut-section--surface" id="step-3">
+  <div class="container">
+    <div class="tut-step">
+      <div class="tut-step-label">
+        <span class="tut-step-number">3</span>
+        <div>
+          <div class="tut-step-title">Chain questions — and let the agent ask too</div>
+          <div class="tut-step-desc">
+            Call <code>@effect input</code> as many times as you need before the first LLM
+            call. You can also instruct the agent to ask a clarifying question itself —
+            Margarita surfaces the agent's question as an input prompt exactly the same way.
+          </div>
+        </div>
+      </div>
+      <div class="tut-code-card">
+        <div class="tut-code-filename">input.mgx</div>
+        <pre class="fpanel-code"><code><span class="code-comment">// Gather inputs up front</span>
+<span class="code-keyword">@effect input</span> <span class="code-string">"What is your name?"</span> =&gt; userName
+<span class="code-keyword">@effect input</span> <span class="code-string">"Which programming language do you work in most?"</span> =&gt; userLanguage
+<span class="code-keyword">@effect input</span> <span class="code-string">"Experience level? (beginner / intermediate / expert)"</span> =&gt; userLevel
+
+&lt;&lt;
+Write a personalised learning plan for <span class="code-var">${userName}</span>,
+a <span class="code-var">${userLevel}</span> <span class="code-var">${userLanguage}</span> developer.
+Keep it to three bullet points.
+Then ask the user one follow-up question to refine the plan
+further and store it into `plan` variable
+&gt;&gt;
+
+<span class="code-keyword">@effect run</span>
+
+<span class="code-comment">// The agent's follow-up question surfaces as an input prompt</span>
+<span class="code-keyword">@effect input</span> <span class="code-string">"How long should the summary be?:"</span> =&gt; userFollowUp
+
+&lt;&lt;
+Summarize the ${plan} and write a conclusion
+in the length that the user specified here: ${userFollowUp}.
+Revise the conclusion based on that answer.
+&gt;&gt;
+
+<span class="code-keyword">@effect run</span></code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="tut-section tut-section--cta">
+  <div class="container tut-cta">
+    <h2 class="section-heading tut-dark-heading">What's next?</h2>
+    <p class="section-sub tut-dark-sub">
+      Read the full Margarita docs or go back to the State tutorial.
+    </p>
+    <div class="hero-actions">
+      <a href="https://www.banyango.com/margarita/latest/" class="btn btn-primary" target="_blank"
+         rel="noopener noreferrer">Read the Margarita Docs</a>
+      <a href="margarita-tutorial-state.html" class="btn btn-ghost">Previous: State</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="img/lime.svg" alt="Margarita" class="footer-logo-img">
+        <span class="footer-brand-name">Margarita</span>
+      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="https://www.banyango.com/margarita/latest/" target="_blank" rel="noopener noreferrer">Margarita Docs</a>
+        <a href="https://www.banyango.com/margarita/latest/" target="_blank" rel="noopener noreferrer">Margarita Docs</a>
+        <a href="https://github.com/banyango/margarita" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+      <p class="footer-copy">&copy; 2026 Banyango. MIT License. Logo courtesy Freepik</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+
+</html>

@@ -248,7 +248,7 @@ code {
   border-color: var(--color-accent);
 }
 
-.btn-lime {
+.btn-mg {
   background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
   color: var(--color-dark);
   border-color: transparent;
@@ -256,7 +256,7 @@ code {
   box-shadow: 0 2px 10px rgba(132, 204, 22, 0.3);
 }
 
-.btn-lime:hover {
+.btn-mg:hover {
   background: linear-gradient(135deg, #94d820 0%, var(--color-accent) 100%);
   box-shadow: 0 6px 20px rgba(132, 204, 22, 0.4);
 }
@@ -455,8 +455,7 @@ code {
     radial-gradient(ellipse 50% 40% at 80% 80%, rgba(132, 204, 22, 0.08) 0%, transparent 60%),
     var(--color-dark);
   color: #fff;
-  padding: 6rem 0 7rem;
-  text-align: center;
+  padding: 5rem 0 4.5rem;
   clip-path: polygon(0 0, 100% 0, 100% 93%, 0 100%);
   margin-bottom: -3rem;
 }
@@ -466,34 +465,99 @@ code {
   z-index: 1;
 }
 
-/* Lime background illustrations */
-.hero-lime-bg {
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.hero-sub {
+  margin-bottom: 2rem;
+}
+
+.hero-install-block {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 1.75rem;
+}
+
+.hero-install-block-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 0.65rem;
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 1.5rem;
+}
+
+.hero-stat {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+}
+
+.hero-stat-val {
+  font-family: 'Supermercado One', sans-serif;
+  font-size: 1.5rem;
+  color: #fff;
+  line-height: 1;
+}
+
+.hero-stat-lbl {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 800px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+/* Margarita background illustrations */
+.hero-mg-bg {
   position: absolute;
   pointer-events: none;
   z-index: 0;
 }
 
-.hero-lime-img {
+.hero-mg-img {
   display: block;
   opacity: 0.18;
   filter: drop-shadow(0 0 60px rgba(132, 204, 22, 0.5));
 }
 
 /* Individual positions */
-.hero-lime-bg-1 { top: 10%;    left: -80px;  }
-.hero-lime-bg-2 { top: -60px;  right: 8%;    }
-.hero-lime-bg-3 { bottom: -60px; right: 22%; }
-.hero-lime-bg-4 { top: 42%;   left: 28%;    }
-.hero-lime-bg-5 { bottom: -20px; left: 8%;  }
+.hero-mg-bg-1 { top: 10%;    left: -80px;  }
+.hero-mg-bg-2 { top: -60px;  right: 8%;    }
+.hero-mg-bg-3 { bottom: -60px; right: 22%; }
+.hero-mg-bg-4 { top: 42%;   left: 28%;    }
+.hero-mg-bg-5 { bottom: -20px; left: 8%;  }
 
 /* Individual sizes and animations */
-.hero-lime-bg-1 .hero-lime-img { width: 260px; height: 260px; animation: lime-a 40s ease-in-out -6s  infinite; }
-.hero-lime-bg-2 .hero-lime-img { width: 210px; height: 210px; animation: lime-b 34s ease-in-out -18s infinite; }
-.hero-lime-bg-3 .hero-lime-img { width: 240px; height: 240px; animation: lime-c 46s ease-in-out -28s infinite; }
-.hero-lime-bg-4 .hero-lime-img { width: 160px; height: 160px; animation: lime-d 38s ease-in-out -10s infinite; }
-.hero-lime-bg-5 .hero-lime-img { width: 185px; height: 185px; animation: lime-e 42s ease-in-out -34s infinite; }
+.hero-mg-bg-1 .hero-mg-img { width: 260px; height: 260px; animation: mg-a 40s ease-in-out -6s  infinite; }
+.hero-mg-bg-2 .hero-mg-img { width: 210px; height: 210px; animation: mg-b 34s ease-in-out -18s infinite; }
+.hero-mg-bg-3 .hero-mg-img { width: 240px; height: 240px; animation: mg-c 46s ease-in-out -28s infinite; }
+.hero-mg-bg-4 .hero-mg-img { width: 160px; height: 160px; animation: mg-d 38s ease-in-out -10s infinite; }
+.hero-mg-bg-5 .hero-mg-img { width: 185px; height: 185px; animation: mg-e 42s ease-in-out -34s infinite; }
 
-@keyframes lime-a {
+@keyframes mg-a {
   0%   { transform: translate(0px,   0px)   rotate(-4deg); }
   20%  { transform: translate(90px,  -70px) rotate(7deg);  }
   40%  { transform: translate(40px,  100px) rotate(-15deg); }
@@ -502,7 +566,7 @@ code {
   100% { transform: translate(0px,   0px)   rotate(-4deg); }
 }
 
-@keyframes lime-b {
+@keyframes mg-b {
   0%   { transform: translate(0px,    0px)   rotate(5deg);  }
   22%  { transform: translate(-90px,  80px)  rotate(-8deg); }
   48%  { transform: translate(-45px,  -65px) rotate(14deg);  }
@@ -510,7 +574,7 @@ code {
   100% { transform: translate(0px,    0px)   rotate(5deg);  }
 }
 
-@keyframes lime-c {
+@keyframes mg-c {
   0%   { transform: translate(0px,    0px)   rotate(-6deg); }
   28%  { transform: translate(-95px,  -75px) rotate(15deg);  }
   52%  { transform: translate(-55px,  90px)  rotate(-9deg); }
@@ -518,7 +582,7 @@ code {
   100% { transform: translate(0px,    0px)   rotate(-6deg); }
 }
 
-@keyframes lime-d {
+@keyframes mg-d {
   0%   { transform: translate(0px,   0px)   rotate(3deg);  }
   18%  { transform: translate(65px,  -55px) rotate(-7deg); }
   44%  { transform: translate(-75px, 65px)  rotate(18deg);  }
@@ -527,7 +591,7 @@ code {
   100% { transform: translate(0px,   0px)   rotate(3deg);  }
 }
 
-@keyframes lime-e {
+@keyframes mg-e {
   0%   { transform: translate(0px,    0px)   rotate(-5deg); }
   32%  { transform: translate(85px,   -75px) rotate(6deg);  }
   60%  { transform: translate(120px,  55px)  rotate(-8deg); }
@@ -545,10 +609,11 @@ code {
 }
 
 .hero-heading {
+  font-family: 'Supermercado One', sans-serif;
   font-size: clamp(2.4rem, 5.5vw, 4rem);
-  font-weight: 800;
+  font-weight: 400;
   color: #fff;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   letter-spacing: -0.03em;
   line-height: 1.08;
 }
@@ -569,8 +634,7 @@ code {
 .hero-sub {
   font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.7);
-  max-width: 580px;
-  margin: 0 auto 2.25rem;
+  max-width: 40ch;
   line-height: 1.75;
 }
 
@@ -579,10 +643,123 @@ code {
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
+  margin-top: 4rem;
 }
 
 .hero-explore {
   margin: 1rem;
+  text-align: center;
+}
+
+.guide-cards {
+  margin-top: 2.5rem;
+}
+
+.guide-cards-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.guide-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.guide-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: border-color 0.15s, box-shadow 0.15s, color 0.15s;
+}
+
+.guide-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 2px 12px rgba(22, 163, 74, 0.12);
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.guide-card-title {
+  flex: 1;
+  line-height: 1.4;
+}
+
+.guide-card-arrow {
+  flex-shrink: 0;
+  font-size: 1rem;
+  opacity: 0.5;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.guide-card:hover .guide-card-arrow {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+@media (max-width: 700px) {
+  .guide-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hero-install-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  margin-bottom: 0;
+}
+
+.hero-install-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #86efac;
+  white-space: nowrap;
+}
+
+.hero-install-cmd {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: #e2e8f0;
+  background: transparent;
+  padding: 0;
+  user-select: all;
+}
+
+.hero-install-copy {
+  background: none;
+  border: 1px solid #475569;
+  border-radius: 4px;
+  color: #94a3b8;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.hero-install-copy:hover {
+  border-color: #86efac;
+  color: #86efac;
 }
 
 .hero-code {
@@ -924,70 +1101,70 @@ code {
 }
 
 /* ------------------------------------------------------------------
-   Lime Section – dark-background overrides
+   Margarita Agent Section – dark-background overrides
    ------------------------------------------------------------------ */
 
-/* Dark-background overrides — Lime section sits on --color-dark */
-.lime-section .feature-explorer {
+/* Dark-background overrides — Margarita agent section sits on --color-dark */
+.mg-section .feature-explorer {
   border-color: rgba(255, 255, 255, 0.1);
 }
 
-.lime-section .feature-tab-list {
+.mg-section .feature-tab-list {
   background: var(--color-dark-2);
   border-color: rgba(255, 255, 255, 0.12);
 }
 
-.lime-section .feature-tab {
+.mg-section .feature-tab {
   border-bottom-color: rgba(255, 255, 255, 0.08);
 }
 
-.lime-section .feature-tab:hover {
+.mg-section .feature-tab:hover {
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* Force accent bg on active tab in lime section */
-.lime-section .feature-explorer .feature-tab.is-active {
+/* Force accent bg on active tab in margarita agent section */
+.mg-section .feature-explorer .feature-tab.is-active {
   background: var(--color-accent);
   box-shadow: none;
 }
 
-.lime-section .feature-explorer .feature-tab.is-active .ftab-icon {
+.mg-section .feature-explorer .feature-tab.is-active .ftab-icon {
   color: var(--color-dark);
 }
 
 /* Force white text — higher specificity than base .ftab-* rules */
-.lime-section .feature-explorer .ftab-name {
+.mg-section .feature-explorer .ftab-name {
   color: rgba(255, 255, 255, 0.9);
 }
 
-.lime-section .feature-explorer .ftab-desc {
+.mg-section .feature-explorer .ftab-desc {
   color: rgba(255, 255, 255, 0.5);
 }
 
-.lime-section .feature-explorer .ftab-icon {
+.mg-section .feature-explorer .ftab-icon {
   color: rgba(255, 255, 255, 0.45);
 }
 
-/* Active tab text — dark on lime-yellow background */
-.lime-section .feature-explorer .feature-tab.is-active .ftab-name {
+/* Active tab text — dark on accent background */
+.mg-section .feature-explorer .feature-tab.is-active .ftab-name {
   color: var(--color-dark);
 }
 
-.lime-section .feature-explorer .feature-tab.is-active .ftab-desc {
+.mg-section .feature-explorer .feature-tab.is-active .ftab-desc {
   color: rgba(15, 23, 42, 0.7);
 }
 
 /* ------------------------------------------------------------------
-   Lime Section
+   Margarita Agent Section
    ------------------------------------------------------------------ */
 
-.lime-section {
+.mg-section {
   padding: 5rem 0;
   background: var(--color-dark);
   color: #fff;
 }
 
-.lime-intro,
+.mg-intro,
 .margarita-intro {
   text-align: center;
   margin-bottom: 3.5rem;
@@ -998,7 +1175,7 @@ code {
   margin-right: auto;
 }
 
-.lime-badge {
+.mg-badge {
   display: inline-block;
   font-size: 0.7rem;
   font-weight: 800;
@@ -1012,26 +1189,26 @@ code {
   margin-bottom: 1.25rem;
 }
 
-.lime-section .section-heading {
+.mg-section .section-heading {
   color: #fff;
 }
 
-.lime-section .section-heading::after {
+.mg-section .section-heading::after {
   background: linear-gradient(90deg, var(--color-accent), rgba(132, 204, 22, 0.4));
 }
 
-.lime-section .section-sub {
+.mg-section .section-sub {
   color: rgba(255, 255, 255, 0.65);
   margin-left: auto;
   margin-right: auto;
   text-align: center;
 }
 
-.lime-accent {
+.mg-accent {
   color: var(--color-accent);
 }
 
-.lime-highlights {
+.mg-highlights {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
@@ -1039,7 +1216,7 @@ code {
   margin: 0 auto;
 }
 
-.lime-highlight {
+.mg-highlight {
   display: flex;
   gap: 1.25rem;
   align-items: flex-start;
@@ -1050,23 +1227,23 @@ code {
   transition: background 0.18s;
 }
 
-.lime-highlight:hover {
+.mg-highlight:hover {
   background: rgba(255, 255, 255, 0.07);
 }
 
-.lime-highlight-icon {
+.mg-highlight-icon {
   font-size: 1.5rem;
   flex-shrink: 0;
   margin-top: 0.1rem;
 }
 
-.lime-highlight-body h3 {
+.mg-highlight-body h3 {
   font-size: 1rem;
   color: #fff;
   margin-bottom: 0.4rem;
 }
 
-.lime-highlight-body p {
+.mg-highlight-body p {
   font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.6);
   margin-bottom: 0;
@@ -1239,7 +1416,7 @@ code {
   color: var(--color-primary);
 }
 
-.docs-card-icon--lime {
+.docs-card-icon--mg {
   background: rgba(132, 204, 22, 0.12);
   color: var(--color-accent-dark);
 }
@@ -1396,7 +1573,7 @@ code {
 
   /* Hero */
   .hero {
-    padding: 4.5rem 0 5rem;
+    padding: 1rem 0 1rem;
     clip-path: polygon(0 0, 100% 0, 100% 96%, 0 100%);
   }
 
