@@ -35,6 +35,26 @@ module.exports = merge(common, {
       filename: 'template-packages.html',
       minify: false,
     }),
+    new HtmlWebpackPlugin({
+      template: './margarita-getting-started.html',
+      filename: 'margarita-getting-started.html',
+      minify: false,
+    }),
+    new HtmlWebpackPlugin({
+      template: './margarita-tutorial-state.html',
+      filename: 'margarita-tutorial-state.html',
+      minify: false,
+    }),
+    new HtmlWebpackPlugin({
+      template: './margarita-tutorial-template.html',
+      filename: 'margarita-tutorial-template.html',
+      minify: false,
+    }),
+    new HtmlWebpackPlugin({
+      template: './margarita-tutorial-user-input.html',
+      filename: 'margarita-tutorial-user-input.html',
+      minify: false,
+    }),
     new CopyPlugin({
       patterns: [
         { from: 'img', to: 'img' },
