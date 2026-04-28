@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Margarita — Writing agents should be as easy as writing markdown.</title>
+  <meta name="description" content="Margarita is an agentic scripting tool where you write plain text scripts — with state, loops, and LLM calls — and run them against any model.">
+  <link rel="icon" href="/img/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="img/icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:          #EDE9DC;
+      --surface:     #F7F4EC;
+      --black:       #111111;
+      --white:       #FEFEFE;
+      --lime:        #CBFF4D;
+      --lime-muted:  #B0E000;
+      --muted:       #6B6555;
+      --border-w:    2px;
+      --shadow:      4px 4px 0 var(--black);
+      --shadow-lg:   6px 6px 0 var(--black);
+
+      --font:        'Space Grotesk', system-ui, sans-serif;
+      --mono:        'JetBrains Mono', 'Fira Code', monospace;
+
+      --max:         1080px;
+      --max-prose:   660px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--black);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    /* ─── HERO LOGO ─── */
+    .hero-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--black);
+      border: var(--border-w) solid var(--black);
+      box-shadow: var(--shadow);
+      padding: 0.45rem 1rem 0.45rem 0.6rem;
+      margin-bottom: 2rem;
+    }
+    .hero-logo-img {
+      width: 28px;
+      height: 28px;
+    }
+    .hero-logo-text {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--lime);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding: 7rem 1.5rem 5rem;
+      text-align: center;
+      background: var(--bg);
+      border-bottom: var(--border-w) solid var(--black);
+    }
+
+    .hero-prose {
+      max-width: var(--max-prose);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+    .eyebrow::before,
+    .eyebrow::after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 2rem;
+      background: var(--muted);
+    }
+
+    h1 {
+      font-size: clamp(2.6rem, 6.5vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--black);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 1.8vw, 1.1rem);
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 52ch;
+      margin: 0 auto 2.5rem;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.8rem 1.8rem;
+      background: var(--lime);
+      color: var(--black);
+      font-family: var(--font);
+      font-weight: 700;
+      font-size: 0.9rem;
+      border: var(--border-w) solid var(--black);
+      box-shadow: var(--shadow);
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .btn-primary:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--black);
+    }
+    .btn-primary:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--black);
+    }
+
+    .btn-ghost {
+      display: inline-block;
+      padding: 0.8rem 1.8rem;
+      background: transparent;
+      color: var(--black);
+      font-family: var(--font);
+      font-weight: 700;
+      font-size: 0.9rem;
+      border: var(--border-w) solid var(--black);
+      box-shadow: var(--shadow);
+      transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
+    }
+    .btn-ghost:hover {
+      background: var(--black);
+      color: var(--white);
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--black);
+    }
+
+    /* ─── DEMO PANEL ─── */
+    .demo-section {
+      background: var(--bg);
+      padding: 4rem 1.5rem 5rem;
+      border-bottom: var(--border-w) solid var(--black);
+    }
+
+    .demo-grid {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    /* Editor */
+    .editor-window {
+      background: var(--white);
+      border: var(--border-w) solid var(--black);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    .window-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1rem;
+      background: var(--black);
+      border-bottom: var(--border-w) solid var(--black);
+    }
+    .wdot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .wdot--r { background: #FF5F57; }
+    .wdot--a { background: #FEBC2E; }
+    .wdot--g { background: #28C840; }
+    .window-filename {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: #888;
+      margin-left: 0.4rem;
+    }
+
+    .editor-body {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    .editor-gutter {
+      background: #F0EDE4;
+      border-right: 1px solid #D8D4C8;
+      padding: 1.25rem 0;
+      text-align: right;
+    }
+    .editor-gutter span {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      line-height: 1.85;
+      color: #B0AA98;
+      padding-right: 0.5rem;
+      user-select: none;
+    }
+    .editor-code {
+      padding: 1.25rem 1.25rem;
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      line-height: 1.85;
+      white-space: pre;
+      overflow-x: auto;
+      color: #2C2C2C;
+    }
+    .t-kw  { color: #1A7A3F; font-weight: 700; }
+    .t-str { color: #6B5A00; }
+    .t-cmt { color: #9A9585; font-style: italic; }
+    .t-var { color: #1A5FA0; }
+    .t-pmt { color: #2C2C2C; }
+    .t-del { color: #9A9585; }
+
+    /* Terminal */
+    .term-window {
+      background: #0D0F0E;
+      border: var(--border-w) solid var(--black);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+    .term-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1rem;
+      background: #080A09;
+      border-bottom: 1px solid #1C2420;
+    }
+    .term-body {
+      padding: 1.1rem 1.25rem 1.25rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      line-height: 1.6;
+    }
+    .term-ascii {
+      color: #CBFF4D;
+      font-size: 0.6rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .term-run {
+      border-left: 2px solid #7C3AED;
+      padding-left: 0.85rem;
+      margin-bottom: 0.9rem;
+    }
+    .term-run-head { margin-bottom: 0.25rem; }
+    .term-arrow  { color: #7B8A9A; margin-right: 0.3rem; }
+    .term-lbl    { color: #F3F4F6; font-weight: 700; margin-right: 0.35rem; }
+    .term-dot    { color: #4ADE80; margin-right: 0.25rem; }
+    .term-done   { color: #4ADE80; font-weight: 700; margin-right: 0.35rem; }
+    .term-time   { color: #6B7280; }
+    .term-rl     { color: #A78BFA; font-weight: 700; }
+    .term-resp   { color: #F3F4F6; }
+    .term-set    { color: #4ADE80; font-size: 0.67rem; margin-top: 0.15rem; }
+    .term-meta   { color: #7B8A9A; margin-top: 0.2rem; }
+    .term-foot   { color: #374151; margin-top: 0.5rem; }
+    .term-fkey   { color: #9CA3AF; }
+
+    /* ─── FEATURES ─── */
+    .features {
+      background: var(--white);
+      border-bottom: var(--border-w) solid var(--black);
+      padding: 5rem 1.5rem;
+    }
+    .features-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+    .features-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 3rem;
+    }
+
+    .feature-row {
+      border-top: var(--border-w) solid var(--black);
+      padding: 2.5rem 0;
+      display: grid;
+      grid-template-columns: 5rem 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    .feature-row:last-child {
+      border-bottom: var(--border-w) solid var(--black);
+    }
+
+    .feat-num {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--lime-muted);
+      padding-top: 0.35rem;
+      letter-spacing: 0.05em;
+    }
+
+    .feat-body {}
+    .feat-title {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--black);
+      margin-bottom: 0.75rem;
+      line-height: 1.1;
+    }
+    .feat-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 58ch;
+    }
+    .feat-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      background: var(--lime);
+      color: var(--black);
+      padding: 0.25rem 0.65rem;
+      border: 1px solid var(--black);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    /* ─── FOOTER ─── */
+    .site-footer {
+      background: var(--black);
+      padding: 3.5rem 1.5rem;
+    }
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .footer-brand {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--lime);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+    .footer-links a {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--white);
+      border-bottom: 2px solid transparent;
+      padding-bottom: 2px;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .footer-links a:hover {
+      color: var(--lime);
+      border-color: var(--lime);
+    }
+    .footer-copy {
+      font-size: 0.75rem;
+      color: #555;
+      font-family: var(--mono);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 720px) {
+      .demo-grid { grid-template-columns: 1fr; }
+      .feature-row { grid-template-columns: 3rem 1fr; gap: 1rem; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-prose">
+    <div class="hero-logo">
+      <img src="img/lime.svg" alt="Margarita" class="hero-logo-img">
+      <span class="hero-logo-text">Margarita</span>
+    </div>
+    <h1>Writing agents should be as easy as writing markdown.</h1>
+    <p class="hero-sub">
+      Margarita turns Markdown scripts into full agentic workflows. Declare variables, call your LLM, and pass results between steps — all in files you can read and understand at a glance.
+    </p>
+    <div class="cta-row">
+      <a href="margarita-getting-started.html" class="btn-primary">Get Started →</a>
+      <a href="https://github.com/banyango/margarita" target="_blank" rel="noopener noreferrer" class="btn-ghost">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- Editor + Terminal demo -->
+<section class="demo-section">
+  <div class="demo-grid">
+
+    <!-- Fake editor -->
+    <div class="editor-window" aria-label="Example Margarita script">
+      <div class="window-bar">
+        <span class="wdot wdot--r"></span>
+        <span class="wdot wdot--a"></span>
+        <span class="wdot wdot--g"></span>
+        <span class="window-filename">review.mgx</span>
+      </div>
+      <div class="editor-body">
+        <div class="editor-code"><span class="t-cmt">// This is a margarita script (.mgx)</span>
+
+<span class="t-cmt">// These are variables</span>
+<span class="t-kw">@state</span> score    = <span class="t-str">0</span>
+<span class="t-kw">@state</span> feedback = <span class="t-str">""</span>
+
+<span class="t-cmt">// Add Markdown and fill in the vars</span>
+<span class="t-del">&lt;&lt;</span>
+<span class="t-pmt">The current score is <span class="t-var">${score}</span>.</span>
+
+<span class="t-pmt">Review this code snippet and set `score` to a number from 0–100</span>
+<span class="t-pmt">and `feedback` to a one-sentence summary of the quality.</span>
+
+<span class="t-pmt">```python</span>
+<span class="t-pmt">def add(a, b): return a+b</span>
+<span class="t-pmt">```</span>
+<span class="t-del">&gt;&gt;</span>
+
+<span class="t-cmt">// This runs the agent. The agent updates the vars</span>
+<span class="t-kw">@effect run</span>
+
+<span class="t-del">&lt;&lt;</span>
+<span class="t-pmt">Explain the score of <span class="t-var">${score}</span> in more </span>
+<span>detail and tell me about the feedback.</span>
+<span class="t-del">&gt;&gt;</span>
+
+<span class="t-cmt">// Now we take the results and run again!</span>
+<span class="t-kw">@effect run</span></div>
+      </div>
+    </div>
+
+    <!-- Fake terminal -->
+    <div class="term-window" aria-label="Terminal output showing two completed runs">
+      <div class="term-bar">
+        <span class="wdot wdot--r"></span>
+        <span class="wdot wdot--a"></span>
+        <span class="wdot wdot--g"></span>
+        <span class="window-filename" style="color:#555;">margarita run review.mgx</span>
+      </div>
+      <div class="term-body">
+        <div class="term-run">
+          <div class="term-run-head">
+            <span class="term-arrow">▼</span>
+            <span class="term-lbl">Run 1</span>
+            <span class="term-dot">●</span>
+            <span class="term-done">completed</span>
+            <span class="term-time">5.2s</span>
+          </div>
+          <div><span class="term-rl">Response:</span></div>
+          <div class="term-resp">Setting score to 72 and feedback to "Simple and correct,<br>but missing type hints and a docstring."</div>
+          <div class="term-set">↳ set score    = 72</div>
+          <div class="term-set">↳ set feedback = "Simple and correct..."</div>
+          <div class="term-meta">Tokens:&nbsp;&nbsp;&nbsp;&nbsp;11,430 in&nbsp;&nbsp; 198 out</div>
+          <div class="term-meta">Requests:&nbsp; 1</div>
+        </div>
+        <div class="term-run">
+          <div class="term-run-head">
+            <span class="term-arrow">▼</span>
+            <span class="term-lbl">Run 2</span>
+            <span class="term-dot">●</span>
+            <span class="term-done">completed</span>
+            <span class="term-time">4.8s</span>
+          </div>
+          <div class="term-set">↳ get feedback</div>
+          <div><span class="term-rl">Response:</span></div>
+          <div class="term-resp">A score of 72 reflects functional code that does the job,<br>but leaves room for improvement. The feedback — "Simple<br>and correct, but missing type hints and a docstring" —<br>points to gaps in readability and long-term maintainability.</div>
+          <div class="term-meta">Tokens:&nbsp;&nbsp;&nbsp;&nbsp;11,628 in&nbsp;&nbsp; 312 out</div>
+          <div class="term-meta">Requests:&nbsp; 2</div>
+        </div>
+        <div class="term-foot">
+          <span style="color:#4ADE80;">●</span>&nbsp;All turns completed&nbsp;&nbsp;<span class="term-fkey">q</span> to quit
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Features -->
+<section class="features">
+  <div class="features-inner">
+    <p class="features-label">Why Margarita</p>
+
+    <div class="feature-row">
+      <span class="feat-num">01</span>
+      <div class="feat-body">
+        <h3 class="feat-title">Use any model, on any backend</h3>
+        <p class="feat-desc">
+          Run the same script against Copilot, Llama (adding more). Your script stays exactly the same.
+        </p>
+        <span class="feat-tag">margarita use ollama</span>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <span class="feat-num">02</span>
+      <div class="feat-body">
+        <h3 class="feat-title">Control your context, keep costs low</h3>
+        <p class="feat-desc">
+          Most AI code harnesses hide the context from you. Margarita gives you complete control. Add only the tools you need. Run Python functions locally and update the context.
+        </p>
+        <span class="feat-tag">@effect context clear</span>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <span class="feat-num">03</span>
+      <div class="feat-body">
+        <h3 class="feat-title">Compose prompts from reusable .mg files</h3>
+        <p class="feat-desc">
+          Write a reusable prompt component and reuse it your other scripts. Need to change it across your org? Just update it in one spot.
+        </p>
+        <span class="feat-tag">[[ role.mg ]]</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span class="footer-brand">Margarita</span>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="https://github.com/banyango/margarita" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://www.banyango.com/margarita/latest/" target="_blank" rel="noopener noreferrer">Docs</a>
+    </nav>
+    <p class="footer-copy">&copy; 2026 Banyango. MIT License.</p>
+  </div>
+</footer>
+
+</body>
+</html>
