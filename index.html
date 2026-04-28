@@ -1,459 +1,159 @@
 <!doctype html>
-<html class="no-js" lang="en">
-
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Margarita</title>
-  <meta name="description"
-        content="Margarita: A powerful ecosystem for reusable prompts and agentic workflows — Build, compose, and manage your AI pipelines with ease.">
-
-  <meta property="og:title" content="Margarita">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://banyango.com/margarita/">
-  <meta property="og:image" content="icon.png">
-  <meta property="og:image:alt" content="Margarita logo">
-  <meta property="og:description"
-        content="This is the home of Margarita — lightweight tools for building reusable prompt templates and agentic workflows.">
-
+  <title>Margarita — Writing agents should be as easy as writing markdown.</title>
+  <meta name="description" content="Margarita is an agentic scripting tool where you write plain text scripts — with state, loops, and LLM calls — and run them against any model.">
   <link rel="icon" href="/img/favicon.ico" sizes="any">
-  <link rel="icon" href="/img/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="img/icon.png">
   <link rel="manifest" href="site.webmanifest">
-  <meta name="theme-color" content="#16A34A">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Roboto:wght@400;500;700&family=Supermercado+One&display=swap"
-    rel="stylesheet">
-
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/index3.css">
 <script defer src="./js/app.js"></script></head>
-
 <body>
 
-<!-- Navigation -->
-<nav class="site-nav" aria-label="Main navigation">
-  <div class="nav-inner">
-    <a href="#" class="nav-logo" aria-label="Margarita home">
-      <img src="img/lime.svg" alt="Margarita" class="nav-logo-img">
-      <span class="nav-logo-text">Margarita</span>
-    </a>
-
-    <button class="nav-hamburger" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false"
-            aria-controls="nav-links">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-
-    <ul class="nav-links" id="nav-links" role="list">
-      <li><a href="#features">.mg</a></li>
-      <li><a href="#margarita">.mgx</a></li>
-      <li><a href="#docs">Docs</a></li>
-      <li class="nav-dropdown">
-        <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
-          Tutorials <span class="nav-dropdown-arrow" aria-hidden="true">&#9662;</span>
-        </button>
-        <ul class="nav-dropdown-menu" role="list">
-          <li><a href="margarita-getting-started.html">Getting Started with Margarita</a></li>
-          <li><a href="margarita-tutorial-state.html">State</a></li>
-          <li><a href="margarita-tutorial-user-input.html">User Input</a></li>
-        </ul>
-      </li>
-      <li class="nav-dropdown">
-        <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
-          Guides <span class="nav-dropdown-arrow" aria-hidden="true">&#9662;</span>
-        </button>
-        <ul class="nav-dropdown-menu" role="list">
-          <li><a href="agents-md.html">One AGENTS.md, for Any Model</a></li>
-          <li><a href="components.html">Compose Once, Reuse Everywhere</a></li>
-          <li><a href="custom-ralph.html">Build a Custom Ralph Wiggum Loop</a></li>
-          <li><a href="local-functions.html">Spend Less on Tokens</a></li>
-          <li><a href="github-issue-summary.html">Auto-Triage GitHub Issues</a></li>
-          <li><a href="template-packages.html">Share Templates Across Projects</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="https://github.com/banyango/margarita" class="nav-cta" target="_blank" rel="noopener noreferrer">
-          GitHub
-        </a>
-      </li>
-    </ul>
-  </div>
-</nav>
-
 <!-- Hero -->
-<section class="hero" id="hero">
-  <div class="hero-mg-bg hero-mg-bg-1" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-mg-img"></div>
-  <div class="hero-mg-bg hero-mg-bg-2" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-mg-img"></div>
-  <div class="hero-mg-bg hero-mg-bg-3" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-mg-img"></div>
-  <div class="hero-mg-bg hero-mg-bg-4" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-mg-img"></div>
-  <div class="hero-mg-bg hero-mg-bg-5" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-mg-img"></div>
-  <div class="container">
-    <div class="hero-inner">
-      <div class="hero-left">
-        <p class="hero-eyebrow">Prompt engineering / Agentic workflows</p>
-        <h1 class="hero-heading">Margarita</h1>
-        <p class="hero-sub">Writing agents should be as easy as writing Markdown.</p>
-        <a href="https://www.banyango.com/margarita/latest/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Get Started &rarr;</a>
+<section class="hero">
+  <div class="hero-prose">
+    <div class="hero-logo">
+      <img src="img/lime.svg" alt="Margarita" class="hero-logo-img">
+      <span class="hero-logo-text">Margarita</span>
+    </div>
+    <h1>Writing agents should be as easy as writing markdown.</h1>
+    <p class="hero-sub">
+      Margarita turns Markdown scripts into full agentic workflows. Declare variables, call your LLM, and pass results between steps — all in repeatable scripts you can read and understand at a glance.
+    </p>
+    <div class="cta-row">
+      <a href="margarita-getting-started.html" class="btn-primary">Get Started →</a>
+      <a href="https://github.com/banyango/margarita" target="_blank" rel="noopener noreferrer" class="btn-ghost">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- Editor + Terminal demo -->
+<section class="demo-section">
+  <div class="demo-grid">
+
+    <!-- Fake editor -->
+    <div class="editor-window" aria-label="Example Margarita script">
+      <div class="window-bar">
+        <span class="wdot wdot--r"></span>
+        <span class="wdot wdot--a"></span>
+        <span class="wdot wdot--g"></span>
+        <span class="window-filename">review.mgx</span>
       </div>
-      <div class="hero-right">
-        <div class="hero-install-block">
-          <p class="hero-install-block-label">Quick install</p>
-          <div class="hero-install-card">
-            <span class="hero-install-label">Quick Install</span>
-            <code class="hero-install-cmd">uv tool install margarita</code>
-            <button class="hero-install-copy" aria-label="Copy install command" onclick="navigator.clipboard.writeText('uv tool install margarita').then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)})">Copy</button>
-          </div>
-          <div class="hero-stats">
-            <div class="hero-stat">
-              <div class="hero-stat-val">.mg</div>
-              <div class="hero-stat-lbl">Templates</div>
-            </div>
-            <div class="hero-stat">
-              <div class="hero-stat-val">.mgx</div>
-              <div class="hero-stat-lbl">Agents</div>
-            </div>
-            <div class="hero-stat">
-              <div class="hero-stat-val">uv</div>
-              <div class="hero-stat-lbl">Powered</div>
-            </div>
-          </div>
+      <div class="editor-body">
+        <div class="editor-gutter" id="editor-gutter" aria-hidden="true"></div>
+        <div class="editor-code" id="editor-code"></div>
+      </div>
+    </div>
+
+    <!-- Fake terminal -->
+    <div class="term-window" aria-label="Terminal output showing two completed runs">
+      <div class="term-bar">
+        <span class="wdot wdot--r"></span>
+        <span class="wdot wdot--a"></span>
+        <span class="wdot wdot--g"></span>
+        <span class="window-filename" style="color:#555;">margarita run review.mgx</span>
+      </div>
+      <div class="term-body">
+        <div id="term-runs"></div>
+        <div class="term-foot" id="term-foot" style="display:none">
+          <span style="color:#4ADE80;">●</span>&nbsp;All turns completed&nbsp;&nbsp;<span class="term-fkey">q</span> to quit
         </div>
       </div>
     </div>
+
   </div>
 </section>
 
 <!-- Features -->
-<section class="features" id="features">
-  <div class="container">
-    <div class="margarita-intro">
-      <div class="mg-badge">Ecosystem</div>
-      <h2 class="section-heading">.mg</h2>
-      <p class="section-sub">Enhance your prompts with easy to read logic. Powerful concepts like variables, conditionals, loops, and includes that render to plain Markdown. More importantly .mg files enable agentic workflows with .mgx! so keep reading</p>
-    </div>
+<section class="features">
+  <div class="features-inner">
+    <p class="features-label">Why Margarita</p>
 
-    <div class="feature-explorer">
-
-      <div class="feature-tab-list" role="tablist" aria-label="Feature examples">
-
-        <button class="feature-tab is-active" role="tab" aria-selected="true" aria-controls="panel-markdown"
-                data-panel="markdown">
-          <span class="ftab-icon">&lt;&gt;</span>
-          <span class="ftab-text">
-              <span class="ftab-name">Markdown</span>
-              <span class="ftab-desc">Plain markdown output</span>
-            </span>
-        </button>
-
-        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-variables"
-                data-panel="variables">
-          <span class="ftab-icon">{}</span>
-          <span class="ftab-text">
-              <span class="ftab-name">Variables</span>
-              <span class="ftab-desc">Inject context values</span>
-            </span>
-        </button>
-
-        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-conditionals"
-                data-panel="conditionals">
-          <span class="ftab-icon">if:</span>
-          <span class="ftab-text">
-              <span class="ftab-name">Conditionals</span>
-              <span class="ftab-desc">if / else branching</span>
-            </span>
-        </button>
-
-        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-loops" data-panel="loops">
-          <span class="ftab-icon">for:</span>
-          <span class="ftab-text">
-              <span class="ftab-name">Loops</span>
-              <span class="ftab-desc">Iterate over lists</span>
-            </span>
-        </button>
-
-        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-includes"
-                data-panel="includes">
-          <span class="ftab-icon">&lt;+&gt;</span>
-          <span class="ftab-text">
-              <span class="ftab-name">Includes</span>
-              <span class="ftab-desc">Compose from fragments</span>
-            </span>
-        </button>
-
-        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-uv" data-panel="uv">
-          <span class="ftab-icon">&#9889;</span>
-          <span class="ftab-text">
-              <span class="ftab-name">uv</span>
-              <span class="ftab-desc">Fast Python packaging</span>
-            </span>
-        </button>
-
-        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-python" data-panel="python">
-          <span class="ftab-icon">&#955;</span>
-          <span class="ftab-text">
-              <span class="ftab-name">Python API</span>
-              <span class="ftab-desc">Programmatic access</span>
-            </span>
-        </button>
-
-      </div><!-- /.feature-tab-list -->
-
-      <div class="feature-panels">
-
-        <div class="feature-panel is-active" id="panel-markdown" role="tabpanel">
-          <div class="fpanel-header">
-            <h3>Markdown Output</h3>
-            <p>Anything between <code>&lt;&lt;</code> and <code>&gt;&gt;</code> is plain Markdown</p>
-          </div>
-          <pre class="fpanel-code"><code><span class="code-meta">---
-description: A template that demonstrates basic markdown formatting.
----</span>
-&lt;&lt;
-# This is a normal heading
-  - A list
-A **bold** statement followwed by *italics* and a [link](https://www.banyango.com/margarita/latest).
-
-Anything you can do in markdown you can do here.
-&gt;&gt;
-<span class="code-keyword">for</span> item <span class="code-keyword">in</span> items:
-  &lt;&lt; - This is also markdown -> <span class="code-var">${item}</span> &gt;&gt;</code></pre>
-        </div>
-
-        <div class="feature-panel" id="panel-variables" role="tabpanel">
-          <div class="fpanel-header">
-            <h3>Variable Substitution</h3>
-            <p>Pass data into your templates using
-              <code>${variable}</code> anywhere in the body.</p>
-          </div>
-          <pre class="fpanel-code"><code><span class="code-comment"># greet.mg</span>
-<span class="code-meta">---
-name: greet
-description: A simple template that demonstrates variable substitution.
-parameter1: name (string): The name of the person to greet.
-parameter2: project (string): The name of the project or product.
----</span>
-&lt;&lt; Hello, <span class="code-var">${name}</span>! &gt;&gt;
-&lt;&lt; You are using <span class="code-var">${project}</span>. &gt;&gt;</code></pre>
-        </div>
-
-        <div class="feature-panel" id="panel-conditionals" role="tabpanel">
-          <div class="fpanel-header">
-            <h3>Conditionals</h3>
-            <p>
-              Use <code>if var == value:</code> / <code>else:</code> to include or exclude sections based on context.
-            </p>
-          </div>
-          <pre class="fpanel-code"><code><span class="code-comment"># access.mg</span>
-<span class="code-meta">---
-parameter: level (string): Access level of the user, e.g. "admin" or "user".
----</span>
-&lt;&lt; Access level: <span class="code-var">${level}</span> &gt;&gt;
-<span class="code-keyword">if</span> level == <span class="code-string">"admin"</span>:
-  &lt;&lt; You have full access. &gt;&gt;
-<span class="code-keyword">else</span>:
-  &lt;&lt; Read-only mode. &gt;&gt;</code></pre>
-        </div>
-
-        <div class="feature-panel" id="panel-loops" role="tabpanel">
-          <div class="fpanel-header">
-            <h3>Loops</h3>
-            <p>Loop over data just like in your programming languages.</p>
-          </div>
-          <pre class="fpanel-code"><code><span class="code-comment"># tasks.mg</span>
-<span class="code-meta">---
-description: A template that demonstrates looping over a list of tasks.
----</span>
-<< ## My Tasks >>
-<span class="code-keyword">for</span> task <span class="code-keyword">in</span> tasks:
-  &lt;&lt; - <span class="code-var">${task}</span> &gt;&gt;</code></pre>
-        </div>
-
-        <div class="feature-panel" id="panel-includes" role="tabpanel">
-          <div class="fpanel-header">
-            <h3>Includes</h3>
-            <p>React like composability with includes.</p>
-          </div>
-          <pre class="fpanel-code"><code><span class="code-comment"># components/greeting.mg</span>
-<span class="code-meta">---
-description: A simple greeting component that can be included in other templates.
-parameters: user (string): The name of the person to greet. (metadata is not required but good practice!)
----</span>
-&lt;&lt; Hello, <span class="code-var">${user}</span>! &gt;&gt;
-
-<span class="code-comment"># report.mg</span>
-<span class="code-meta">---
-description: A report template that includes a greeting component.
----</span>
-<span class="code-var">[[ components/greeting.mg user="Batman" ]]</span>
-            </code></pre>
-        </div>
-
-        <div class="feature-panel" id="panel-python" role="tabpanel">
-          <div class="fpanel-header">
-            <h3>Python API</h3>
-            <p>Import Margarita directly into Python for agentic loop patterns — render templates, inject dynamic
-              context, and pipe the output straight into your LLM calls.</p>
-          </div>
-          <pre class="fpanel-code">
-<code><span class="code-keyword">from</span> margarita.parser <span class="code-keyword">import</span> Parser
-<span class="code-keyword">from</span> margarita.renderer <span class="code-keyword">import</span> Renderer
-
-metadata, nodes = Parser().parse(template)
-renderer = Renderer(context={
-    "task": "Summarize the key points",
-    "context": "User is researching AI agents"
-})
-
-prompt = renderer.render(nodes)</code>
-          </pre>
-        </div>
-
-        <div class="feature-panel" id="panel-uv" role="tabpanel">
-          <div class="fpanel-header">
-            <h3>Using Margarita with uv</h3>
-            <p> Use <code>uvx</code> to run it as a one-off tool, or add it as a project dependency. Packages
-              that ship <code>.mg</code> files can be used in includes.</p>
-          </div>
-          <pre class="fpanel-code"><code><span class="code-comment"># run margarita directly without installing</span>
-uvx margarita render greet.mg
-
-<span class="code-comment"># add margarita to your project</span>
-uv add margarita
-
-<span class="code-comment"># run via uv in a project that has margarita as a dependency</span>
-uv run margarita render greet.mg
-
-<span class="code-comment"># install globally as a uv tool</span>
-uv tool install margarita
-
-<span class="code-comment"># include a template shipped inside a uv-managed package</span>
-<span class="code-comment"># report.mg</span>
-<span class="code-var">[[ my-prompt-package/summarize.mg topic="AI agents" ]]</span></code></pre>
-        </div>
-
-      </div><!-- /.feature-panels -->
-
-    </div><!-- /.feature-explorer -->
-    <div class="guide-cards">
-      <p class="guide-cards-label">Guides</p>
-      <div class="guide-cards-grid">
-        <a href="components.html" class="guide-card">
-          <span class="guide-card-title">Compose Once, Reuse Everywhere</span>
-          <span class="guide-card-arrow">&rarr;</span>
-        </a>
-        <a href="agents-md.html" class="guide-card">
-          <span class="guide-card-title">One AGENTS.md, for Any Model</span>
-          <span class="guide-card-arrow">&rarr;</span>
-        </a>
-        <a href="template-packages.html" class="guide-card">
-          <span class="guide-card-title">Share Templates Across Projects</span>
-          <span class="guide-card-arrow">&rarr;</span>
-        </a>
+    <div class="feature-row">
+      <span class="feat-num">01</span>
+      <div class="feat-body">
+        <h3 class="feat-title">Use any model, on any backend</h3>
+        <p class="feat-desc">
+          Run the same script using Ollama, Copilot (adding more). Your script stays exactly the same.
+        </p>
+        <span class="feat-tag">margarita use ollama</span>
       </div>
     </div>
+
+    <div class="feature-row">
+      <span class="feat-num">02</span>
+      <div class="feat-body">
+        <h3 class="feat-title">Control your context, keep costs low</h3>
+        <p class="feat-desc">
+          Most AI code harnesses hide the context from you. Margarita gives you complete control. Add only the tools you need. Run Python functions locally and update the context instead of burning tokens on tool calls.
+        </p>
+        <span class="feat-tag">@effect context clear<br/>@effect func summarize("A really long text input") => summary</span>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <span class="feat-num">03</span>
+      <div class="feat-body">
+        <h3 class="feat-title">Compose prompts from reusable .mg files</h3>
+        <p class="feat-desc">
+          Write a reusable prompt component and reuse it in your other scripts. Need to change it across your org? Just update it in one spot.
+        </p>
+        <span class="feat-tag">[[ snippets/role.mg is_admin=True permissions=["view"] ]]</span>
+      </div>
+    </div>
+
   </div>
 </section>
 
-<!-- Margarita Agent Features -->
-<section class="mg-section" id="margarita">
-  <div class="container">
-    <div class="mg-intro">
-      <div class="mg-badge">Ecosystem</div>
-      <h2 class="section-heading">.mgx</h2>
-      <p class="section-sub">
-        AI agents are now as easy as writing Markdown. Margarita wraps your existing tools like <span
-        class="mg-accent">Github Copilot</span> and lets you <span class="mg-accent">programmatically control</span> the context, tools, and state sent to them via <code class="code-comment">.mgx</code> files.
-      </p>
+<!-- .mgx Feature Explorer -->
+<section class="mgx-section" id="mgx">
+  <div class="mgx-inner">
+    <div class="mgx-header">
+      <p class="mgx-eyebrow">What you can do</p>
+      <h2 class="mgx-title">.mgx — agentic scripts</h2>
+      <p class="mgx-sub">AI agents are now as easy as writing Markdown. Margarita lets you programmatically control the context, tools, and state sent to any model via <code style="font-family:var(--mono);font-size:0.88em;background:var(--bg);padding:1px 5px;border:1px solid #D0CCC0;">.mgx</code> files.</p>
     </div>
 
     <div class="feature-explorer">
       <div class="feature-tab-list" role="tablist" aria-label="Margarita feature examples">
-        <button class="feature-tab is-active" role="tab" aria-selected="true"
-                aria-controls="panel-mg-helloworld" data-panel="mg-helloworld">
-          <span class="ftab-icon">&#128075;</span>
-          <span class="ftab-text">
-            <span class="ftab-name">Hello World</span>
-            <span class="ftab-desc">Your first .mgx file</span>
-          </span>
+        <button class="feature-tab is-active" role="tab" aria-selected="true" aria-controls="panel-mg-helloworld" data-panel="mg-helloworld">
+          <span class="ftab-icon">👋</span> Hello World
         </button>
-
-        <button class="feature-tab" role="tab" aria-selected="false"
-                aria-controls="panel-mg-run" data-panel="mg-run">
-          <span class="ftab-icon">&#9654;</span>
-          <span class="ftab-text">
-            <span class="ftab-name">Run Agent</span>
-            <span class="ftab-desc">Execute the agent</span>
-          </span>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-mg-run" data-panel="mg-run">
+          <span class="ftab-icon">▶</span> Run Agent
         </button>
-
-
-        <button class="feature-tab" role="tab" aria-selected="false"
-                aria-controls="panel-mg-func" data-panel="mg-func">
-          <span class="ftab-icon">fn</span>
-          <span class="ftab-text">
-            <span class="ftab-name">Local Functions</span>
-            <span class="ftab-desc">Run Python locally</span>
-          </span>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-mg-conditionals" data-panel="mg-conditionals">
+          <span class="ftab-icon">@</span> Logic
         </button>
-
-        <button class="feature-tab" role="tab" aria-selected="false"
-                aria-controls="panel-mg-tools" data-panel="mg-tools">
-          <span class="ftab-icon">[]</span>
-          <span class="ftab-text">
-            <span class="ftab-name">Dynamic Tools</span>
-            <span class="ftab-desc">Call tool methods</span>
-          </span>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-mg-includes" data-panel="mg-includes">
+          <span class="ftab-icon">[[</span> Includes
         </button>
-
-        <button class="feature-tab" role="tab" aria-selected="false"
-                aria-controls="panel-mg-context" data-panel="mg-context">
-          <span class="ftab-icon">ctx</span>
-          <span class="ftab-text">
-            <span class="ftab-name">Context Control</span>
-            <span class="ftab-desc">Prevent context bloat</span>
-          </span>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-mg-state" data-panel="mg-state">
+          <span class="ftab-icon">~</span> State
         </button>
-
-        <button class="feature-tab" role="tab" aria-selected="false"
-                aria-controls="panel-mg-state" data-panel="mg-state">
-          <span class="ftab-icon">~</span>
-          <span class="ftab-text">
-            <span class="ftab-name">State</span>
-            <span class="ftab-desc">Persistent variables</span>
-          </span>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-mg-input" data-panel="mg-input">
+          <span class="ftab-icon">?</span> User Input
         </button>
-
-        <button class="feature-tab" role="tab" aria-selected="false"
-                aria-controls="panel-mg-input" data-panel="mg-input">
-          <span class="ftab-icon">?</span>
-          <span class="ftab-text">
-            <span class="ftab-name">User Input</span>
-            <span class="ftab-desc">Prompt for input</span>
-          </span>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-mg-memory" data-panel="mg-memory">
+          <span class="ftab-icon">💾</span> Memory
         </button>
-
-        <button class="feature-tab" role="tab" aria-selected="false"
-                aria-controls="panel-mg-memory" data-panel="mg-memory">
-          <span class="ftab-icon">&#128190;</span>
-          <span class="ftab-text">
-            <span class="ftab-name">Memory</span>
-            <span class="ftab-desc">Persist values across runs</span>
-          </span>
+        <button class="feature-tab" role="tab" aria-selected="false" aria-controls="panel-mg-files" data-panel="mg-files">
+          <span class="ftab-icon">📄</span> Files
         </button>
-
-      </div><!-- /.feature-tab-list -->
+      </div>
 
       <div class="feature-panels">
 
         <div class="feature-panel is-active" id="panel-mg-helloworld" role="tabpanel">
           <div class="fpanel-header">
             <h3>Hello World</h3>
-            <p>Your first <code>.mgx</code> file. Log a message, declare a state variable, write a prompt block, and run
-              the agent — that's all it takes to get started with Margarita.</p>
+            <p>Your first <code>.mgx</code> file. Log a message, declare a state variable, write a prompt block, and run the agent — that's all it takes to get started with Margarita.</p>
           </div>
           <pre class="fpanel-code"><code><span class="code-meta">---
 description: Hello World!
@@ -475,115 +175,80 @@ description: Hello World!
         <div class="feature-panel" id="panel-mg-run" role="tabpanel">
           <div class="fpanel-header">
             <h3>Running the Agent</h3>
-            <p>Use <code>@effect run</code> to execute the agent at any point in your <code>.mgx</code> file. Run it
-              multiple times. Margarita
-              renders all accumulated
-              <code>&lt;&lt; &gt;&gt;</code> blocks into the prompt before the agent is called.</p>
+            <p>Use <code>@effect run</code> to execute the agent at any point in your <code>.mgx</code> file. Run it multiple times — Margarita renders all accumulated <code>&lt;&lt; &gt;&gt;</code> blocks into the prompt before each call.</p>
           </div>
           <pre class="fpanel-code"><code><span class="code-comment"># assistant.mgx</span>
 <span class="code-meta">---
 description: A simple Margarita agent that answers a question.
 ---</span>
-<span class="code-comment">// All statements are sequential</span>
 
 <span class="code-comment">// 1. Add this to the context</span>
 &lt;&lt; You are a helpful assistant. What is the answer to life the universe and everything? &gt;&gt;
 
 <span class="code-comment">// 2. Run the agent</span>
-<span class="code-keyword">@effect run</span></code>
+<span class="code-keyword">@effect run</span>
 
 <span class="code-comment">// 3. Add more to the context</span>
 &lt;&lt; You need to think harder this time? &gt;&gt;
 
 <span class="code-comment">// 4. Run the agent again!</span>
-<span class="code-keyword">@effect run</span></code>
-</pre>
-        </div>
-        <div class="feature-panel" id="panel-mg-func" role="tabpanel">
-          <div class="fpanel-header">
-            <h3>Local Functions</h3>
-            <p>Use <code>@effect func</code> to run a local Python function and store the return value in state — no LLM
-              round-trip, no tokens consumed.</p>
-          </div>
-          <pre class="fpanel-code"><code><span class="code-comment"># processor.mgx</span>
-<span class="code-meta">---
-description: Call a Python function and store the result into state vars.
----</span>
-<span class="code-keyword">import</span> summarize <span class="code-keyword">from</span> module
-
-<span class="code-comment">// Run the summarize function and store into summary var</span>
-<span class="code-keyword">@effect func</span> summarize(<span class="code-var">"A really long text input"</span>) <span
-              class="code-keyword">=></span> summary
-
-<span class="code-comment">// Summary was stored into state vars so we can use it here!</span>
-&lt;&lt; Write a poem about the summary: <span class="code-var">${summary}</span> &gt;&gt;
-
 <span class="code-keyword">@effect run</span></code></pre>
         </div>
 
-        <div class="feature-panel" id="panel-mg-tools" role="tabpanel">
+        <div class="feature-panel" id="panel-mg-conditionals" role="tabpanel">
           <div class="fpanel-header">
-            <h3>Dynamic Tools</h3>
-            <p>Use <code>@effect tools</code> to add a tool function to your <code>agent</code>. Register only the tools
-              you need. Use <code>@effect tools clear</code> to drop all tools.</p>
+            <h3>Conditionals &amp; Loops</h3>
+            <p>Use <code>if var == value:</code> / <code>else:</code> to include or exclude sections of your prompt based on context. Use <code>for item in list:</code> to loop over data.</p>
           </div>
-          <pre class="fpanel-code"><code><span class="code-comment"># analyst.mgx</span>
+          <pre class="fpanel-code"><code><span class="code-comment"># access.mg</span>
 <span class="code-meta">---
-description: Fetch data with a tool, then pass it to the agent.
+parameter: level (string): Access level of the user, e.g. "admin" or "user".
 ---</span>
-<span class="code-keyword">from</span> modules <span class="code-keyword">import</span> fetch, MyPydanticParams
+&lt;&lt; Access level: <span class="code-var">${level}</span> &gt;&gt;
+<span class="code-keyword">if</span> level == <span class="code-string">"admin"</span>:
+  &lt;&lt; You have full access. &gt;&gt;
+<span class="code-keyword">else</span>:
+  &lt;&lt; Read-only mode. &gt;&gt;
 
-<span class="code-comment">// This registers your fetch Python function with the agent's tools.</span>
-<span class="code-comment">// We specify the params with a pydantic model.</span>
-<span class="code-keyword">@effect tools</span> fetch(params: MyPydanticParams) <span class="code-keyword">=></span> data
-
-&lt;&lt; You are a helpful assistant. You can fetch data from urls if you need... &gt;&gt;
-
-<span class="code-keyword">@effect run</span>
-<span class="code-keyword">@effect tools clear</span>
-
-<span class="code-comment">// Tools are cleared so no context is wasted on that tool.</span>
-&lt;&lt; Write a summary... &gt;&gt;
-<span class="code-keyword">@effect run</span>
-          </code></pre>
-
+<span class="code-comment"># tasks.mg</span>
+<span class="code-meta">---
+description: A template that demonstrates looping over a list of tasks.
+---</span>
+&lt;&lt; ## My Tasks &gt;&gt;
+<span class="code-keyword">for</span> task <span class="code-keyword">in</span> tasks:
+  &lt;&lt; - <span class="code-var">${task}</span> &gt;&gt;</code></pre>
         </div>
 
-        <div class="feature-panel" id="panel-mg-context" role="tabpanel">
+        <div class="feature-panel" id="panel-mg-includes" role="tabpanel">
           <div class="fpanel-header">
-            <h3>Context Control</h3>
-            <p>Use <code>@effect context clear</code> to reset the accumulated context between agent calls. Keeps each
-              step focused and prevents context from
-              ballooning across a multi-step workflow.</p>
+            <h3>Includes</h3>
+            <p>React-like composability with includes. Write a <code>.mg</code> fragment once and drop it into any script or template.</p>
           </div>
-          <pre class="fpanel-code"><code><span class="code-comment"># multi-step.mgx</span>
+          <pre class="fpanel-code"><code><span class="code-comment"># components/greeting.mg</span>
 <span class="code-meta">---
-description: Two focused agent calls with a clean context boundary.
+description: A simple greeting component that can be included in other templates.
+parameters: user (string): The name of the person to greet.
 ---</span>
-&lt;&lt; You are a code reviewer. &gt;&gt;
-&lt;&lt; Review: <span class="code-var">${code}</span> &gt;&gt;
+&lt;&lt; Hello, <span class="code-var">${user}</span>! &gt;&gt;
 
-<span class="code-keyword">@effect run</span>
-<span class="code-keyword">@effect context clear</span>
-
-&lt;&lt; You are a documentation writer. &gt;&gt;
-&lt;&lt; Write docs for: <span class="code-var">${code}</span> &gt;&gt;
-
-<span class="code-keyword">@effect run</span></code></pre>
+<span class="code-comment"># report.mg</span>
+<span class="code-meta">---
+description: A report template that includes a greeting component.
+---</span>
+<span class="code-var">[[ components/greeting.mg user="Batman" ]]</span></code></pre>
         </div>
 
         <div class="feature-panel" id="panel-mg-state" role="tabpanel">
           <div class="fpanel-header">
             <h3>State</h3>
-            <p>Values stored by <code>@effect func</code> and <code>@effect tools</code> persist for the lifetime of
-              the run — templates and the agent can read from state at any point.</p>
+            <p>Values stored by the agent, <code>@effect func</code>, or <code>@effect tools</code> persist for the lifetime of the run — any prompt block can read from state at any point.</p>
           </div>
           <pre class="fpanel-code"><code><span class="code-comment"># stateful.mgx</span>
 <span class="code-meta">---
 description: Show how the agent state works.
 ---</span>
 <span class="code-keyword">@state</span> count = 5
-<span class="code-keyword">@state</span> user = "Batman"
+<span class="code-keyword">@state</span> user = <span class="code-string">"Batman"</span>
 
 &lt;&lt;
 The agent can get/set state variables using markdown.
@@ -597,20 +262,21 @@ Update the count variable to 10 and print out the user variable.
         <div class="feature-panel" id="panel-mg-input" role="tabpanel">
           <div class="fpanel-header">
             <h3>User Input</h3>
-            <p>Use <code>@effect input</code> to pause execution and prompt the user for a value. The response is
-              stored in state and available to the rest of the template.</p>
+            <p>Use <code>@effect input</code> to pause execution and prompt the user for a value. The response is stored in state and available to the rest of the script.</p>
           </div>
           <pre class="fpanel-code"><code><span class="code-comment"># build-assistant.mgx</span>
 <span class="code-meta">---
 description: Prompt the user, then run the agent with their input.
 ---</span>
+
 <span class="code-comment">// Pause and ask the user a question</span>
-<span class="code-keyword">@effect input</span> <span class="code-var">"What do you want to build?:"</span> <span
-              class="code-keyword">=&gt;</span> userInput
+<span class="code-keyword">@effect input</span> <span class="code-var">"What do you want to build?:"</span> <span class="code-keyword">=&gt;</span> userInput
 
 <span class="code-comment">// Use the captured input in context</span>
-&lt;&lt; You are a helpful build assistant. &gt;&gt;
-&lt;&lt; Help the user build: <span class="code-var">${userInput}</span> &gt;&gt;
+&lt;&lt;
+You are a helpful build assistant.
+Help the user build: <span class="code-var">${userInput}</span>
+&gt;&gt;
 
 <span class="code-keyword">@effect run</span></code></pre>
         </div>
@@ -618,14 +284,13 @@ description: Prompt the user, then run the agent with their input.
         <div class="feature-panel" id="panel-mg-memory" role="tabpanel">
           <div class="fpanel-header">
             <h3>Memory</h3>
-            <p>Use <code>@memory var</code> to declare a persistent variable that survives across runs. Values are
-              read on startup and written back at the end — letting you build workflows that remember what happened last
-              time.</p>
+            <p>Use <code>@memory var</code> to declare a persistent variable that survives across runs. Values are read on startup and written back at the end — letting you build workflows that remember what happened last time.</p>
           </div>
           <pre class="fpanel-code"><code><span class="code-comment"># memory-example.mgx</span>
 <span class="code-meta">---
 description: Test Memory
 ---</span>
+
 <span class="code-comment">// Declare a memory variable — loaded from persistent storage</span>
 <span class="code-keyword">@memory</span> <span class="code-keyword">var</span> valueA
 
@@ -637,80 +302,295 @@ Otherwise write out it's set!
 <span class="code-keyword">@effect run</span></code></pre>
         </div>
 
-      </div><!-- /.feature-panels -->
+        <div class="feature-panel" id="panel-mg-files" role="tabpanel">
+          <div class="fpanel-header">
+            <h3>Files</h3>
+            <p>The agent has built-in tools — <code>read_file</code>, <code>write_file</code>, <code>search_files</code>, and <code>ask_user</code>. Just tell it what to read or write in your prompt and it handles the rest.</p>
+          </div>
+          <pre class="fpanel-code"><code><span class="code-comment"># file-example.mgx</span>
+<span class="code-meta">---
+description: Read notes and write a summary
+---</span>
 
+<span class="code-comment">// The agent reads and writes files on its own — no boilerplate needed</span>
+&lt;&lt;
+Read the file at <span class="code-string">./data/notes.txt</span>
+
+Summarise the key points and write the result to <span class="code-string">./output/summary.md</span>
+&gt;&gt;
+
+<span class="code-keyword">@effect run</span></code></pre>
+        </div>
+
+      </div><!-- /.feature-panels -->
     </div><!-- /.feature-explorer -->
-    <div class="guide-cards">
-      <p class="guide-cards-label">Guides</p>
-      <div class="guide-cards-grid">
-        <a href="custom-ralph.html" class="guide-card">
-          <span class="guide-card-title">Build a Custom Ralph Wiggum Loop</span>
-          <span class="guide-card-arrow">&rarr;</span>
-        </a>
-        <a href="github-issue-summary.html" class="guide-card">
-          <span class="guide-card-title">Auto-Triage GitHub Issues</span>
-          <span class="guide-card-arrow">&rarr;</span>
-        </a>
-        <a href="local-functions.html" class="guide-card">
-          <span class="guide-card-title">Spend Less on Tokens</span>
-          <span class="guide-card-arrow">&rarr;</span>
-        </a>
-      </div>
-    </div>
   </div>
 </section>
 
-<!-- Documentation Links -->
-<section class="docs-section" id="docs">
-  <div class="container">
-    <h2 class="section-heading">Ready to dive in?</h2>
-    <p class="section-sub">Explore the full documentation for Margarita, or jump straight to the source on
-      GitHub.</p>
-
-    <div class="docs-grid">
-      <a href="https://www.banyango.com/margarita/latest/" class="docs-card" target="_blank" rel="noopener noreferrer">
-        <div class="docs-card-icon docs-card-icon--margarita">M</div>
-        <h3>Margarita Docs</h3>
-        <p>Language reference, CLI guide, Python API, and examples for building templates.</p>
-        <span class="docs-card-link">Read the docs &rarr;</span>
-      </a>
-
-      <a href="https://github.com/banyango/margarita" class="docs-card" target="_blank" rel="noopener noreferrer">
-        <div class="docs-card-icon docs-card-icon--github">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28" aria-hidden="true">
-            <path
-              d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-          </svg>
+<!-- Guides & Tutorials -->
+<section class="links-section">
+  <div class="links-inner">
+    <div class="links-grid">
+      <div>
+        <p class="links-group-label">Tutorials</p>
+        <div class="links-list">
+          <a href="margarita-getting-started.html"><span class="links-list-arrow">→</span> Getting Started with Agents</a>
+          <a href="margarita-tutorial-state.html"><span class="links-list-arrow">→</span> Working with State</a>
+          <a href="margarita-tutorial-user-input.html"><span class="links-list-arrow">→</span> Collecting User Input</a>
         </div>
-        <h3>GitHub</h3>
-        <p>Browse the source, open issues, contribute, and follow the latest releases.</p>
-        <span class="docs-card-link">View on GitHub &rarr;</span>
-      </a>
+      </div>
+      <div>
+        <p class="links-group-label">Guides</p>
+        <div class="links-list">
+          <a href="custom-ralph.html"><span class="links-list-arrow">→</span> Build a Custom Ralph Wiggum Loop</a>
+          <a href="local-functions.html"><span class="links-list-arrow">→</span> Spend Less on Tokens</a>
+          <a href="template-packages.html"><span class="links-list-arrow">→</span> Share Templates Across Projects</a>
+          <a href="github-issue-summary.html"><span class="links-list-arrow">→</span> Auto-Triage GitHub Issues</a>
+          <a href="agents-md.html"><span class="links-list-arrow">→</span> One AGENTS.md, for Any Model</a>
+          <a href="components.html"><span class="links-list-arrow">→</span> Compose Once, Reuse Everywhere</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- Footer -->
 <footer class="site-footer">
-  <div class="container">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <img src="img/lime.svg" alt="Margarita" class="footer-logo-img">
-        <span class="footer-brand-name">Margarita</span>
-      </div>
-      <nav class="footer-links" aria-label="Footer navigation">
-        <a href="https://www.banyango.com/margarita/latest/" target="_blank" rel="noopener noreferrer">Margarita
-          Docs</a>
-        <a href="https://www.banyango.com/margarita/latest/" target="_blank" rel="noopener noreferrer">Margarita Docs</a>
-        <a href="https://github.com/banyango/margarita" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a href="mailto:kyle@banyango.com">Investors</a>
-      </nav>
-      <p class="footer-copy">&copy; 2026 Banyango. MIT License. Logo courtesy Freepik</p>
-    </div>
+  <div class="footer-inner">
+    <span class="footer-brand">Margarita</span>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="https://github.com/banyango/margarita" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://www.banyango.com/margarita/latest/" target="_blank" rel="noopener noreferrer">Docs</a>
+    </nav>
+    <p class="footer-copy">&copy; 2026 Banyango. MIT License.</p>
   </div>
 </footer>
 
-<script src="js/app.js"></script>
-</body>
+<script>
+// Feature explorer tab switching
+document.querySelectorAll('.feature-explorer').forEach(function (explorer) {
+  var tabs   = explorer.querySelectorAll('.feature-tab');
+  var panels = explorer.querySelectorAll('.feature-panel');
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      tabs.forEach(function (t) { t.classList.remove('is-active'); t.setAttribute('aria-selected', 'false'); });
+      panels.forEach(function (p) { p.classList.remove('is-active'); });
+      tab.classList.add('is-active');
+      tab.setAttribute('aria-selected', 'true');
+      var panel = document.getElementById('panel-' + tab.dataset.panel);
+      if (panel) panel.classList.add('is-active');
+    });
+  });
+});
 
+(function () {
+  // ── Code phases to type ──────────────────────────────────────────────────
+  var P1 = '// This is a margarita script (.mgx)\n\n// These are variables\n@state score    = 0\n@state feedback = ""\n\n';
+  var P2 = '\n\n// Add Markdown and fill in the vars\n<<\nThe current score is ${score}.\n\nReview this code snippet and set `score` to a number from 0–10\nand `feedback` to a one-sentence summary of the quality.\n\n```python\ndef add(a, b): return a+b\n```\n>>\n\n';
+  var P3 = '\n// This runs the agent. The agent updates the vars\n@effect run\n\n';
+  var P4 = '\n<<\nExplain the score of ${score} in more\ndetail and tell me about the feedback.\n>>\n';
+  var P5 = '\n// Now we take the results and run again!\n@effect run';
+
+  // ── Terminal HTML fragments ──────────────────────────────────────────────
+  var RUN1_DONE =
+    '<div class="term-run">' +
+      '<div class="term-run-head">' +
+        '<span class="term-arrow">▼</span> ' +
+        '<span class="term-lbl">Run 1</span> ' +
+        '<span class="term-dot">●</span> ' +
+        '<span class="term-done">completed</span> ' +
+        '<span class="term-time">5.2s</span>' +
+      '</div>' +
+      '<div><span class="term-rl">Response:</span></div>' +
+      '<div class="term-resp">Setting score to 72 and feedback to “Simple and correct,<br>but missing type hints and a docstring.”</div>' +
+      '<div class="term-set">↳ set score&nbsp;&nbsp;&nbsp;&nbsp;= 72</div>' +
+      '<div class="term-set">↳ set feedback = “Simple and correct...”</div>' +
+      '<div class="term-meta">Tokens:&nbsp;&nbsp;&nbsp;&nbsp;11,430 in&nbsp;&nbsp; 198 out</div>' +
+      '<div class="term-meta">Requests:&nbsp; 1</div>' +
+    '</div>';
+
+  var RUN2_DONE =
+    '<div class="term-run">' +
+      '<div class="term-run-head">' +
+        '<span class="term-arrow">▼</span> ' +
+        '<span class="term-lbl">Run 2</span> ' +
+        '<span class="term-dot">●</span> ' +
+        '<span class="term-done">completed</span> ' +
+        '<span class="term-time">4.8s</span>' +
+      '</div>' +
+      '<div class="term-set">↳ get feedback</div>' +
+      '<div><span class="term-rl">Response:</span></div>' +
+      '<div class="term-resp">A score of 72 reflects functional code that does the job,<br>but leaves room for improvement. The feedback — “Simple<br>and correct, but missing type hints” — points to gaps<br>in readability and long-term maintainability.</div>' +
+      '<div class="term-meta">Tokens:&nbsp;&nbsp;&nbsp;&nbsp;11,628 in&nbsp;&nbsp; 312 out</div>' +
+      '<div class="term-meta">Requests:&nbsp; 2</div>' +
+    '</div>';
+
+  // ── Syntax highlighter ───────────────────────────────────────────────────
+  function hl(raw) {
+    var s = raw
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    return s.split('\n').map(function (line) {
+      // Comment
+      if (/^\/\//.test(line)) return '<span class="t-cmt">' + line + '</span>';
+      // @state
+      if (/^@state\s/.test(line)) {
+        return line
+          .replace(/^(@state)/, '<span class="t-kw">$1</span>')
+          .replace(/(=\s*)(""|0)$/, function (m, eq, val) {
+            return eq + '<span class="t-str">' + val + '</span>';
+          });
+      }
+      // @effect run
+      if (/^@effect run/.test(line)) return '<span class="t-kw">' + line + '</span>';
+      // Standalone delimiter
+      if (line === '&lt;&lt;' || line === '&gt;&gt;') return '<span class="t-del">' + line + '</span>';
+      // Inline: delimiters + variables
+      return line
+        .replace(/(&lt;&lt;|&gt;&gt;)/g, '<span class="t-del">$1</span>')
+        .replace(/(\$\{[^}]+\})/g, '<span class="t-var">$1</span>');
+    }).join('\n');
+  }
+
+  // ── DOM refs ────────────────────────────────────────────────────────────
+  var editorCode  = document.getElementById('editor-code');
+  var editorGutter = document.getElementById('editor-gutter');
+  var termRuns    = document.getElementById('term-runs');
+  var termFoot    = document.getElementById('term-foot');
+
+  function updateGutter(raw) {
+    var n = raw.split('\n').length;
+    var html = '';
+    for (var i = 1; i <= n; i++) html += '<span>' + i + '</span>';
+    editorGutter.innerHTML = html;
+  }
+
+  // ── Typing engine ────────────────────────────────────────────────────────
+  var rawText = '';
+  var timers  = [];
+
+  function clearTimers() {
+    timers.forEach(clearTimeout);
+    timers = [];
+  }
+
+  function wait(ms, cb) {
+    timers.push(setTimeout(cb, ms));
+  }
+
+  function typeText(text, baseSpeed, cb) {
+    // Split into words-with-trailing-whitespace so each append is one word
+    var tokens = text.match(/\S+\s*/g) || [];
+    var i = 0;
+    function next() {
+      if (i < tokens.length) {
+        rawText += tokens[i++];
+        editorCode.innerHTML = hl(rawText) + '<span class="cursor">▇</span>';
+        updateGutter(rawText);
+        timers.push(setTimeout(next, baseSpeed + Math.random() * baseSpeed * 0.35));
+      } else {
+        wait(120, cb);
+      }
+    }
+    next();
+  }
+
+  // ── Running spinner ──────────────────────────────────────────────────────
+  function runningBlock(id, label) {
+    return '<div class="term-run" id="' + id + '">' +
+      '<div class="term-run-head">' +
+        '<span class="term-arrow">▼</span> ' +
+        '<span class="term-lbl">' + label + '</span> ' +
+        '<span style="color:#FEBC2E;">●</span> ' +
+        '<span style="color:#FEBC2E;font-weight:700;">running</span> ' +
+        '<span class="term-time" id="' + id + '-t">0.0s</span>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function startTimer(elId) {
+    var t = 0;
+    var iv = setInterval(function () {
+      t = Math.round((t + 0.1) * 10) / 10;
+      var el = document.getElementById(elId + '-t');
+      if (el) el.textContent = t.toFixed(1) + 's';
+    }, 100);
+    return iv;
+  }
+
+  // ── Main sequence ────────────────────────────────────────────────────────
+  function run() {
+    rawText = '';
+    editorCode.innerHTML = '<span class="cursor">▇</span>';
+    editorGutter.innerHTML = '<span>1</span>';
+    termRuns.innerHTML = '';
+    termFoot.style.display = 'none';
+
+    // Phase 1: @state declarations
+    typeText(P1, 320, function () {
+      wait(400, function () {
+
+        // Phase 2: first prompt block
+        typeText(P2, 150, function () {
+
+          // Phase 3: first @effect run
+          typeText(P3, 320, function () {
+            wait(700, function () {
+
+              // Terminal: Run 1 running
+              termRuns.innerHTML = runningBlock('run1', 'Run 1');
+              var iv1 = startTimer('run1');
+
+              wait(2600, function () {
+                clearInterval(iv1);
+                termRuns.innerHTML = RUN1_DONE;
+
+                wait(600, function () {
+
+                  // Phase 4: second prompt block
+                  typeText(P4, 150, function () {
+
+                    // Phase 5: second @effect run
+                    typeText(P5, 320, function () {
+                      wait(700, function () {
+
+                        // Terminal: Run 2 running
+                        termRuns.innerHTML = RUN1_DONE + runningBlock('run2', 'Run 2');
+                        var iv2 = startTimer('run2');
+
+                        wait(2200, function () {
+                          clearInterval(iv2);
+                          termRuns.innerHTML = RUN1_DONE + RUN2_DONE;
+                          termFoot.style.display = 'block';
+                          // Remove cursor
+                          editorCode.innerHTML = hl(rawText);
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  }
+
+  // ── Start when the demo panel scrolls into view ──────────────────────────
+  var demo = document.querySelector('.demo-section');
+  if (!demo) return;
+  var started = false;
+  var obs = new IntersectionObserver(function (entries) {
+    if (entries[0].isIntersecting && !started) {
+      started = true;
+      wait(300, run);
+    }
+  }, { threshold: 0.25 });
+  obs.observe(demo);
+})();
+</script>
+</body>
 </html>
