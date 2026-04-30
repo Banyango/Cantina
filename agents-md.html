@@ -61,12 +61,12 @@
           Guides <span class="nav-dropdown-arrow" aria-hidden="true">&#9662;</span>
         </button>
         <ul class="nav-dropdown-menu" role="list">
-          <li><a href="agents-md.html">One AGENTS.md, for Any Model</a></li>
-          <li><a href="components.html">Compose Once, Reuse Everywhere</a></li>
           <li><a href="custom-ralph.html">Build a Custom Ralph Wiggum Loop</a></li>
           <li><a href="local-functions.html">Spend Less on Tokens</a></li>
-          <li><a href="github-issue-summary.html">Auto-Triage GitHub Issues</a></li>
           <li><a href="template-packages.html">Share Templates Across Projects</a></li>
+          <li><a href="components.html">Compose Once, Reuse Everywhere</a></li>
+          <li><a href="agents-md.html">One AGENTS.md, for Any Model</a></li>
+          <li><a href="github-issue-summary.html">Auto-Triage GitHub Issues</a></li>
         </ul>
       </li>
       <li>
@@ -111,23 +111,6 @@
         Each model has its own tool names, quirks, and preferred patterns.
         Maintaining separate files means they inevitably drift — and your agents start making subtly different mistakes.
       </p>
-    </div>
-    <div class="tut-pain-cards">
-      <div class="tut-pain-card">
-        <div class="tut-pain-icon">&#128260;</div>
-        <h3>Copy-paste drift</h3>
-        <p>Shared rules live in two files. One gets updated, the other doesn't. Your models quietly receive contradictory instructions.</p>
-      </div>
-      <div class="tut-pain-card">
-        <div class="tut-pain-icon">&#128269;</div>
-        <h3>Review overhead</h3>
-        <p>Every PR touching agent instructions means checking two files for consistency. Easy to miss, painful to catch in production.</p>
-      </div>
-      <div class="tut-pain-card">
-        <div class="tut-pain-icon">&#9889;</div>
-        <h3>Scales poorly</h3>
-        <p>Add a third model and you're maintaining three files. The problem compounds with every new assistant you adopt.</p>
-      </div>
     </div>
   </div>
 </section>

@@ -1719,6 +1719,8 @@ code {
 /* Intro block */
 .tut-intro {
   text-align: center;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 3rem;
 }
 

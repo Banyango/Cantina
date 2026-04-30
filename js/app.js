@@ -45,6 +45,16 @@ dropdowns.forEach(dropdown => {
   if (!toggle) return;
   toggle.addEventListener('click', e => {
     e.stopPropagation();
+
+    // close all existing dropdowns before opening.
+    const all = document.querySelectorAll('.nav-dropdown');
+    all.forEach(n => {
+        n.classList.remove('open');
+        n.querySelector('.nav-dropdown-toggle').setAttribute(
+        'aria-expanded', "false"
+      )
+    });
+
     const isOpen = dropdown.classList.toggle('open');
     toggle.setAttribute('aria-expanded', String(isOpen));
   });

@@ -17,7 +17,7 @@ for trigger in escalation_triggers:
   << - ${ trigger } >>
 <<
 When escalating:
-1. Summarise the request in two sentences.
+1. Summarize the request in two sentences.
 2. State exactly what you were unable to resolve and why.
 3. Include any relevant context, IDs, or error messages.
 4. Do not attempt to continue the task after escalating.
