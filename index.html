@@ -103,7 +103,7 @@
       <div class="feat-body">
         <h3 class="feat-title">Compose prompts from reusable .mg files</h3>
         <p class="feat-desc">
-          Write a reusable prompt component and reuse it in your other scripts. Need to change it across your org? Just update it in one spot.
+          Write a prompt component and reuse it in your other scripts. Need to change it across your org? Just update it in one spot.
         </p>
         <span class="feat-tag">[[ snippets/role.mg is_admin=True permissions=["view"] ]]</span>
       </div>
@@ -317,7 +317,7 @@ description: Read notes and write a summary
 &lt;&lt;
 Read the file at <span class="code-string">./data/notes.txt</span>
 
-Summarise the key points and write the result to <span class="code-string">./output/summary.md</span>
+Summarize the key points and write the result to <span class="code-string">./output/summary.md</span>
 &gt;&gt;
 
 <span class="code-keyword">@effect run</span></code></pre>
@@ -387,10 +387,10 @@ document.querySelectorAll('.feature-explorer').forEach(function (explorer) {
 (function () {
   // ── Code phases to type ──────────────────────────────────────────────────
   var P1 = '// This is a margarita script (.mgx)\n\n// These are variables\n@state score    = 0\n@state feedback = ""\n\n';
-  var P2 = '\n\n// Add Markdown and fill in the vars\n<<\nThe current score is ${score}.\n\nReview this code snippet and set `score` to a number from 0–10\nand `feedback` to a one-sentence summary of the quality.\n\n```python\ndef add(a, b): return a+b\n```\n>>\n\n';
-  var P3 = '\n// This runs the agent. The agent updates the vars\n@effect run\n\n';
+  var P2 = '\n\n// Add Markdown \n<<\nThe current score is ${score}.\n\nReview this code snippet and set `score` to a number from 0–10\nand `feedback` to a one-sentence summary of the quality.\n\n```python\ndef add(a, b): return a+b\n```\n>>\n\n';
+  var P3 = '\n// Run the agent\n@effect run\n\n';
   var P4 = '\n<<\nExplain the score of ${score} in more\ndetail and tell me about the feedback.\n>>\n';
-  var P5 = '\n// Now we take the results and run again!\n@effect run';
+  var P5 = '\n// Run again!\n@effect run';
 
   // ── Terminal HTML fragments ──────────────────────────────────────────────
   var RUN1_DONE =
@@ -402,10 +402,11 @@ document.querySelectorAll('.feature-explorer').forEach(function (explorer) {
         '<span class="term-done">completed</span> ' +
         '<span class="term-time">5.2s</span>' +
       '</div>' +
-      '<div><span class="term-rl">Response:</span></div>' +
-      '<div class="term-resp">Setting score to 72 and feedback to “Simple and correct,<br>but missing type hints and a docstring.”</div>' +
+      '<div class="term-meta">This code appears correct however it could use some improvements. Setting the score and feedback.</div>' +
       '<div class="term-set">↳ set score&nbsp;&nbsp;&nbsp;&nbsp;= 72</div>' +
       '<div class="term-set">↳ set feedback = “Simple and correct...”</div>' +
+      '<div><span class="term-rl">Response:</span></div>' +
+      '<div class="term-resp">Set the score to 72 and feedback to “Simple and correct,<br>but missing type hints and a docstring.”</div>' +
       '<div class="term-meta">Tokens:&nbsp;&nbsp;&nbsp;&nbsp;11,430 in&nbsp;&nbsp; 198 out</div>' +
       '<div class="term-meta">Requests:&nbsp; 1</div>' +
     '</div>';
@@ -419,6 +420,7 @@ document.querySelectorAll('.feature-explorer').forEach(function (explorer) {
         '<span class="term-done">completed</span> ' +
         '<span class="term-time">4.8s</span>' +
       '</div>' +
+      '<div class="term-meta">The score is 72 and I need to fetch the feedback from state.</div>' +
       '<div class="term-set">↳ get feedback</div>' +
       '<div><span class="term-rl">Response:</span></div>' +
       '<div class="term-resp">A score of 72 reflects functional code that does the job,<br>but leaves room for improvement. The feedback — “Simple<br>and correct, but missing type hints” — points to gaps<br>in readability and long-term maintainability.</div>' +
@@ -548,7 +550,7 @@ document.querySelectorAll('.feature-explorer').forEach(function (explorer) {
                 clearInterval(iv1);
                 termRuns.innerHTML = RUN1_DONE;
 
-                wait(600, function () {
+                wait(1600, function () {
 
                   // Phase 4: second prompt block
                   typeText(P4, 150, function () {
