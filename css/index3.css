@@ -327,9 +327,6 @@ h1 {
   gap: 2rem;
   align-items: start;
 }
-.feature-row:last-child {
-  border-bottom: var(--border-w) solid var(--black);
-}
 
 .feat-num {
   font-family: var(--mono);
@@ -340,7 +337,7 @@ h1 {
   letter-spacing: 0.05em;
 }
 
-.feat-body {}
+.feat-body { min-width: 0; }
 .feat-title {
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 700;
@@ -587,4 +584,13 @@ h1 {
   .feature-row { grid-template-columns: 3rem 1fr; gap: 1rem; }
   .footer-inner { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
   .links-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .feat-preview { font-size: 0.68rem; padding: 0.85rem 1rem; }
+}
+
+@media (max-width: 480px) {
+  .features { padding: 3rem 1rem; }
+  .feature-row { grid-template-columns: 1fr; gap: 0.5rem; padding: 2rem 0; }
+  .feat-num { padding-top: 0; }
+  .feat-preview { font-size: 0.65rem; padding: 0.75rem 0.85rem; overflow-x: auto; max-width: 100%; }
+  .feat-desc { max-width: 100%; }
 }
