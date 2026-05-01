@@ -172,6 +172,8 @@ h1 {
   border: var(--border-w) solid var(--black);
   box-shadow: var(--shadow-lg);
   overflow: hidden;
+  /* 30 lines × 1.406rem + code padding (2.5rem) + title bar (~1.9rem) */
+  min-height: calc(30 * 1.406rem + 4.4rem);
 }
 
 .window-bar {
@@ -200,7 +202,10 @@ h1 {
 
 .editor-body {
   display: grid;
-  grid-template-columns: 2.25rem 1fr;
+  grid-template-columns: 1fr;
+}
+.editor-gutter {
+  display: none;
 }
 .cursor {
   display: inline;
@@ -247,6 +252,8 @@ h1 {
   border: var(--border-w) solid var(--black);
   box-shadow: var(--shadow-lg);
   overflow: hidden;
+  /* 30 lines × 1.152rem + body padding (2.35rem) + title bar (~1.9rem) */
+  min-height: calc(30 * 1.152rem + 4.25rem);
 }
 .term-bar {
   display: flex;
@@ -297,16 +304,23 @@ h1 {
   margin: 0 auto;
 }
 .features-label {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-family: var(--sans);
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--black);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.features-sub {
+  font-size: 1.1rem;
   color: var(--muted);
   margin-bottom: 3rem;
+  text-align: center;
 }
 
 .feature-row {
-  border-top: var(--border-w) solid var(--black);
   padding: 2.5rem 0;
   display: grid;
   grid-template-columns: 5rem 1fr;
@@ -341,6 +355,20 @@ h1 {
   line-height: 1.7;
   max-width: 58ch;
 }
+.feat-preview {
+  margin: 1.5rem 0 1.25rem;
+  padding: 1.1rem 1.4rem;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  line-height: 1.9;
+  background: var(--white);
+  border: var(--border-w) solid var(--black);
+  border-left: 4px solid var(--lime-muted);
+  box-shadow: var(--shadow);
+  white-space: pre;
+  overflow-x: auto;
+}
+
 .feat-tag {
   display: inline-block;
   margin-top: 1rem;
@@ -467,7 +495,7 @@ h1 {
 }
 .links-inner {
   max-width: var(--max);
-  margin: 0 auto;
+  margin: 3rem auto 0;
 }
 .links-grid {
   display: grid;

@@ -71,44 +71,119 @@
   </div>
 </section>
 
-<!-- Features -->
+<!-- Things you can build -->
 <section class="features">
   <div class="features-inner">
-    <p class="features-label">Why Margarita</p>
-
+    <p class="features-label">What can you build?</p>
     <div class="feature-row">
       <span class="feat-num">01</span>
       <div class="feat-body">
-        <h3 class="feat-title">Use any model, on any backend</h3>
+        <h3 class="feat-title">A custom agent loop</h3>
         <p class="feat-desc">
-          Run the same script using Ollama, Copilot (adding more). Your script stays exactly the same.
+          Want to build a custom ralph loop? Create a custom agent that has all the steps you want.
         </p>
-        <span class="feat-tag">margarita use ollama</span>
+        <pre class="feat-preview"><code><span class="code-keyword">@effect</span> input <span class="code-string">"What do you want to build?:"</span> =&gt; userInput
+
+<span class="code-comment">// Break it into tasks</span>
+<span class="code-var">[[ use-case-task-breakdown.mg input=userInput ]]</span>
+<span class="code-keyword">@effect run</span>
+
+<span class="code-comment">// Implement each task</span>
+<span class="code-keyword">for</span> task <span class="code-keyword">in</span> tasks:
+    <span class="code-keyword">@effect context clear</span>
+    <span class="code-keyword">@state</span> isDone = <span class="code-keyword">false</span>
+    <span class="code-var">[[ additional_guidance.mg ]]</span>
+    <span class="code-keyword">for</span> i <span class="code-keyword">in</span> range(5):
+        <span class="code-keyword">@effect run</span>
+        <span class="code-keyword">if</span> isDone: <span class="code-keyword">break</span></code></pre>
+        <a href="custom-ralph.html" class="feat-tag">See full guide: Build a Custom Ralph Wiggum Loop →</a>
       </div>
     </div>
 
     <div class="feature-row">
       <span class="feat-num">02</span>
       <div class="feat-body">
-        <h3 class="feat-title">Control your context, keep costs low</h3>
+        <h3 class="feat-title">Tools to summarize your emails</h3>
         <p class="feat-desc">
-          Most AI code harnesses hide the context from you. Margarita gives you complete control. Add only the tools you need. Run Python functions locally and update the context instead of burning tokens on tool calls.
+          Create a Margarita script that calls a Python function to load your inbox from Apple Mail, inject the results into a prompt, and get a categorized summary with action items.
         </p>
-        <span class="feat-tag">@effect context clear<br/>@effect func summarize("A really long text input") => summary</span>
+        <pre class="feat-preview"><code><span class="code-keyword">from</span> src.applemail <span class="code-keyword">import</span> load_emails
+
+<span class="code-keyword">@effect func</span> load_emails(limit=20) =&gt; result
+
+&lt;&lt;
+Summarize the last 20 emails I've gotten.
+
+- Categorize them.
+- Give me an action item list.
+- Ignore spam type emails.
+
+Here are the emails: <span class="code-var">${result}</span>
+&gt;&gt;
+
+<span class="code-keyword">@effect run</span></code></pre>
+        <a href="summarize-emails.html" class="feat-tag">See full guide: Summarize Your Emails →</a>
       </div>
     </div>
 
     <div class="feature-row">
       <span class="feat-num">03</span>
       <div class="feat-body">
-        <h3 class="feat-title">Compose prompts from reusable .mg files</h3>
+        <h3 class="feat-title">Build an LLM enabled Game</h3>
         <p class="feat-desc">
-          Write a prompt component and reuse it in your other scripts. Need to change it across your org? Just update it in one spot.
+          Want to build an LLM enabled game? Create a game loop that prompts the model for the next move, then feeds the result back into the next turn's context.
         </p>
-        <span class="feat-tag">[[ snippets/role.mg is_admin=True permissions=["view"] ]]</span>
+        <pre class="feat-preview"><code><span class="code-keyword">if</span> type == <span class="code-string">"mage"</span>:
+    <span class="code-var">[[ src/mage.mg ]]</span>
+<span class="code-keyword">elif</span> type == <span class="code-string">"fighter"</span>:
+    <span class="code-var">[[ src/fighter.mg ]]</span>
+
+<span class="code-keyword">@state</span> health = 100
+<span class="code-keyword">@state</span> isFree = <span class="code-keyword">false</span>
+
+<span class="code-keyword">for</span> i <span class="code-keyword">in</span> range(0, 100):
+    <span class="code-keyword">@effect input</span> <span class="code-string">"What do you do?"</span> =&gt; action
+    <span class="code-keyword">@effect run</span>
+    <span class="code-keyword">if</span> health &lt;= 0: <span class="code-keyword">break</span>
+    <span class="code-keyword">if</span> isFree: <span class="code-keyword">break</span></code></pre>
+        <a href="dungeon-quest.html" class="feat-tag">See full guide: Build Dungeon Quest →</a>
       </div>
     </div>
 
+    <div class="feature-row feature-row--more">
+      <span class="feat-num">···</span>
+      <div class="feat-body">
+        <h3 class="feat-title">And much more.</h3>
+        <p class="feat-desc">
+          Automated code review pipelines. Scheduled reports. Data enrichment workflows. Slack bots. Anything that benefits from a repeatable, readable script driving an LLM.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="links-inner">
+    <div class="links-grid">
+      <div>
+        <p class="links-group-label">Tutorials</p>
+        <div class="links-list">
+          <a href="margarita-getting-started.html"><span class="links-list-arrow">→</span> Getting Started with Agents</a>
+          <a href="margarita-tutorial-state.html"><span class="links-list-arrow">→</span> Working with State</a>
+          <a href="margarita-tutorial-user-input.html"><span class="links-list-arrow">→</span> Collecting User Input</a>
+        </div>
+      </div>
+      <div>
+        <p class="links-group-label">Guides</p>
+        <div class="links-list">
+          <a href="custom-ralph.html"><span class="links-list-arrow">→</span> Build a Custom Ralph Wiggum Loop</a>
+          <a href="dungeon-quest.html"><span class="links-list-arrow">→</span> Build a Game</a>
+          <a href="summarize-emails.html"><span class="links-list-arrow">→</span> Summarize Your Emails</a>
+          <a href="local-functions.html"><span class="links-list-arrow">→</span> Spend Less on Tokens</a>
+          <a href="template-packages.html"><span class="links-list-arrow">→</span> Share Templates Across Projects</a>
+          <a href="github-issue-summary.html"><span class="links-list-arrow">→</span> Auto-Triage GitHub Issues</a>
+          <a href="agents-md.html"><span class="links-list-arrow">→</span> One AGENTS.md, for Any Model</a>
+          <a href="components.html"><span class="links-list-arrow">→</span> Compose Once, Reuse Everywhere</a>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -116,7 +191,6 @@
 <section class="mgx-section" id="mgx">
   <div class="mgx-inner">
     <div class="mgx-header">
-      <p class="mgx-eyebrow">What you can do</p>
       <h2 class="mgx-title">.mgx — agentic scripts</h2>
       <p class="mgx-sub">AI agents are now as easy as writing Markdown. Margarita lets you programmatically control the context, tools, and state sent to any model via <code style="font-family:var(--mono);font-size:0.88em;background:var(--bg);padding:1px 5px;border:1px solid #D0CCC0;">.mgx</code> files.</p>
     </div>
@@ -328,33 +402,6 @@ Summarize the key points and write the result to <span class="code-string">./out
   </div>
 </section>
 
-<!-- Guides & Tutorials -->
-<section class="links-section">
-  <div class="links-inner">
-    <div class="links-grid">
-      <div>
-        <p class="links-group-label">Tutorials</p>
-        <div class="links-list">
-          <a href="margarita-getting-started.html"><span class="links-list-arrow">→</span> Getting Started with Agents</a>
-          <a href="margarita-tutorial-state.html"><span class="links-list-arrow">→</span> Working with State</a>
-          <a href="margarita-tutorial-user-input.html"><span class="links-list-arrow">→</span> Collecting User Input</a>
-        </div>
-      </div>
-      <div>
-        <p class="links-group-label">Guides</p>
-        <div class="links-list">
-          <a href="custom-ralph.html"><span class="links-list-arrow">→</span> Build a Custom Ralph Wiggum Loop</a>
-          <a href="local-functions.html"><span class="links-list-arrow">→</span> Spend Less on Tokens</a>
-          <a href="template-packages.html"><span class="links-list-arrow">→</span> Share Templates Across Projects</a>
-          <a href="github-issue-summary.html"><span class="links-list-arrow">→</span> Auto-Triage GitHub Issues</a>
-          <a href="agents-md.html"><span class="links-list-arrow">→</span> One AGENTS.md, for Any Model</a>
-          <a href="components.html"><span class="links-list-arrow">→</span> Compose Once, Reuse Everywhere</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- Footer -->
 <footer class="site-footer">
   <div class="footer-inner">
@@ -363,7 +410,7 @@ Summarize the key points and write the result to <span class="code-string">./out
       <a href="https://github.com/banyango/margarita" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="https://www.banyango.com/margarita/latest/" target="_blank" rel="noopener noreferrer">Docs</a>
     </nav>
-    <p class="footer-copy">&copy; 2026 Banyango. MIT License.</p>
+    <p class="footer-copy">&copy; 2026 Banyango.</p>
   </div>
 </footer>
 
