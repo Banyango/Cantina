@@ -327,9 +327,6 @@ h1 {
   gap: 2rem;
   align-items: start;
 }
-.feature-row:last-child {
-  border-bottom: var(--border-w) solid var(--black);
-}
 
 .feat-num {
   font-family: var(--mono);
@@ -340,7 +337,7 @@ h1 {
   letter-spacing: 0.05em;
 }
 
-.feat-body {}
+.feat-body { min-width: 0; }
 .feat-title {
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 700;
