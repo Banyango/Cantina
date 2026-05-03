@@ -1,0 +1,260 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="only light">
+  <title>Summarize Your Emails – Margarita</title>
+  <meta name="description"
+        content="Call a local Python function from a Margarita script to load emails from Apple Mail, then summarize and categorize them in a single @effect run.">
+
+  <meta property="og:title" content="Summarize Your Emails – Margarita">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="icon.png">
+  <meta property="og:description"
+        content="Use @effect func to call a local Python function, inject the result into a prompt, and summarize your inbox — no API glue required.">
+
+  <link rel="icon" href="/img/favicon.ico" sizes="any">
+  <link rel="icon" href="/img/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#16A34A">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tutorials.css">
+<script defer src="./js/app.js"></script></head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Margarita home">
+      <img src="img/lime.svg" alt="Margarita" class="nav-logo-img">
+      <span class="nav-logo-text">Margarita</span>
+    </a>
+
+    <button class="nav-hamburger" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false"
+            aria-controls="nav-links">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <ul class="nav-links" id="nav-links" role="list">
+      <li><a href="https://www.banyango.com/margarita/latest/">Docs</a></li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+          Tutorials <span class="nav-dropdown-arrow" aria-hidden="true">&#9662;</span>
+        </button>
+        <ul class="nav-dropdown-menu" role="list">
+          <li><a href="margarita-getting-started.html">Getting Started With Agents</a></li>
+          <li><a href="margarita-tutorial-state.html">State</a></li>
+          <li><a href="margarita-tutorial-user-input.html">User Input</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+          Guides <span class="nav-dropdown-arrow" aria-hidden="true">&#9662;</span>
+        </button>
+        <ul class="nav-dropdown-menu" role="list">
+          <li><a href="custom-ralph.html">Build a Custom Ralph Wiggum Loop</a></li>
+          <li><a href="dungeon-quest.html">Build a Game</a></li>
+          <li><a href="summarize-emails.html">Summarize Your Emails</a></li>
+          <li><a href="local-functions.html">Spend Less on Tokens</a></li>
+          <li><a href="template-packages.html">Share Templates Across Projects</a></li>
+          <li><a href="components.html">Compose Once, Reuse Everywhere</a></li>
+          <li><a href="agents-md.html">One AGENTS.md, for Any Model</a></li>
+          <li><a href="github-issue-summary.html">Auto-Triage GitHub Issues</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="https://github.com/banyango/margarita" class="nav-cta" target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-mg-bg hero-mg-bg-1" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-mg-img"></div>
+  <div class="hero-mg-bg hero-mg-bg-2" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-mg-img"></div>
+  <div class="hero-mg-bg hero-mg-bg-3" aria-hidden="true"><img src="img/lime.svg" alt="" class="hero-mg-img"></div>
+  <div class="container">
+    <p class="hero-eyebrow">Guide</p>
+    <h1 class="hero-heading">
+      Summarize Your Emails
+    </h1>
+    <p class="hero-sub">
+      Call a local Python function to load your inbox, inject the results into a prompt, and get a categorized summary — in a single <code class="tut-inline-code">@effect run</code>.
+    </p>
+    <div class="tut-model-chips">
+      <span class="tut-chip tut-chip--claude">Margarita</span>
+    </div>
+  </div>
+</section>
+
+<!-- Step 1: The Orchestrator -->
+<section class="tut-section tut-section--surface" id="step-1">
+  <div class="container">
+    <div class="tut-step">
+      <div class="tut-code-card">
+        <div class="tut-code-filename">summarize-emails.mgx</div>
+        <pre class="fpanel-code"><code><span class="code-keyword">from</span> src.applemail <span class="code-keyword">import</span> load_emails
+
+<span class="code-keyword">@effect func</span> load_emails(limit=20) =&gt; result
+
+&lt;&lt;
+Summarize the last 20 emails I've gotten.
+
+- Categorize them.
+- Give me an action item list.
+- Ignore spam type emails.
+
+Here are the emails:
+<span class="code-var">${result}</span>
+&gt;&gt;
+
+<span class="code-keyword">@effect run</span></code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Step 2: The Python Function -->
+<section class="tut-section tut-section--light" id="step-2">
+  <div class="container">
+    <div class="tut-step">
+      <div class="feature-explorer tut-explorer">
+        <div class="feature-tab-list" role="tablist" aria-label="Source files">
+
+          <button class="feature-tab is-active" role="tab" aria-selected="true"
+                  aria-controls="panel-applemail" data-panel="applemail">
+            <span class="ftab-icon">&#128140;</span>
+            <span class="ftab-text">
+              <span class="ftab-name">src/applemail.py</span>
+              <span class="ftab-desc">Read emails from Apple Mail</span>
+            </span>
+          </button>
+
+          <button class="feature-tab" role="tab" aria-selected="false"
+                  aria-controls="panel-pyproject" data-panel="pyproject">
+            <span class="ftab-icon">&#128230;</span>
+            <span class="ftab-text">
+              <span class="ftab-name">pyproject.toml</span>
+              <span class="ftab-desc">One dependency: emlx</span>
+            </span>
+          </button>
+
+        </div>
+
+        <div class="feature-panels">
+
+          <div class="feature-panel is-active" id="panel-applemail" role="tabpanel">
+            <div class="fpanel-header">
+              <h3>src/applemail.py</h3>
+              <p>Reads the Apple Mail Envelope Index via SQLite and returns a list of
+                <code>Email</code> objects. Called directly by <code>@effect func</code> —
+                no API wrapper needed.</p>
+            </div>
+            <pre class="fpanel-code"><code><span class="code-keyword">from</span> dataclasses <span class="code-keyword">import</span> dataclass
+<span class="code-keyword">from</span> datetime <span class="code-keyword">import</span> datetime
+<span class="code-keyword">from</span> pathlib <span class="code-keyword">import</span> Path
+<span class="code-keyword">import</span> sqlite3, glob
+
+MAIL_BASE = Path.home() / <span class="code-string">"Library"</span> / <span class="code-string">"Mail"</span>
+<span class="code-comment"># Apple Mail stores dates as seconds since 2001-01-01</span>
+MAC_EPOCH_OFFSET = 978307200
+
+<span class="code-keyword">@dataclass</span>
+<span class="code-keyword">class</span> Email:
+    message_id: str
+    subject: str
+    sender: str
+    recipients: list[str]
+    date: datetime | None
+    mailbox: str
+
+<span class="code-keyword">def</span> load_emails(limit: int = 100) -&gt; list[Email]:
+    <span class="code-comment">"""
+    Query the Apple Mail Envelope Index for the most recent emails.
+    Requires Full Disk Access for your terminal in System Settings.
+    """</span>
+    index_path = _find_envelope_index()
+    conn = sqlite3.connect(<span class="code-string">f"file:{index_path}?mode=ro"</span>, uri=True)
+    conn.row_factory = sqlite3.Row
+
+    rows = conn.execute(<span class="code-string">"""
+        SELECT m.ROWID, m.message_id,
+               COALESCE(su.subject, CAST(m.subject AS TEXT)) AS subject,
+               m.date_sent, m.flags,
+               s.address AS sender_address, s.comment AS sender_name,
+               mb.url AS mailbox_url
+        FROM messages m
+        LEFT JOIN subjects su ON m.subject = su.ROWID
+        LEFT JOIN addresses s ON m.sender = s.ROWID
+        LEFT JOIN mailboxes mb ON m.mailbox = mb.ROWID
+        ORDER BY m.date_sent DESC LIMIT ?
+    """</span>, (limit,))
+
+    <span class="code-keyword">return</span> [_row_to_email(conn, row) <span class="code-keyword">for</span> row <span class="code-keyword">in</span> rows]</code></pre>
+          </div>
+
+          <div class="feature-panel" id="panel-pyproject" role="tabpanel">
+            <div class="fpanel-header">
+              <h3>pyproject.toml</h3>
+              <p>The only dependency is <code>emlx</code> — a small library for reading
+                Apple Mail <code>.emlx</code> files. Install with <code>uv sync</code>.</p>
+            </div>
+            <pre class="fpanel-code"><code>[project]
+name = <span class="code-string">"summarize-emails"</span>
+version = <span class="code-string">"0.1.0"</span>
+requires-python = <span class="code-string">">=3.12"</span>
+dependencies = [
+    <span class="code-string">"emlx>=1.0.4"</span>,
+]</code></pre>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="tut-section tut-section--cta">
+  <div class="container tut-cta">
+    <div class="hero-actions">
+      <a href="https://www.banyango.com/margarita/latest/" class="btn btn-primary" target="_blank"
+         rel="noopener noreferrer">Read the Margarita Docs</a>
+      <a href="index.html" class="btn btn-ghost">Back to Margarita</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="img/lime.svg" alt="Margarita" class="footer-logo-img">
+        <span class="footer-brand-name">Margarita</span>
+      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="https://www.banyango.com/margarita/latest/" target="_blank" rel="noopener noreferrer">Margarita Docs</a>
+        <a href="https://github.com/banyango/margarita" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+      <p class="footer-copy">&copy; 2026 Banyango. Logo courtesy Freepik</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+
+</html>
