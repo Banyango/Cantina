@@ -55,6 +55,16 @@ module.exports = merge(common, {
       filename: 'margarita-tutorial-user-input.html',
       minify: false,
     }),
+    new HtmlWebpackPlugin({
+      template: './dungeon-quest.html',
+      filename: 'dungeon-quest.html',
+      minify: false,
+    }),
+    new HtmlWebpackPlugin({
+      template: './summarize-emails.html',
+      filename: 'summarize-emails.html',
+      minify: false,
+    }),
     new CopyPlugin({
       patterns: [
         { from: 'img', to: 'img' },
@@ -62,6 +72,7 @@ module.exports = merge(common, {
         { from: 'js/vendor', to: 'js/vendor' },
         { from: 'img/icon.png', to: 'icon.png' },
         { from: 'robots.txt', to: 'robots.txt' },
+        { from: 'CNAME', to: 'CNAME', toType: 'file' },
         { from: '404.html', to: '404.html' },
         { from: 'agents-md.html', to: 'agents-md.html' },
         { from: 'site.webmanifest', to: 'site.webmanifest' },
