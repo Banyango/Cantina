@@ -23,9 +23,9 @@
       <img src="img/lime.svg" alt="Margarita" class="hero-logo-img">
       <span class="hero-logo-text">Margarita</span>
     </div>
-    <h1>Writing agents should be as easy as writing markdown.</h1>
+    <h1>Predictable agents should be as easy as writing Markdown.</h1>
     <p class="hero-sub">
-      Margarita turns Markdown scripts into full agentic workflows. Declare variables, call your LLM, and pass results between steps — all in repeatable scripts you can read and understand at a glance.
+      Margarita introduces a deterministic scripting extension to Markdown that keeps your agents predictable. No more fighting with your prompt to make it follow your workflow steps.
     </p>
     <div class="cta-row">
       <a href="margarita-getting-started.html" class="btn-primary">Get Started →</a>
@@ -47,8 +47,36 @@
         <span class="window-filename">review.mgx</span>
       </div>
       <div class="editor-body">
-        <div class="editor-gutter" id="editor-gutter" aria-hidden="true"></div>
-        <div class="editor-code" id="editor-code"></div>
+        <div class="editor-code"><span class="t-cmt">// These are variables</span>
+<span class="t-kw">@state</span> score    = <span class="t-str">3</span>
+<span class="t-kw">@state</span> feedback = <span class="t-str">""</span>
+
+<span class="t-cmt">// This is Markdown. It is added to the Context Window</span>
+<span class="t-cmt">// score gets substituted and score/feedback are set by the llm.</span>
+<span class="t-del">&lt;&lt;</span>
+The current score is <span class="t-var">${score}</span>.
+
+Review this code snippet and set <span class="t-var">`score`</span> to a number from 0–10
+and <span class="t-var">`feedback`</span> to a one-sentence summary of the quality.
+
+```python
+def add(a, b): return a+b
+```
+<span class="t-del">&gt;&gt;</span>
+
+<span class="t-cmt">// This runs the agent</span>
+<span class="t-cmt">// score is set to 72</span>
+<span class="t-cmt">// feedback is set to Simple and correct...</span>
+<span class="t-kw">@effect run</span>
+
+<span class="t-cmt">// This adds more to the context.</span>
+<span class="t-del">&lt;&lt;</span>
+Explain the score of <span class="t-var">${score}</span> in more
+detail and tell me about the feedback.
+<span class="t-del">&gt;&gt;</span>
+
+<span class="t-cmt">// We run the agent and get the final response.</span>
+<span class="t-kw">@effect run</span></div>
       </div>
     </div>
 
@@ -61,13 +89,58 @@
         <span class="window-filename" style="color:#555;">margarita run review.mgx</span>
       </div>
       <div class="term-body">
-        <div id="term-runs"></div>
-        <div class="term-foot" id="term-foot" style="display:none">
+        <div class="term-run">
+          <div class="term-run-head">
+            <span class="term-arrow">▼</span>
+            <span class="term-lbl">Run 1</span>
+            <span class="term-dot">●</span>
+            <span class="term-done">completed</span>
+            <span class="term-time">5.2s</span>
+          </div>
+          <div class="term-meta">This code appears correct however it could use some improvements. Setting the score and feedback.</div>
+          <div class="term-set">↳ set score&nbsp;&nbsp;&nbsp;&nbsp;= 72</div>
+          <div class="term-set">↳ set feedback = "Simple and correct..."</div>
+          <div><span class="term-rl">Response:</span></div>
+          <div class="term-resp">Set the score to 72 and feedback to "Simple and correct,<br>but missing type hints and a docstring."</div>
+          <div class="term-meta">Tokens:&nbsp;&nbsp;&nbsp;&nbsp;11,430 in&nbsp;&nbsp; 198 out</div>
+          <div class="term-meta">Requests:&nbsp; 1</div>
+        </div>
+        <div class="term-run">
+          <div class="term-run-head">
+            <span class="term-arrow">▼</span>
+            <span class="term-lbl">Run 2</span>
+            <span class="term-dot">●</span>
+            <span class="term-done">completed</span>
+            <span class="term-time">4.8s</span>
+          </div>
+          <div class="term-meta">The score is 72 and I need to fetch the feedback from state.</div>
+          <div class="term-set">↳ get feedback</div>
+          <div><span class="term-rl">Response:</span></div>
+          <div class="term-resp">A score of 72 reflects functional code that does the job,<br>but leaves room for improvement. The feedback — "Simple<br>and correct, but missing type hints" — points to gaps<br>in readability and long-term maintainability.</div>
+          <div class="term-meta">Tokens:&nbsp;&nbsp;&nbsp;&nbsp;11,628 in&nbsp;&nbsp; 312 out</div>
+          <div class="term-meta">Requests:&nbsp; 2</div>
+        </div>
+        <div class="term-foot">
           <span style="color:#4ADE80;">●</span>&nbsp;All turns completed&nbsp;&nbsp;<span class="term-fkey">q</span> to quit
         </div>
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- Determinism -->
+<section class="determinism-section">
+  <div class="determinism-inner">
+    <h2 class="determinism-title">We can create workflows in a prompt, but should we?</h2>
+    <p class="determinism-tag">
+      Margarita is for people that are looking for repeatable scripts that add in the dynamic abilities of LLMs where it makes sense.
+    </p>
+    <p class="determinism-body">
+      Use the right tool for the job.
+      Write code-like logic where you need consistency.
+      Bring in a code agent where you need complexity/ and dynamic responses.
+    </p>
   </div>
 </section>
 
@@ -79,20 +152,19 @@
     <div class="feature-row">
       <span class="feat-num">01</span>
       <div class="feat-body">
-        <h3 class="feat-title">Use any model, on any backend</h3>
+        <h3 class="feat-title">Use determinism where it makes sense</h3>
         <p class="feat-desc">
-          Run the same script using Ollama, Copilot (adding more). Your script stays exactly the same.
+          The syntax is a very minimal extension to markdown and will always run the same. No more having the llm skip a step in your workflow every 3rd time you run it. No more inventing properties your JSON objects. Keep control when you need control.
         </p>
-        <span class="feat-tag">margarita use ollama</span>
       </div>
     </div>
 
     <div class="feature-row">
       <span class="feat-num">02</span>
       <div class="feat-body">
-        <h3 class="feat-title">Control your context, keep costs low</h3>
+        <h3 class="feat-title">Prune your context, keep costs low</h3>
         <p class="feat-desc">
-          Most AI code harnesses hide the context from you. Margarita gives you complete control. Add only the tools you need. Run Python functions locally and update the context instead of burning tokens on tool calls.
+          Most AI code harnesses hide the context from you. Margarita gives you complete control. Turf data you don't need. Add the specific tools you need and no more. Run Python functions locally instead of burning tokens on tool calls. All of these methods can keep your contexts focused and tight.
         </p>
         <span class="feat-tag">@effect context clear<br/>@effect func summarize("A really long text input") => summary</span>
       </div>
@@ -103,9 +175,9 @@
       <div class="feat-body">
         <h3 class="feat-title">Compose prompts from reusable .mg files</h3>
         <p class="feat-desc">
-          Write a prompt component and reuse it in your other scripts. Need to change it across your org? Just update it in one spot.
+          Remember React? Compose prompts together just like it. Use conditional logic and parameter passing. Render fragments in a loop. All the things you wished Markdown shipped with.
         </p>
-        <span class="feat-tag">[[ snippets/role.mg is_admin=True permissions=["view"] ]]</span>
+        <span class="feat-tag">[[ snippets/role.mg is_admin=True permission="view" ]]</span>
       </div>
     </div>
 
@@ -150,18 +222,24 @@ Here are the emails: <span class="code-var">${result}</span>
         </p>
         <pre class="feat-preview"><code><span class="code-keyword">@effect</span> input <span class="code-string">"What do you want to build?:"</span> =&gt; userInput
 
-<span class="code-comment">// Break it into tasks</span>
-<span class="code-var">[[ use-case-task-breakdown.mg input=userInput ]]</span>
+<span class="code-comment">// We have a prompt in this file to break input into tasks</span>
+<span class="code-comment">// This is an example of an include</span>
+<span class="code-var">[[ break_down_input_into_tasks.mg input=userInput ]]</span>
+
+<span class="code-comment">// Also tell the llm to store into the tasks var</span>
+<span class="code-var"><< Store the tasks into a json array in the variable `tasks`>></span>
+
 <span class="code-keyword">@effect run</span>
 
-<span class="code-comment">// Implement each task</span>
+<span class="code-comment">// The agent broke the tasks down now we implement each task</span>
 <span class="code-keyword">for</span> task <span class="code-keyword">in</span> tasks:
-    <span class="code-keyword">@effect context clear</span>
     <span class="code-keyword">@state</span> isDone = <span class="code-keyword">false</span>
-    <span class="code-var">[[ additional_guidance.mg ]]</span>
-    <span class="code-keyword">for</span> i <span class="code-keyword">in</span> range(5):
+    <span class="code-keyword">for</span> i <span class="code-keyword">in</span> range(MAX_ITERATIONS):
+        <span class="code-comment">// Use the code agent to implement the task</span>
         <span class="code-keyword">@effect run</span>
-        <span class="code-keyword">if</span> isDone: <span class="code-keyword">break</span></code></pre>
+
+        <span class="code-keyword">if</span> isDone:
+          <span class="code-keyword">break</span></code></pre>
         <a href="custom-ralph.html" class="feat-tag">See full guide: Build a Custom Ralph Wiggum Loop →</a>
       </div>
     </div>
@@ -469,217 +547,6 @@ document.querySelectorAll('.feature-explorer').forEach(function (explorer) {
     });
   });
 });
-
-(function () {
-  // ── Code phases to type ──────────────────────────────────────────────────
-  var P1 = '// This is a margarita script (.mgx)\n\n// These are variables\n@state score    = 0\n@state feedback = ""\n\n';
-  var P2 = '\n\n// Add Markdown \n<<\nThe current score is ${score}.\n\nReview this code snippet and set `score` to a number from 0–10\nand `feedback` to a one-sentence summary of the quality.\n\n```python\ndef add(a, b): return a+b\n```\n>>\n\n';
-  var P3 = '\n// Run the agent\n@effect run\n\n';
-  var P4 = '\n<<\nExplain the score of ${score} in more\ndetail and tell me about the feedback.\n>>\n';
-  var P5 = '\n// Run again!\n@effect run';
-
-  // ── Terminal HTML fragments ──────────────────────────────────────────────
-  var RUN1_DONE =
-    '<div class="term-run">' +
-      '<div class="term-run-head">' +
-        '<span class="term-arrow">▼</span> ' +
-        '<span class="term-lbl">Run 1</span> ' +
-        '<span class="term-dot">●</span> ' +
-        '<span class="term-done">completed</span> ' +
-        '<span class="term-time">5.2s</span>' +
-      '</div>' +
-      '<div class="term-meta">This code appears correct however it could use some improvements. Setting the score and feedback.</div>' +
-      '<div class="term-set">↳ set score&nbsp;&nbsp;&nbsp;&nbsp;= 72</div>' +
-      '<div class="term-set">↳ set feedback = “Simple and correct...”</div>' +
-      '<div><span class="term-rl">Response:</span></div>' +
-      '<div class="term-resp">Set the score to 72 and feedback to “Simple and correct,<br>but missing type hints and a docstring.”</div>' +
-      '<div class="term-meta">Tokens:&nbsp;&nbsp;&nbsp;&nbsp;11,430 in&nbsp;&nbsp; 198 out</div>' +
-      '<div class="term-meta">Requests:&nbsp; 1</div>' +
-    '</div>';
-
-  var RUN2_DONE =
-    '<div class="term-run">' +
-      '<div class="term-run-head">' +
-        '<span class="term-arrow">▼</span> ' +
-        '<span class="term-lbl">Run 2</span> ' +
-        '<span class="term-dot">●</span> ' +
-        '<span class="term-done">completed</span> ' +
-        '<span class="term-time">4.8s</span>' +
-      '</div>' +
-      '<div class="term-meta">The score is 72 and I need to fetch the feedback from state.</div>' +
-      '<div class="term-set">↳ get feedback</div>' +
-      '<div><span class="term-rl">Response:</span></div>' +
-      '<div class="term-resp">A score of 72 reflects functional code that does the job,<br>but leaves room for improvement. The feedback — “Simple<br>and correct, but missing type hints” — points to gaps<br>in readability and long-term maintainability.</div>' +
-      '<div class="term-meta">Tokens:&nbsp;&nbsp;&nbsp;&nbsp;11,628 in&nbsp;&nbsp; 312 out</div>' +
-      '<div class="term-meta">Requests:&nbsp; 2</div>' +
-    '</div>';
-
-  // ── Syntax highlighter ───────────────────────────────────────────────────
-  function hl(raw) {
-    var s = raw
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-
-    return s.split('\n').map(function (line) {
-      // Comment
-      if (/^\/\//.test(line)) return '<span class="t-cmt">' + line + '</span>';
-      // @state
-      if (/^@state\s/.test(line)) {
-        return line
-          .replace(/^(@state)/, '<span class="t-kw">$1</span>')
-          .replace(/(=\s*)(""|0)$/, function (m, eq, val) {
-            return eq + '<span class="t-str">' + val + '</span>';
-          });
-      }
-      // @effect run
-      if (/^@effect run/.test(line)) return '<span class="t-kw">' + line + '</span>';
-      // Standalone delimiter
-      if (line === '&lt;&lt;' || line === '&gt;&gt;') return '<span class="t-del">' + line + '</span>';
-      // Inline: delimiters + variables
-      return line
-        .replace(/(&lt;&lt;|&gt;&gt;)/g, '<span class="t-del">$1</span>')
-        .replace(/(\$\{[^}]+\})/g, '<span class="t-var">$1</span>');
-    }).join('\n');
-  }
-
-  // ── DOM refs ────────────────────────────────────────────────────────────
-  var editorCode  = document.getElementById('editor-code');
-  var editorGutter = document.getElementById('editor-gutter');
-  var termRuns    = document.getElementById('term-runs');
-  var termFoot    = document.getElementById('term-foot');
-
-  function updateGutter(raw) {
-    var n = raw.split('\n').length;
-    var html = '';
-    for (var i = 1; i <= n; i++) html += '<span>' + i + '</span>';
-    editorGutter.innerHTML = html;
-  }
-
-  // ── Typing engine ────────────────────────────────────────────────────────
-  var rawText = '';
-  var timers  = [];
-
-  function clearTimers() {
-    timers.forEach(clearTimeout);
-    timers = [];
-  }
-
-  function wait(ms, cb) {
-    timers.push(setTimeout(cb, ms));
-  }
-
-  function typeText(text, baseSpeed, cb) {
-    // Split into words-with-trailing-whitespace so each append is one word
-    var tokens = text.match(/\S+\s*/g) || [];
-    var i = 0;
-    function next() {
-      if (i < tokens.length) {
-        rawText += tokens[i++];
-        editorCode.innerHTML = hl(rawText) + '<span class="cursor">▇</span>';
-        updateGutter(rawText);
-        timers.push(setTimeout(next, baseSpeed + Math.random() * baseSpeed * 0.35));
-      } else {
-        wait(120, cb);
-      }
-    }
-    next();
-  }
-
-  // ── Running spinner ──────────────────────────────────────────────────────
-  function runningBlock(id, label) {
-    return '<div class="term-run" id="' + id + '">' +
-      '<div class="term-run-head">' +
-        '<span class="term-arrow">▼</span> ' +
-        '<span class="term-lbl">' + label + '</span> ' +
-        '<span style="color:#FEBC2E;">●</span> ' +
-        '<span style="color:#FEBC2E;font-weight:700;">running</span> ' +
-        '<span class="term-time" id="' + id + '-t">0.0s</span>' +
-      '</div>' +
-    '</div>';
-  }
-
-  function startTimer(elId) {
-    var t = 0;
-    var iv = setInterval(function () {
-      t = Math.round((t + 0.1) * 10) / 10;
-      var el = document.getElementById(elId + '-t');
-      if (el) el.textContent = t.toFixed(1) + 's';
-    }, 100);
-    return iv;
-  }
-
-  // ── Main sequence ────────────────────────────────────────────────────────
-  function run() {
-    rawText = '';
-    editorCode.innerHTML = '<span class="cursor">▇</span>';
-    editorGutter.innerHTML = '<span>1</span>';
-    termRuns.innerHTML = '';
-    termFoot.style.display = 'none';
-
-    // Phase 1: @state declarations
-    typeText(P1, 320, function () {
-      wait(400, function () {
-
-        // Phase 2: first prompt block
-        typeText(P2, 150, function () {
-
-          // Phase 3: first @effect run
-          typeText(P3, 320, function () {
-            wait(700, function () {
-
-              // Terminal: Run 1 running
-              termRuns.innerHTML = runningBlock('run1', 'Run 1');
-              var iv1 = startTimer('run1');
-
-              wait(2600, function () {
-                clearInterval(iv1);
-                termRuns.innerHTML = RUN1_DONE;
-
-                wait(1600, function () {
-
-                  // Phase 4: second prompt block
-                  typeText(P4, 150, function () {
-
-                    // Phase 5: second @effect run
-                    typeText(P5, 320, function () {
-                      wait(700, function () {
-
-                        // Terminal: Run 2 running
-                        termRuns.innerHTML = RUN1_DONE + runningBlock('run2', 'Run 2');
-                        var iv2 = startTimer('run2');
-
-                        wait(2200, function () {
-                          clearInterval(iv2);
-                          termRuns.innerHTML = RUN1_DONE + RUN2_DONE;
-                          termFoot.style.display = 'block';
-                          // Remove cursor
-                          editorCode.innerHTML = hl(rawText);
-                        });
-                      });
-                    });
-                  });
-                });
-              });
-            });
-          });
-        });
-      });
-    });
-  }
-
-  // ── Start when the demo panel scrolls into view ──────────────────────────
-  var demo = document.querySelector('.demo-section');
-  if (!demo) return;
-  var started = false;
-  var obs = new IntersectionObserver(function (entries) {
-    if (entries[0].isIntersecting && !started) {
-      started = true;
-      wait(300, run);
-    }
-  }, { threshold: 0.25 });
-  obs.observe(demo);
-})();
 </script>
 </body>
 </html>
